@@ -18,7 +18,7 @@ import android.widget.ListView;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.library.SlidingTabLayout;
+import com.gogocosmo.cosmoqiu.memoryaccelerator.Library.SlidingTabLayout;
 
 import java.util.ArrayList;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gogocosmo.cosmoqiu.memoryaccelerator.library;
+package com.gogocosmo.cosmoqiu.memoryaccelerator.Library;
 
 
         import android.R;
