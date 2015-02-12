@@ -4,6 +4,8 @@
     <!-- Application Theme -->
     <color name="ColorPrimary">@color/RED</color>
     <color name="ColorPrimaryDark">@color/RED</color>
+
+    <!-- tabs -->
     <color name="tabsScrollColor">@color/RED</color>
 
     <!-- Activity Carousel -->

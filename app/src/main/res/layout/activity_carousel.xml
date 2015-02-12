@@ -10,10 +10,10 @@
         android:orientation="vertical">
 
         <!--<include-->
-            <!--android:id="@+id/tool_bar"-->
-            <!--layout="@layout/tool_bar"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_width="match_parent" />-->
+        <!--android:id="@+id/tool_bar"-->
+        <!--layout="@layout/tool_bar"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent" />-->
 
         <FrameLayout
             android:id="@+id/topFragmentContainer"
@@ -36,45 +36,6 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/good_luck" />
         </FrameLayout>
-        <!--
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-
-                <Button
-                    android:id="@+id/previousCardButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="7dp"
-                    android:layout_weight="1"
-                    android:background="#d1e3db"
-                    android:padding="10dp"
-                    android:text="Previous"
-                    android:textColor="#585a57"
-                    android:textSize="20sp"
-                    />
-
-                <Button
-                    android:id="@+id/nextCardButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="1"
-                    android:background="#d1e3db"
-                    android:padding="10dp"
-                    android:text="Next"
-                    android:textColor="#585a57"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-        -->
 
     </LinearLayout>
 
@@ -91,7 +52,6 @@
         android:src="@drawable/fire_action"
         android:layout_gravity="left|bottom"
         android:layout_marginBottom="30dp"
-        android:layout_marginLeft="18dp"
-        />
+        android:layout_marginLeft="18dp" />
 
 </FrameLayout>

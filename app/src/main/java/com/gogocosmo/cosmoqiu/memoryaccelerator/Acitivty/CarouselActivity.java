@@ -49,7 +49,7 @@ public class CarouselActivity extends ActionBarActivity {
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
 //        _toolbar = (Toolbar) findViewById(R.id.tool_bar);
-   //     setSupportActionBar(_toolbar);
+        //     setSupportActionBar(_toolbar);
 
         _topFragment = new TopFragment();
         getSupportFragmentManager()
@@ -94,7 +94,7 @@ public class CarouselActivity extends ActionBarActivity {
             }
         });
 
-        ImageButton returnButton = (ImageButton)findViewById(R.id.ReturnButton);
+        ImageButton returnButton = (ImageButton) findViewById(R.id.ReturnButton);
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,24 +107,6 @@ public class CarouselActivity extends ActionBarActivity {
 
 
     }
-
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-//
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                swipeDownEvent();
-//                Log.d(TAG, "Activity: ACTION_DWON");
-//                return true;
-//            case MotionEvent.ACTION_UP:
-//                swipeUpEvent();
-//                Log.d(TAG, "Activity: ACTION_UP");
-//                break;
-//            default:
-//        }
-//        return false;
-//    }
-
 
     void swipeUpEvent() {
 //        CardFragment currentCard = (CardFragment) getCurrentFragment();

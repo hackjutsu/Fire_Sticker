@@ -1,7 +1,5 @@
 package com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter;
 
-import android.graphics.Color;
-
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.Item;
 
 /**

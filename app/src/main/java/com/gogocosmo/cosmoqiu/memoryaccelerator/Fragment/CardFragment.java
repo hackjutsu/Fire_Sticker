@@ -42,19 +42,6 @@ public class CardFragment extends Fragment {
         _card.setText(_text);
 
 
-//        Random r = new Random();
-//        int red = r.nextInt(255 - 0 + 1) + 0;
-//        int green = r.nextInt(255 - 0 + 1) + 0;
-//        int blue = r.nextInt(255 - 0 + 1) + 0;
-//
-//        _color = Color.rgb(red, green, blue);
-//
-//        Log.d(TAG,
-//                String.valueOf(red) + " ," +
-//                        String.valueOf(green) + " ," +
-//                        String.valueOf(blue)
-//        );
-
         return view;
     }
 
@@ -101,55 +88,5 @@ public class CardFragment extends Fragment {
     public void setCardText(String text) {
         _text = text;
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-//        Log.i(TAG, getClass().getSimpleName() + ":entered onStart()");
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-//        Log.i(TAG, getClass().getSimpleName() + ":entered onResume()");
-        super.onResume();
-    }
-
-
-    @Override
-    public void onPause() {
-//        Log.i(TAG, getClass().getSimpleName() + ":entered onPause()");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-//        Log.i(TAG, getClass().getSimpleName() + ":entered onStop()");
-        super.onStop();
-    }
-
-    @Override
-    public void onDetach() {
-//        Log.i(TAG, getClass().getSimpleName() + ":entered onDetach()");
-        super.onDetach();
-    }
-
-
-    @Override
-    public void onDestroy() {
-//        Log.i(TAG, getClass().getSimpleName() + ":entered onDestroy()");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDestroyView() {
-//        Log.i(TAG, getClass().getSimpleName() + ":entered onDestroyView()");
-        super.onDestroyView();
-    }
-
 
 }

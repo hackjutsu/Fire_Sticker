@@ -1,6 +1,5 @@
 package com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,9 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -70,11 +67,11 @@ public class ListViewActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_list);
 
-//        // Setting up the tabs
+//        // Setting up the _slidingTabsLayout
 //        final ActionBar actionBar = getSupportActionBar();
 //        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 //
-//        // Create a tab listener that is called when the user changes tabs.
+//        // Create a tab listener that is called when the user changes _slidingTabsLayout.
 //        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 //
 //            @Override
@@ -94,7 +91,7 @@ public class ListViewActivity extends ActionBarActivity
 //        };
 //
 //
-//        // Add 3 tabs, specifying the tab's text and TabListener
+//        // Add 3 _slidingTabsLayout, specifying the tab's text and TabListener
 //        for (int i = 0; i < 3; i++) {
 //            actionBar.addTab(
 //                    actionBar.newTab()
@@ -119,7 +116,7 @@ public class ListViewActivity extends ActionBarActivity
 //            public void onClick(View v) {
 //                v.startAnimation(new AlphaAnimation(1.0f, 0.5f));
 ////                Intent intent = new Intent(ListViewActivity.this, CarouselActivity.class);
-//                Intent intent = new Intent(ListViewActivity.this, TabActivity.class);
+//                Intent intent = new Intent(ListViewActivity.this, LaunchActivity.class);
 //                startActivity(intent);
 //            }
 //        });
