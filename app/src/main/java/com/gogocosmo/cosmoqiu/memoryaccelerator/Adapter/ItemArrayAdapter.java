@@ -26,7 +26,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
     }
 
     public ItemArrayAdapter(Context context, ArrayList<Item> values) {
-        super(context, R.layout.rowlayout, values);
+        super(context, R.layout.item_list_rowlayout, values);
         this.context = context;
         this.values = values;
     }
@@ -38,7 +38,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         //reuse views
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            rowView = inflater.inflate(R.layout.rowlayout, null);
+            rowView = inflater.inflate(R.layout.item_list_rowlayout, null);
             // configure view holder
             viewHolder = new ViewHolder();
             viewHolder.question = (TextView) rowView.findViewById(R.id.label_question);

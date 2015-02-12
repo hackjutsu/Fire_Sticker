@@ -4,11 +4,25 @@
     <color name="theme_color">@color/YANZHI</color>
     <color name="actionbar_text">@color/XUESE</color>
 
-    <color name="ColorPrimary">@color/YANZHI</color>
-    <color name="ColorPrimaryDark">@color/YANZHI</color>
-    <color name="tabsScrollColor">@color/YANZHI</color>
+    <!-- Application Theme -->
+    <color name="ColorPrimary">@color/RED</color>
+    <color name="ColorPrimaryDark">@color/RED</color>
+    <color name="tabsScrollColor">@color/RED</color>
 
+    <!-- Activity Carousel -->
+    <color name="ACTIVITY_CAROUSEL_BACKGROUND">@color/WHITE</color>
 
+    <!-- tool_bar -->
+    <color name="TOOL_BAR_BACKGROUND">@color/RED</color>
+
+    <!-- fragment_top -->
+    <color name="FRAGMENT_TOP_BACKGROUND">@color/BLUE</color>
+    <color name="FRAGMENT_TOP_TEXT">@color/WHITE</color>
+
+    <!-- Item List in TabFragment -->
+    <color name="ITEMLIST_SIDE_BAR">@color/FANQIEHONG</color>
+    <color name="ITEMLIST_BACKGROUND">@color/PURE_WHITE</color>
+    <color name="ITEMLIST_ROW_TEXT">@color/PURE_BLACK</color>
 
     <!-- Frequently Used Colors -->
     <color name="RED">@color/YANZHI</color>

@@ -11,14 +11,14 @@
         <FrameLayout
             android:layout_width="3dp"
             android:layout_height="match_parent"
-            android:background="@color/FANQIEHONG"></FrameLayout>
+            android:background="@color/ITEMLIST_SIDE_BAR"></FrameLayout>
 
         <ListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:background="@color/PURE_WHITE"
+            android:background="@color/ITEMLIST_BACKGROUND"
             android:fadingEdgeLength="30dp"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none" />

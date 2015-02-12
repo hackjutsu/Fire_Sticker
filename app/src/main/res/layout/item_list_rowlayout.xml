@@ -13,7 +13,7 @@
         android:paddingLeft="18dp"
         android:paddingRight="18dp"
         android:text="Question"
-        android:textColor="@color/PURE_BLACK"
+        android:textColor="@color/ITEMLIST_ROW_TEXT"
         android:layout_weight="1"
         android:layout_margin="10dp"
         android:textSize="17sp"

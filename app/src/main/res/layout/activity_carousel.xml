@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/WHITE"
+        android:background="@color/ACTIVITY_CAROUSEL_BACKGROUND"
         android:orientation="vertical">
 
         <include
