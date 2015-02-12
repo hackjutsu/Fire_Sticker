@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="theme_color">@color/YANZHI</color>
-    <color name="actionbar_text">@color/XUESE</color>
-
     <!-- Application Theme -->
     <color name="ColorPrimary">@color/RED</color>
     <color name="ColorPrimaryDark">@color/RED</color>

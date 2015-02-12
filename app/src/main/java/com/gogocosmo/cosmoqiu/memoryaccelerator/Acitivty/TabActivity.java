@@ -1,14 +1,22 @@
 package com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
@@ -73,6 +81,9 @@ public class TabActivity extends ActionBarActivity {
         }
     }
 
+
+    final private String TAG = "MEMORY-ACC";
+
     // Declaring Your View and Variables
     Toolbar toolbar;
     ViewPager pager;
@@ -82,6 +93,12 @@ public class TabActivity extends ActionBarActivity {
     ArrayList<String> _titles;
     int Numboftabs = 3;
 
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +107,8 @@ public class TabActivity extends ActionBarActivity {
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
+//        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+//        setSupportActionBar(toolbar);
 
 
         _titles = new ArrayList<>();
@@ -151,6 +168,77 @@ public class TabActivity extends ActionBarActivity {
             }
         });
 
+        // Setting up Drawer
+        mDrawerList = (ListView) findViewById(R.id.navList);
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(TabActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+
+                if (position == _titles.size()) {
+                    // ADD A NEW COLUMN
+                    String newColumn = "TAB "+String.valueOf(position);
+
+                    Log.d(TAG, "ADD A NEW COLUMN: " + String.valueOf(position));
+                    adapter.addNewTab(newColumn);
+                    addDrawerItems();
+
+                    if (Numboftabs <= 5) {
+                        tabs.setDistributeEvenly(true);
+                    } else {
+                        tabs.setDistributeEvenly(false);
+                    }
+                    tabs.setViewPager(pager);
+                }
+
+                tabs.setCurrentTab(position);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+
+        addDrawerItems();
+        setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void addDrawerItems() {
+
+        ArrayList<String> drawerArray = new ArrayList<>(_titles);
+        drawerArray.add("NEW COLUMN");
+        String[] osArray = drawerArray.toArray(new String[drawerArray.size()]);
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
     }
 
 
@@ -175,6 +263,23 @@ public class TabActivity extends ActionBarActivity {
             return true;
         }
 
+        // Activate the navigation drawer toggle
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

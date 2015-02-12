@@ -18,7 +18,6 @@ package com.gogocosmo.cosmoqiu.memoryaccelerator.library;
 
         import android.content.Context;
         import android.graphics.Typeface;
-        import android.os.Build;
         import android.support.v4.view.PagerAdapter;
         import android.support.v4.view.ViewPager;
         import android.util.AttributeSet;
@@ -225,7 +224,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             if (i == mViewPager.getCurrentItem()) {
                 tabView.setSelected(true);
             }
-            tabTitleView.setTextColor(getResources().getColorStateList(R.color.selector));
+            tabTitleView.setTextColor(getResources().getColorStateList(R.color.tab_selector));
             tabTitleView.setTextSize(14);
 
         }
