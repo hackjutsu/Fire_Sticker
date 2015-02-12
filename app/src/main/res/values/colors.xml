@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="theme_color">@color/YANZHI</color>
+    <color name="actionbar_text">@color/XUESE</color>
+
+    <color name="ColorPrimary">@color/YANZHI</color>
+    <color name="ColorPrimaryDark">@color/YANZHI</color>
+    <color name="tabsScrollColor">@color/YANZHI</color>
+
+
+
+    <!-- Frequently Used Colors -->
+    <color name="RED">@color/YANZHI</color>
+    <color name="BLUE">@color/HAILAN</color>
+    <color name="WHITE">@color/XUESE</color>
+    <color name="PURE_WHITE">@android:color/white</color>
+    <color name="PURE_BLACK">@android:color/black</color>
+
+    <!-- Colors Source -->
+    <color name="YANZHI">#952e3a</color>
+    <color name="FANQIEHONG">#c4473d</color>
+    <color name="XUESE">#fffafa</color>
+    <color name="HAILAN">#17507d</color>
+
+</resources>

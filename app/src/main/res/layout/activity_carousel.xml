@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/WHITE"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/topFragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bottom_shadow">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/good_luck" />
+        </FrameLayout>
+        <!--
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/previousCardButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_weight="1"
+                    android:background="#d1e3db"
+                    android:padding="10dp"
+                    android:text="Previous"
+                    android:textColor="#585a57"
+                    android:textSize="20sp"
+                    />
+
+                <Button
+                    android:id="@+id/nextCardButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="#d1e3db"
+                    android:padding="10dp"
+                    android:text="Next"
+                    android:textColor="#585a57"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        -->
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ReturnButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:elevation="10dp"
+        android:background="@drawable/round_button"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/fire_action"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="18dp"
+        />
+
+</FrameLayout>

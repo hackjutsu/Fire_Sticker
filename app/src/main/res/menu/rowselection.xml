@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:memoryaccelerator="http://schemas.android.com/tools">
+    <item android:id="@+id/menuItemDelete"
+        android:title="Delete"
+        memoryaccelerator:showAsAction="always"/>
+</menu>
