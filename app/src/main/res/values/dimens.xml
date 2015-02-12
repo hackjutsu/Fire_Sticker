@@ -3,4 +3,17 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="action_bar_height">45dp</dimen>
+
+    <!-- Drawers -->
+    <dimen name="DRAWER_WIDTH">250dp</dimen>
+
+    <!-- Launch Activity -->
+    <dimen name="ROUND_BUTTON_DIMEN">60dp</dimen>
+
+    <!-- Tabs -->
+    <dimen name="TAB_HEIGHT">48dp</dimen>
+
+    <!-- Item List -->
+    <dimen name="ITEMLIST_SIDE_BAR_DIMEN">3dp</dimen>
+
 </resources>

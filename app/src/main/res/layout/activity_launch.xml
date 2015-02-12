@@ -18,7 +18,7 @@
             <com.gogocosmo.cosmoqiu.memoryaccelerator.Library.SlidingTabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/TAB_HEIGHT"
                 android:elevation="2dp"
                 android:background="@color/WHITE" />
 
@@ -32,9 +32,9 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/LetsGoButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/FireButton"
+            android:layout_width="@dimen/ROUND_BUTTON_DIMEN"
+            android:layout_height="@dimen/ROUND_BUTTON_DIMEN"
             android:elevation="10dp"
             android:background="@drawable/round_button"
             android:layout_centerHorizontal="true"
@@ -52,10 +52,10 @@
 
     <ListView
         android:id="@+id/navList"
-        android:layout_width="230dp"
+        android:layout_width="@dimen/DRAWER_WIDTH"
         android:layout_height="match_parent"
         android:layout_gravity="left|start"
-        android:background="@color/DRAWER_LIST_BACKGROUND" />
+        android:background="@color/DRAWERLIST_BACKGROUND" />
 
 
 </android.support.v4.widget.DrawerLayout>

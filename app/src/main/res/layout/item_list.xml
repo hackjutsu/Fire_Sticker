@@ -9,7 +9,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="3dp"
+            android:layout_width="@dimen/ITEMLIST_SIDE_BAR_DIMEN"
             android:layout_height="match_parent"
             android:background="@color/ITEMLIST_SIDE_BAR"></FrameLayout>
 

@@ -135,7 +135,7 @@ public class LaunchActivity extends ActionBarActivity {
 
 
         /*********************************  Button Configurations  ********************************/
-        final ImageButton letsGoButton = (ImageButton) findViewById(R.id.LetsGoButton);
+        final ImageButton letsGoButton = (ImageButton) findViewById(R.id.FireButton);
         letsGoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +189,7 @@ public class LaunchActivity extends ActionBarActivity {
         ArrayList<String> drawerArray = new ArrayList<>(_titles);
         drawerArray.add("NEW COLUMN");
         String[] osArray = drawerArray.toArray(new String[drawerArray.size()]);
-        _drawerListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        _drawerListAdapter = new ArrayAdapter<>(this, R.layout.drawer_list_rowlayout, osArray);
         _drawerList.setAdapter(_drawerListAdapter);
     }
 

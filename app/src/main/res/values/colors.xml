@@ -24,7 +24,8 @@
     <color name="ITEMLIST_ROW_TEXT">@color/PURE_BLACK</color>
 
     <!-- Drawer -->
-    <color name="DRAWER_LIST_BACKGROUND">@color/WHITE</color>
+    <color name="DRAWERLIST_BACKGROUND">@color/RED</color>
+    <color name="DRAWERLIST_ROW_TEXT">@color/PURE_WHITE</color>
 
     <!-- Frequently Used Colors -->
     <color name="RED">@color/YANZHI</color>

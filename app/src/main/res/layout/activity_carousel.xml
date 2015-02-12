@@ -41,8 +41,8 @@
 
     <ImageButton
         android:id="@+id/ReturnButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/ROUND_BUTTON_DIMEN"
+        android:layout_height="@dimen/ROUND_BUTTON_DIMEN"
         android:elevation="10dp"
         android:background="@drawable/round_button"
         android:layout_centerHorizontal="true"
