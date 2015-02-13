@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +15,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.ViewPagerAdapter;
+import com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment.TabFragment;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Library.SlidingTabLayout;
 
 import java.util.ArrayList;
 
-public class LaunchActivity extends ActionBarActivity {
+public class LaunchActivity extends ActionBarActivity
+        implements TabFragment.OnListItemLongClickListener{
 
     // Load the inital data for testing purpose
     static {
@@ -262,5 +266,13 @@ public class LaunchActivity extends ActionBarActivity {
 
         super.onConfigurationChanged(newConfig);
         _drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void OnListItemLongClicked(View view, int position) {
+
+        Toast.makeText(this,
+                ItemFactory.getItemList().get(position).getQuestion(),
+                Toast.LENGTH_SHORT).show();
     }
 }

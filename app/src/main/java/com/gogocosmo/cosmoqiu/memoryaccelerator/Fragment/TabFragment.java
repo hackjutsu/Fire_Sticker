@@ -22,7 +22,12 @@ public class TabFragment extends Fragment {
 
     private ListView _listView;
     private Context _context;
+    private OnListItemLongClickListener _longClickListener;
 
+    public interface OnListItemLongClickListener {
+
+        void OnListItemLongClicked(View view, int position);
+    };
 
     public TabFragment() {
         // Required empty public constructor
@@ -32,6 +37,13 @@ public class TabFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         _context = activity;
+        if (activity instanceof OnListItemLongClickListener) {
+            _longClickListener = (OnListItemLongClickListener) activity;
+        } else {
+            throw new RuntimeException(
+                    "Host Activity should implement " +
+                            "TabFragment.OnListItemLongClickListener interface.");
+        }
     }
 
     @Override
@@ -45,12 +57,21 @@ public class TabFragment extends Fragment {
                 ItemFactory.getItemList());
         _listView.setAdapter(itemArrayAdapter);
 
-        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(_context, NewItemActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
+        _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(_context, NewItemActivity.class);
-                startActivity(intent);
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                _longClickListener.OnListItemLongClicked(view, position);
+                return true;
             }
         });
 
