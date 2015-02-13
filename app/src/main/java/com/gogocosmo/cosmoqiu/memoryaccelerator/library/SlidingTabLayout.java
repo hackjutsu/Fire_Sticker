@@ -63,6 +63,12 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     }
 
+    public interface OnPageScrollListener {
+        void OnPageScrolled();
+    }
+
+    private OnPageScrollListener _pageScrollListener;
+
     private static final int TITLE_OFFSET_DIPS = 24;
     private static final int TAB_VIEW_PADDING_DIPS = 16;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
@@ -284,6 +290,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 mViewPagerPageChangeListener.onPageScrolled(position, positionOffset,
                         positionOffsetPixels);
             }
+
+            if (_pageScrollListener != null) {
+                _pageScrollListener.OnPageScrolled();
+            }
         }
 
         @Override
@@ -331,5 +341,16 @@ public class SlidingTabLayout extends HorizontalScrollView {
             return;
         }
         mViewPager.setCurrentItem(index);
+    }
+
+    // New Function
+    public void registerPageScrollListener(OnPageScrollListener listener) {
+        _pageScrollListener = listener;
+    }
+
+    public void unregisterPageScrollListener(OnPageScrollListener listener) {
+        if (listener == _pageScrollListener) {
+            _pageScrollListener = null;
+        }
     }
 }

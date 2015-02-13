@@ -5,9 +5,20 @@
 
     <item
         android:id="@+id/action_add"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="Add"
         android:icon="@drawable/add_action"
-        app:showAsAction="ifRoom"
-        ></item>
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_back"
+        android:orderInCategory="100"
+        android:title="  Back  "
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="200"
+        android:title="  Delete  "
+        app:showAsAction="ifRoom" />
 </menu>

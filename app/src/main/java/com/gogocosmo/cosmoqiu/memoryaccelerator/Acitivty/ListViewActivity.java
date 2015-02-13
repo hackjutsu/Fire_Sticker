@@ -26,7 +26,7 @@ public class ListViewActivity extends ActionBarActivity
     protected Object mActionMode;
     public int selectedItem = -1;
     private ListView listView;
-    private View selectedView;
+    private View _selectedView;
 
     static {
 
@@ -132,11 +132,11 @@ public class ListViewActivity extends ActionBarActivity
                     return false;
                 }
 
-                if (selectedView != null) {
-                    selectedView.setBackgroundColor(Color.WHITE);
+                if (_selectedView != null) {
+                    _selectedView.setBackgroundColor(Color.WHITE);
                 }
                 selectedItem = position;
-                selectedView = view;
+                _selectedView = view;
 //                view.setBackgroundColor(Color.rgb(227, 239, 209));
 
                 // Start the CAB using the ActionMode.Callback defined above
@@ -154,7 +154,7 @@ public class ListViewActivity extends ActionBarActivity
 
     private void deleteItem() {
 
-        selectedView.animate().setDuration(1000).alpha(0)
+        _selectedView.animate().setDuration(1000).alpha(0)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -162,9 +162,9 @@ public class ListViewActivity extends ActionBarActivity
                         ItemArrayAdapter adater = (ItemArrayAdapter) listView.getAdapter();
                         adater.remove(adater.getItem(selectedItem));
                         adater.notifyDataSetChanged();
-                        selectedView.setAlpha(1);
-                        selectedView.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
-                        selectedView = null;
+                        _selectedView.setAlpha(1);
+                        _selectedView.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+                        _selectedView = null;
                         selectedItem = -1;
                     }
                 });
@@ -178,8 +178,8 @@ public class ListViewActivity extends ActionBarActivity
         // Assumes that you have "contexual.xml" menu resources
         inflater.inflate(R.menu.rowselection, menu);
 
-        if (selectedView != null) {
-            selectedView.setBackgroundColor(Color.rgb(227, 239, 209));
+        if (_selectedView != null) {
+            _selectedView.setBackgroundColor(Color.rgb(227, 239, 209));
         }
         return true;
     }
@@ -212,8 +212,8 @@ public class ListViewActivity extends ActionBarActivity
     @Override
     public void onDestroyActionMode(ActionMode mode) {
         Log.d(TAG, "onDestroyActionMode");
-        if (selectedView != null) {
-            selectedView.setBackgroundColor(Color.WHITE);
+        if (_selectedView != null) {
+            _selectedView.setBackgroundColor(Color.WHITE);
         }
     }
 }

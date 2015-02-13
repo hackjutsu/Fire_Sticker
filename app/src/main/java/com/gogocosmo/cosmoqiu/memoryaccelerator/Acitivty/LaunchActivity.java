@@ -2,12 +2,12 @@ package com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +19,16 @@ import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment.TabFragment;
+import com.gogocosmo.cosmoqiu.memoryaccelerator.Library.SlidingTabLayout;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Library.SlidingTabLayout;
 
 import java.util.ArrayList;
 
-public class LaunchActivity extends ActionBarActivity
-        implements TabFragment.OnListItemLongClickListener{
+public class LaunchActivity extends ActionBarActivity implements
+        TabFragment.OnListItemLongClickListener,
+        android.view.ActionMode.Callback,
+        SlidingTabLayout.OnPageScrollListener {
 
     // Load the inital data for testing purpose
     static {
@@ -84,6 +86,8 @@ public class LaunchActivity extends ActionBarActivity
 
     final private String TAG = "MEMORY-ACC";
 
+    private ImageButton _fireButton;
+
     // Declaring Tab Views and Variables
     private ViewPager _pager;
     private ViewPagerAdapter _viewPagerAdapter;
@@ -97,6 +101,11 @@ public class LaunchActivity extends ActionBarActivity
     private ActionBarDrawerToggle _drawerToggle;
     private DrawerLayout _drawerLayout;
     private String _activityTitle;
+
+    // Action Mode and Variables
+    private Menu _menu;
+    private android.view.ActionMode _actionMode;
+    private View _selectedView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,8 +148,8 @@ public class LaunchActivity extends ActionBarActivity
 
 
         /*********************************  Button Configurations  ********************************/
-        final ImageButton letsGoButton = (ImageButton) findViewById(R.id.FireButton);
-        letsGoButton.setOnClickListener(new View.OnClickListener() {
+        _fireButton = (ImageButton) findViewById(R.id.FireButton);
+        _fireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -206,8 +215,11 @@ public class LaunchActivity extends ActionBarActivity
             public void onDrawerOpened(View drawerView) {
 
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                if (_actionMode != null) {
+                    _actionMode.finish();
+                }
+                getSupportActionBar().setTitle("Navigation");
             }
 
             /** Called when a drawer has settled in a completely closed state. */
@@ -229,6 +241,16 @@ public class LaunchActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_launch, menu);
+        _menu = menu;
+
+        MenuItem itemAdd = _menu.findItem(R.id.action_add);
+        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
+        MenuItem itemBack = _menu.findItem(R.id.action_back);
+
+        itemAdd.setVisible(true);
+        itemBack.setVisible(false);
+        itemDelete.setVisible(false);
+
         return true;
     }
 
@@ -237,18 +259,34 @@ public class LaunchActivity extends ActionBarActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_add) {
-            Intent intent = new Intent(this, NewItemActivity.class);
-            startActivity(intent);
-            return true;
-        }
 
         // Activate the navigation drawer toggle
         if (_drawerToggle.onOptionsItemSelected(item)) {
+            if (_actionMode != null) {
+                _actionMode.finish();
+            }
             return true;
+        }
+
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                Toast.makeText(this,
+                        "DELETE",
+                        Toast.LENGTH_SHORT).show();
+                if (_actionMode != null) {
+                    _actionMode.finish();
+                }
+                return true;
+            case R.id.action_add:
+                Intent intent = new Intent(this, NewItemActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_back:
+                if (_actionMode != null) {
+                    _actionMode.finish();
+                }
+                return true;
+            default:
         }
 
         return super.onOptionsItemSelected(item);
@@ -271,8 +309,107 @@ public class LaunchActivity extends ActionBarActivity
     @Override
     public void OnListItemLongClicked(View view, int position) {
 
-        Toast.makeText(this,
-                ItemFactory.getItemList().get(position).getQuestion(),
-                Toast.LENGTH_SHORT).show();
+        if (_selectedView != null) {
+            _selectedView.setBackgroundColor(Color.WHITE);
+        }
+
+        _selectedView = view;
+        startActionMode(this);
+    }
+
+    @Override
+    public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
+
+        getSupportActionBar().setTitle("");
+
+        MenuItem itemAdd = _menu.findItem(R.id.action_add);
+        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
+        MenuItem itemBack = _menu.findItem(R.id.action_back);
+
+        itemAdd.setVisible(false);
+        itemBack.setVisible(true);
+        itemDelete.setVisible(true);
+
+        _fireButton.setVisibility(View.INVISIBLE);
+
+        if (_selectedView != null) {
+            _selectedView.setBackgroundColor(Color.rgb(227, 239, 209));
+        }
+
+        _actionMode = mode;
+
+        return false;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+
+                Toast.makeText(this,
+                        "DELETE",
+                        Toast.LENGTH_SHORT).show();
+                mode.finish();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void onDestroyActionMode(android.view.ActionMode mode) {
+
+        getSupportActionBar().setTitle(_activityTitle);
+
+        MenuItem itemAdd = _menu.findItem(R.id.action_add);
+        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
+        MenuItem itemBack = _menu.findItem(R.id.action_back);
+
+        itemAdd.setVisible(true);
+        itemBack.setVisible(false);
+        itemDelete.setVisible(false);
+
+
+//        _fireButton.animate().setDuration(1000).scaleX(1).scaleY(1)
+//                .withStartAction(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        _fireButton.setVisibility(View.VISIBLE);
+//                        _fireButton.setScaleX(1);
+//                        _fireButton.setScaleY(1);
+//
+//                    }});
+        _fireButton.setVisibility(View.VISIBLE);
+
+        if (_selectedView != null) {
+            _selectedView.setBackgroundColor(Color.WHITE);
+        }
+
+        _actionMode = null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        _slidingTabsLayout.registerPageScrollListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        _slidingTabsLayout.unregisterPageScrollListener(this);
+    }
+
+    @Override
+    public void OnPageScrolled() {
+        if (_actionMode != null) {
+            _actionMode.finish();
+        }
     }
 }
