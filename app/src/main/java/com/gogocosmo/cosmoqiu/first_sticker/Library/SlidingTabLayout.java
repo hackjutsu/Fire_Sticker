@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Library;
+package com.gogocosmo.cosmoqiu.first_sticker.Library;
 
         import android.content.Context;
         import android.graphics.Typeface;
@@ -31,7 +31,7 @@ package com.gogocosmo.cosmoqiu.memoryaccelerator.Library;
         import android.widget.LinearLayout;
         import android.widget.TextView;
 
-        import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
+        import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to

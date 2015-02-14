@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty;
+package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
 
 
 import android.os.Bundle;
@@ -12,14 +12,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.CardHolder;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment.CardFragment;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment.TopFragment;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.GesturesListener.OnMultiGesturesListener;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.CardColor;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.Item;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
+import com.gogocosmo.cosmoqiu.first_sticker.Adapter.CardHolder;
+import com.gogocosmo.cosmoqiu.first_sticker.Fragment.CardFragment;
+import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TopFragment;
+import com.gogocosmo.cosmoqiu.first_sticker.GesturesListener.OnMultiGesturesListener;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.CardColor;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.Item;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 import java.util.ArrayList;
 import java.util.Random;

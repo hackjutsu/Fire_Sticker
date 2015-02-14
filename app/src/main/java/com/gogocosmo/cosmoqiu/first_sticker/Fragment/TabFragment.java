@@ -1,9 +1,8 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment;
+package com.gogocosmo.cosmoqiu.first_sticker.Fragment;
 
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,10 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty.NewItemActivity;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.ItemArrayAdapter;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
+import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ItemArrayAdapter;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 
 public class TabFragment extends Fragment {

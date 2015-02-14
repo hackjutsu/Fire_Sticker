@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Library;
+package com.gogocosmo.cosmoqiu.first_sticker.Library;
 
 
         import android.R;

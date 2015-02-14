@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_margin="15dp"
     android:background="@android:drawable/dialog_holo_light_frame"
-    tools:context="com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment.CardFragment">
+    tools:context="com.gogocosmo.cosmoqiu.first_sticker.Fragment.CardFragment">
 
     <TextView
         android:id="@+id/card"

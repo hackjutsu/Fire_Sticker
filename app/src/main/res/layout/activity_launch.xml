@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.gogocosmo.cosmoqiu.memoryaccelerator.Library.SlidingTabLayout
+            <com.gogocosmo.cosmoqiu.first_sticker.Library.SlidingTabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/TAB_HEIGHT"

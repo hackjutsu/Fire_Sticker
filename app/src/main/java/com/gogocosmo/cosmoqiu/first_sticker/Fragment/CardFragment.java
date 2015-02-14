@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment;
+package com.gogocosmo.cosmoqiu.first_sticker.Fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
+import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 
 public class CardFragment extends Fragment {

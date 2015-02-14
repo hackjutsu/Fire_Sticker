@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty;
+package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.ItemArrayAdapter;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.Item;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
+import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ItemArrayAdapter;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.Item;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 public class ListViewActivity extends ActionBarActivity
         implements ActionMode.Callback {

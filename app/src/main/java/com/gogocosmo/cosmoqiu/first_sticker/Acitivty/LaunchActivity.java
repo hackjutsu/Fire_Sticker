@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty;
+package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -19,11 +19,11 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter.ViewPagerAdapter;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Fragment.TabFragment;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Library.SlidingTabLayout;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
+import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ViewPagerAdapter;
+import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TabFragment;
+import com.gogocosmo.cosmoqiu.first_sticker.Library.SlidingTabLayout;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 import java.util.ArrayList;
 

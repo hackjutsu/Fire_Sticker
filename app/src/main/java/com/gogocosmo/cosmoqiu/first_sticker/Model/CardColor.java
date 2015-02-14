@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Model;
+package com.gogocosmo.cosmoqiu.first_sticker.Model;
 
 import android.graphics.Color;
 

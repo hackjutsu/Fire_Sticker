@@ -1,6 +1,6 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Adapter;
+package com.gogocosmo.cosmoqiu.first_sticker.Adapter;
 
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.Item;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.Item;
 
 /**
  * Created by cosmoqiu on 2/8/15.

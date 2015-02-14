@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator;
+package com.gogocosmo.cosmoqiu.first_sticker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

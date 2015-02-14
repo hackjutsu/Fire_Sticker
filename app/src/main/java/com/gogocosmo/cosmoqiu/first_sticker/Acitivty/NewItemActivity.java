@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.memoryaccelerator.Acitivty;
+package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.gogocosmo.cosmoqiu.memoryaccelerator.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.memoryaccelerator.R;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 
 public class NewItemActivity extends Activity
