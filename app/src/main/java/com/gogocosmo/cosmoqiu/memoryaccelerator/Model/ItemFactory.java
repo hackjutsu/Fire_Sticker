@@ -7,17 +7,24 @@ import java.util.ArrayList;
  */
 public class ItemFactory {
 
-    private static ArrayList<Item> ItemList = new ArrayList<>();
+    private static ArrayList<Item> _itemList = new ArrayList<>();
+    private static int _selectedItemIndex = -1;
 
     public static Item createItem(String question, String answer) {
         Item newItem = new Item(question, answer);
-        ItemList.add(newItem);
+        _itemList.add(newItem);
         return newItem;
     }
 
     public static ArrayList<Item> getItemList() {
-        return ItemList;
+        return _itemList;
     }
 
+    public static void setSelectedItemIndex(int selectedItemIndex) {
+        _selectedItemIndex = selectedItemIndex;
+    }
 
+    public static int getSelectedItemIndex() {
+        return _selectedItemIndex;
+    }
 }

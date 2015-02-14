@@ -54,7 +54,7 @@
         android:id="@+id/navList"
         android:layout_width="@dimen/DRAWER_WIDTH"
         android:layout_height="match_parent"
-        android:layout_gravity="left|start"
+        android:layout_gravity="start"
         android:background="@color/DRAWERLIST_BACKGROUND" />
 
 

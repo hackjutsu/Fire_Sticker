@@ -8,7 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -105,7 +107,12 @@ public class LaunchActivity extends ActionBarActivity implements
     // Action Mode and Variables
     private Menu _menu;
     private android.view.ActionMode _actionMode;
-    private View _selectedView;
+
+    // The _selectedView keeps track of the reference of the current selected view. It has to be
+    // static since the ItemArrayAdapter will update the selected view reference during the list
+    // view item recycling. It would be simpler if the view cycling is disabled, but this approach
+    // will sacrifice memory performance.
+    static public View _selectedView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,6 +320,7 @@ public class LaunchActivity extends ActionBarActivity implements
             _selectedView.setBackgroundColor(Color.WHITE);
         }
 
+        ItemFactory.setSelectedItemIndex(position);
         _selectedView = view;
         startActionMode(this);
     }
@@ -320,6 +328,9 @@ public class LaunchActivity extends ActionBarActivity implements
     @Override
     public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
 
+        MenuInflater inflater = mode.getMenuInflater();
+        // assumes that you have "contexual.xml" menu resources
+        inflater.inflate(R.menu.menu_launch, menu);
         getSupportActionBar().setTitle("");
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
@@ -333,6 +344,7 @@ public class LaunchActivity extends ActionBarActivity implements
         _fireButton.setVisibility(View.INVISIBLE);
 
         if (_selectedView != null) {
+
             _selectedView.setBackgroundColor(Color.rgb(227, 239, 209));
         }
 
@@ -353,7 +365,7 @@ public class LaunchActivity extends ActionBarActivity implements
             case R.id.action_delete:
 
                 Toast.makeText(this,
-                        "DELETE",
+                        "on Action DELETE",
                         Toast.LENGTH_SHORT).show();
                 mode.finish();
                 return true;
@@ -364,6 +376,8 @@ public class LaunchActivity extends ActionBarActivity implements
 
     @Override
     public void onDestroyActionMode(android.view.ActionMode mode) {
+
+        Log.d(TAG, "onDestroyActionMode");
 
         getSupportActionBar().setTitle(_activityTitle);
 
@@ -388,7 +402,11 @@ public class LaunchActivity extends ActionBarActivity implements
         _fireButton.setVisibility(View.VISIBLE);
 
         if (_selectedView != null) {
+            Log.d(TAG, "restore background color");
+
             _selectedView.setBackgroundColor(Color.WHITE);
+            ItemFactory.setSelectedItemIndex(-1);
+            _selectedView = null;
         }
 
         _actionMode = null;
@@ -408,6 +426,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     @Override
     public void OnPageScrolled() {
+        // Called when clients scroll the page tab
         if (_actionMode != null) {
             _actionMode.finish();
         }

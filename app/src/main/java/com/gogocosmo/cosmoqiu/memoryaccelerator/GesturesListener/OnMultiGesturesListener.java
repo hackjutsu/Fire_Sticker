@@ -10,10 +10,10 @@ public abstract class OnMultiGesturesListener implements View.OnTouchListener {
 
     final private String TAG = "MEMORY-ACC";
 
-    private final GestureDetector gestureDetector;
+    private final GestureDetector _gestureDetector;
 
     public OnMultiGesturesListener(Context context) {
-        gestureDetector = new GestureDetector(context, new GestureListener());
+        _gestureDetector = new GestureDetector(context, new GestureListener());
     }
 
     abstract public void onSwipeLeft();
@@ -46,7 +46,7 @@ public abstract class OnMultiGesturesListener implements View.OnTouchListener {
                 break;
             default:
         }
-        return gestureDetector.onTouchEvent(event);
+        return _gestureDetector.onTouchEvent(event);
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {

@@ -23,6 +23,7 @@ public class TabFragment extends Fragment {
     private ListView _listView;
     private Context _context;
     private OnListItemLongClickListener _longClickListener;
+    private int _selectedItem = -1;
 
     public interface OnListItemLongClickListener {
 
@@ -76,5 +77,9 @@ public class TabFragment extends Fragment {
         });
 
         return v;
+    }
+
+    public void setSelectedItem(int selectedItem) {
+        this._selectedItem = selectedItem;
     }
 }
