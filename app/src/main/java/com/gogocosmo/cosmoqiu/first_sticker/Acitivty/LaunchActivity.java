@@ -23,6 +23,7 @@ import com.gogocosmo.cosmoqiu.first_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TabFragment;
 import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemGroup;
 import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
@@ -99,7 +100,6 @@ public class LaunchActivity extends ActionBarActivity implements
     private ViewPagerAdapter _viewPagerAdapter;
     private SlidingTabLayout _slidingTabsLayout;
     private ArrayList<String> _titles;
-    private int _tabsNum = 3;
 
     // Declaring Drawer Views and Variables
     private ActionBarDrawerToggle _drawerToggle;
@@ -131,26 +131,13 @@ public class LaunchActivity extends ActionBarActivity implements
         setSupportActionBar(_toolbar);
 
         /*********************************  Tabs Configurations  **********************************/
-        _titles = new ArrayList<>();
+        _titles = ItemGroup._itemGroupList;
         _titles.add("TAB 0");
         _titles.add("TAB 1");
         _titles.add("TAB 2");
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number
-        // Of Tabs.
-        _viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), _titles, _tabsNum);
-
-        // Assigning ViewPager View and setting the _viewPagerAdapter
         _pager = (ViewPager) findViewById(R.id.pager);
-        _pager.setAdapter(_viewPagerAdapter);
-
-        // Assigning the Sliding Tab Layout View
         _slidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
-        if (_tabsNum <= 3) {
-            // To make the Tabs Fixed set this true, This makes the _slidingTabsLayout Space Evenly
-            // in Available width
-            _slidingTabsLayout.setDistributeEvenly(true);
-        }
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
         _slidingTabsLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -160,8 +147,7 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         });
 
-        // Setting the ViewPager For the SlidingTabsLayout
-        _slidingTabsLayout.setViewPager(_pager);
+        updateSlidingTabs();
 
         /*********************************  Button Configurations  ********************************/
         _fireButton = (ImageButton) findViewById(R.id.FireButton);
@@ -193,13 +179,29 @@ public class LaunchActivity extends ActionBarActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
+    private void updateSlidingTabs() {
+
+        _viewPagerAdapter = new ViewPagerAdapter(
+                getSupportFragmentManager(),
+                ItemGroup._itemGroupList,
+                ItemGroup._itemGroupList.size());
+        _pager.setAdapter(_viewPagerAdapter);
+
+        if (ItemGroup._itemGroupList.size() <= 4) {
+            // To make the Tabs Fixed set this true, This makes the _slidingTabsLayout Space Evenly
+            // in Available width
+            _slidingTabsLayout.setDistributeEvenly(true);
+        } else {
+            _slidingTabsLayout.setDistributeEvenly(false);
+        }
+
+        _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
+    }
+
     private void updateDrawerItems() {
 
-        String[] osArray = _titles.toArray(new String[_titles.size()]);
+        String[] osArray = ItemGroup._itemGroupList.toArray(new String[ItemGroup._itemGroupList.size()]);
         _drawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, "", "", PROFILE, this);
-
-        // And passing the titles,icons,header view name, header view email,
-        // and header view profile picture
 
         // Setting the adapter to RecyclerView
         _drawerRecyclerView.setAdapter(_drawerViewAdapter);
@@ -459,17 +461,35 @@ public class LaunchActivity extends ActionBarActivity implements
                 break;
             case DrawerRecyclerViewAdapter.TYPE_END:
                 String newColumn = "TAB " + String.valueOf(position);
-                _viewPagerAdapter.addNewTab(newColumn);
-                _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
 
-                updateDrawerItems();
+//                _viewPagerAdapter.addNewTab(newColumn);
+//                _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
+//                updateDrawerItems();
 
-//                Intent intent = new Intent(this, NewItemActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(this, EditGroupActivity.class);
+                startActivityForResult(intent, 1989);
+
+//                _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
+                Log.d(TAG, "updateDrawerItems is called!!");
+//                updateDrawerItems();
+
                 break;
             default:
 
         }
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1989) {
+            if (resultCode == RESULT_OK) {
+                updateDrawerItems();
+                updateSlidingTabs();
+            }
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+    }//onActivityResult
 }
 

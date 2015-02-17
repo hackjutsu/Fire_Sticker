@@ -8,8 +8,9 @@
     <string name="title_activity_carousel">Post it!</string>
     <string name="title_activity_list">Top Lists</string>
     <string name="top_fragment_band">Sneak a peek ;-)</string>
-
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_edit_group">EditGroupActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

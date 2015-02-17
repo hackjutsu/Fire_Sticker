@@ -120,7 +120,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
         } else if (viewType == TYPE_HEADER) {
 
             View v = LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.header, parent, false);
+                    parent.getContext()).inflate(R.layout.drawer_recyclerview_header, parent, false);
 
             ViewHolder vhHeader = new ViewHolder(v, viewType, new ViewHolder.IViewHolderClickListener() {
                 @Override
@@ -134,7 +134,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
         } else if (viewType == TYPE_END) {
 
             View v = LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.drawer_recyclerview_rowlayout, parent, false);
+                    parent.getContext()).inflate(R.layout.drawer_recyclerview_end, parent, false);
 
             ViewHolder vhEnd = new ViewHolder(v, viewType, new ViewHolder.IViewHolderClickListener() {
                 @Override
@@ -165,13 +165,14 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             //holder._email.setText(_email);
         } else if (holder._viewType == TYPE_END) {
 
-            holder._textView.setText("NEW GROUP");
+            holder._textView.setText("Edit Group Lists");
             holder._position = position;
         }
     }
 
     @Override
     public int getItemCount() {
+        // Including the header and the end section
         return _navTitles.length + 2;
     }
 
