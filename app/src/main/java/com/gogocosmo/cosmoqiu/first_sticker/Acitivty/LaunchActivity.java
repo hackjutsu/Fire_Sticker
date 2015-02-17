@@ -22,9 +22,10 @@ import android.widget.Toast;
 import com.gogocosmo.cosmoqiu.first_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TabFragment;
-import com.gogocosmo.cosmoqiu.first_sticker.Library.SlidingTabLayout;
 import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.first_sticker.R;
+
+import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
 import java.util.ArrayList;
 
