@@ -14,11 +14,21 @@
         android:id="@+id/action_back"
         android:orderInCategory="100"
         android:title="  Back  "
+        android:icon="@drawable/back_action"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_blank"
+        android:orderInCategory="150"
+        android:icon="@drawable/slash_action"
+        android:enabled="false"
+        app:showAsAction="ifRoom"
+        android:title="Slash" />
 
     <item
         android:id="@+id/action_delete"
         android:orderInCategory="200"
         android:title="  Delete  "
+        android:icon="@drawable/delete_action"
         app:showAsAction="ifRoom" />
 </menu>

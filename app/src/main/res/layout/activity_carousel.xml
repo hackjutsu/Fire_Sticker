@@ -9,11 +9,11 @@
         android:background="@color/ACTIVITY_CAROUSEL_BACKGROUND"
         android:orientation="vertical">
 
-        <!--<include-->
-        <!--android:id="@+id/tool_bar"-->
-        <!--layout="@layout/tool_bar"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="match_parent" />-->
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
 
         <FrameLayout
             android:id="@+id/topFragmentContainer"

@@ -8,17 +8,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.gogocosmo.cosmoqiu.first_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TabFragment;
 import com.gogocosmo.cosmoqiu.first_sticker.Library.SlidingTabLayout;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 
 public class LaunchActivity extends ActionBarActivity implements
         TabFragment.OnListItemLongClickListener,
+        DrawerRecyclerViewAdapter.IDrawerListItemClickListener,
         android.view.ActionMode.Callback,
         SlidingTabLayout.OnPageScrollListener {
 
@@ -89,6 +91,7 @@ public class LaunchActivity extends ActionBarActivity implements
     final private String TAG = "MEMORY-ACC";
 
     private ImageButton _fireButton;
+    private Toolbar _toolbar;
 
     // Declaring Tab Views and Variables
     private ViewPager _pager;
@@ -98,9 +101,10 @@ public class LaunchActivity extends ActionBarActivity implements
     private int _tabsNum = 3;
 
     // Declaring Drawer Views and Variables
-    private ListView _drawerList;
-    private ArrayAdapter<String> _drawerListAdapter;
     private ActionBarDrawerToggle _drawerToggle;
+    private RecyclerView _drawerRecyclerView;
+    private RecyclerView.Adapter _drawerViewAdapter;
+    private RecyclerView.LayoutManager _drawerRecyclerViewLayoutManager;
     private DrawerLayout _drawerLayout;
     private String _activityTitle;
 
@@ -114,17 +118,22 @@ public class LaunchActivity extends ActionBarActivity implements
     // will sacrifice memory performance.
     static public View _selectedView = null;
 
+    int PROFILE = R.drawable.lollipop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
+        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(_toolbar);
+
         /*********************************  Tabs Configurations  **********************************/
         _titles = new ArrayList<>();
-        _titles.add("AAA");
-        _titles.add("BBB");
-        _titles.add("CCC");
+        _titles.add("TAB 0");
+        _titles.add("TAB 1");
+        _titles.add("TAB 2");
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number
         // Of Tabs.
@@ -153,7 +162,6 @@ public class LaunchActivity extends ActionBarActivity implements
         // Setting the ViewPager For the SlidingTabsLayout
         _slidingTabsLayout.setViewPager(_pager);
 
-
         /*********************************  Button Configurations  ********************************/
         _fireButton = (ImageButton) findViewById(R.id.FireButton);
         _fireButton.setOnClickListener(new View.OnClickListener() {
@@ -166,97 +174,85 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         });
 
-
         /*********************************  Drawer Configurations  *********************************/
-        _drawerList = (ListView) findViewById(R.id.navList);
-        _drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position == _titles.size()) {
-                    // ADD A NEW COLUMN
-                    String newColumn = "TAB " + String.valueOf(position);
-                    _viewPagerAdapter.addNewTab(newColumn);
-                    _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
+        _drawerRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
+        _drawerRecyclerView.setHasFixedSize(true);
 
-                    updateDrawerItems(); // Update Drawer list
+        _drawerRecyclerViewLayoutManager = new LinearLayoutManager(this);
+        _drawerRecyclerView.setLayoutManager(_drawerRecyclerViewLayoutManager);
 
-                    if (_tabsNum <= 5) {
-                        _slidingTabsLayout.setDistributeEvenly(true);
-                    } else {
-                        _slidingTabsLayout.setDistributeEvenly(false);
-                    }
-                }
-
-                _slidingTabsLayout.setCurrentTab(position); // Set the new Tab as the current Tab
-                _drawerLayout.closeDrawers();
-            }
-        });
-
-        _drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         _activityTitle = getTitle().toString();
+        _drawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
 
         updateDrawerItems();
         setupDrawer();
 
-        //TODO: Understand these settings
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void updateDrawerItems() {
 
-        ArrayList<String> drawerArray = new ArrayList<>(_titles);
-        drawerArray.add("NEW COLUMN");
-        String[] osArray = drawerArray.toArray(new String[drawerArray.size()]);
-        _drawerListAdapter = new ArrayAdapter<>(this, R.layout.drawer_list_rowlayout, osArray);
-        _drawerList.setAdapter(_drawerListAdapter);
+        String[] osArray = _titles.toArray(new String[_titles.size()]);
+        _drawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, "", "", PROFILE, this);
+
+        // And passing the titles,icons,header view name, header view email,
+        // and header view profile picture
+
+        // Setting the adapter to RecyclerView
+        _drawerRecyclerView.setAdapter(_drawerViewAdapter);
     }
 
     private void setupDrawer() {
 
-        _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout,
+        _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout, _toolbar,
                 R.string.drawer_open, R.string.drawer_close) {
 
-            /** Called when a drawer has settled in a completely open state. */
+            @Override
             public void onDrawerOpened(View drawerView) {
-
                 super.onDrawerOpened(drawerView);
+                // code here will execute once the drawer is opened
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
                 if (_actionMode != null) {
                     _actionMode.finish();
                 }
-                getSupportActionBar().setTitle("Navigation");
             }
 
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-
-                super.onDrawerClosed(view);
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                // Code here will execute once drawer is closed
                 getSupportActionBar().setTitle(_activityTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-        };
 
-        //TODO: Understand these settings
+
+        }; // Drawer Toggle Object Made
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         _drawerToggle.setDrawerIndicatorEnabled(true);
-        _drawerLayout.setDrawerListener(_drawerToggle);
+        _drawerLayout.setDrawerListener(_drawerToggle); // Drawer Listener set to the Drawer toggle
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+//        Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_launch, menu);
         _menu = menu;
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
         MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(true);
         itemBack.setVisible(false);
         itemDelete.setVisible(false);
+        itemSlash.setVisible(false);
 
         return true;
     }
@@ -267,7 +263,7 @@ public class LaunchActivity extends ActionBarActivity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        // Activate the navigation drawer toggle
+//        Activate the navigation drawer toggle
         if (_drawerToggle.onOptionsItemSelected(item)) {
             if (_actionMode != null) {
                 _actionMode.finish();
@@ -329,54 +325,47 @@ public class LaunchActivity extends ActionBarActivity implements
     public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
 
         MenuInflater inflater = mode.getMenuInflater();
-        // assumes that you have "contexual.xml" menu resources
         inflater.inflate(R.menu.menu_launch, menu);
         getSupportActionBar().setTitle("");
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
         MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(false);
         itemBack.setVisible(true);
         itemDelete.setVisible(true);
+        itemSlash.setVisible(true);
 
         _fireButton.setVisibility(View.INVISIBLE);
 
         if (_selectedView != null) {
 
-            _selectedView.setBackgroundColor(Color.rgb(227, 239, 209));
+            _selectedView.setBackgroundColor(Color.parseColor("#E57373"));
         }
 
         _actionMode = mode;
 
+        // Return false since we are using a fake Action Mode with a toolbar
         return false;
     }
 
     @Override
     public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
+        // We are using a fake Action Mode with a toolbar
         return false;
     }
 
     @Override
     public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-
-                Toast.makeText(this,
-                        "on Action DELETE",
-                        Toast.LENGTH_SHORT).show();
-                mode.finish();
-                return true;
-            default:
-                return false;
-        }
+        // We are using a fake Action Mode with a toolbar
+        return false;
     }
 
     @Override
     public void onDestroyActionMode(android.view.ActionMode mode) {
-
+        // We are using a fake Action Mode with a toolbar
         Log.d(TAG, "onDestroyActionMode");
 
         getSupportActionBar().setTitle(_activityTitle);
@@ -384,10 +373,13 @@ public class LaunchActivity extends ActionBarActivity implements
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
         MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+
 
         itemAdd.setVisible(true);
         itemBack.setVisible(false);
         itemDelete.setVisible(false);
+        itemSlash.setVisible(false);
 
 
 //        _fireButton.animate().setDuration(1000).scaleX(1).scaleY(1)
@@ -422,6 +414,12 @@ public class LaunchActivity extends ActionBarActivity implements
     protected void onPause() {
         super.onPause();
         _slidingTabsLayout.unregisterPageScrollListener(this);
+
+        // End the Action Mode when this Activity is no longer visible
+        if (_actionMode != null) {
+            _actionMode.finish();
+            _actionMode = null;
+        }
     }
 
     @Override
@@ -431,4 +429,46 @@ public class LaunchActivity extends ActionBarActivity implements
             _actionMode.finish();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+        if (_actionMode != null) {
+            // If the Action Mode is on, then pressing BACK should exit the Action Mode, instead of
+            // exit the App.
+            _actionMode.finish();
+            _actionMode = null;
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onDrawerItemClicked(View v, int position, int viewType) {
+
+        switch (viewType) {
+            case DrawerRecyclerViewAdapter.TYPE_ITEM:
+                // Set the new Tab as the current Tab
+                _slidingTabsLayout.setCurrentTab(position);
+                _drawerLayout.closeDrawers();
+                break;
+            case DrawerRecyclerViewAdapter.TYPE_HEADER:
+
+                break;
+            case DrawerRecyclerViewAdapter.TYPE_END:
+                String newColumn = "TAB " + String.valueOf(position);
+                _viewPagerAdapter.addNewTab(newColumn);
+                _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
+
+                updateDrawerItems();
+
+//                Intent intent = new Intent(this, NewItemActivity.class);
+//                startActivity(intent);
+                break;
+            default:
+
+        }
+    }
 }
+

@@ -49,7 +49,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         }
 
         if (position == ItemFactory.getSelectedItemIndex()) {
-            rowView.setBackgroundColor(Color.rgb(227, 239, 209));
+            rowView.setBackgroundColor(Color.parseColor("#E57373"));
             LaunchActivity._selectedView = rowView;
         } else {
             rowView.setBackgroundColor(Color.WHITE);

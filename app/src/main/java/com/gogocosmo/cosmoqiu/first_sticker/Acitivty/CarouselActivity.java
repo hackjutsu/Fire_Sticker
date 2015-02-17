@@ -40,16 +40,10 @@ public class CarouselActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carousel);
 
-//        Button nextCardButton = (Button) findViewById(R.id.nextCardButton);
-//        nextCardButton.setOnClickListener(this);
-//
-//        Button previousCardButton = (Button) findViewById(R.id.previousCardButton);
-//        previousCardButton.setOnClickListener(this);
-
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
-//        _toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        //     setSupportActionBar(_toolbar);
+        _toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(_toolbar);
 
         _topFragment = new TopFragment();
         getSupportFragmentManager()
