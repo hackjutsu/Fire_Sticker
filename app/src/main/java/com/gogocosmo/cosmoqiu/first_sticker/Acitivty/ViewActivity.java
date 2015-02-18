@@ -33,6 +33,8 @@ public class ViewActivity extends ActionBarActivity {
     private String _originAnswer;
     private Item _item;
 
+    private boolean _onEditMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,8 @@ public class ViewActivity extends ActionBarActivity {
 
         _questionEditText.setText(_item.getQuestion());
         _answerEditText.setText(_item.getAnswer());
+
+        _onEditMode = false;
     }
 
 
@@ -103,21 +107,23 @@ public class ViewActivity extends ActionBarActivity {
         switch (id) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-
+                _onEditMode = false;
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
 
             case R.id.action_edit_view:
-
+                _onEditMode = true;
                 startEdits();
                 return true;
-            case R.id.action_confirm_view:
 
+            case R.id.action_confirm_view:
+                _onEditMode = false;
                 confirmEdits();
                 return true;
-            case R.id.action_discard_view:
 
+            case R.id.action_discard_view:
+                _onEditMode = false;
                 discardEdits();
                 return true;
         }
@@ -176,7 +182,10 @@ public class ViewActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        discardEdits();
+
+        if (_onEditMode == true) {
+            discardEdits();
+        }
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
