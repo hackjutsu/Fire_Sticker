@@ -131,6 +131,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
+        _toolbar.setTitleTextColor(Color.WHITE);
 
         /*********************************  Tabs Configurations  **********************************/
         _titles = ItemGroup._itemGroupList;
