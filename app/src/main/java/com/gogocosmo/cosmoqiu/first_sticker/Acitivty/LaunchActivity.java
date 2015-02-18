@@ -31,7 +31,7 @@ import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 import java.util.ArrayList;
 
 public class LaunchActivity extends ActionBarActivity implements
-        TabFragment.OnListItemLongClickListener,
+        TabFragment.OnTabListItemClickListener,
         DrawerRecyclerViewAdapter.IDrawerListItemClickListener,
         android.view.ActionMode.Callback,
         SlidingTabLayout.OnPageScrollListener {
@@ -91,6 +91,8 @@ public class LaunchActivity extends ActionBarActivity implements
     }
 
     final private String TAG = "MEMORY-ACC";
+
+    final private int EDIT_GROUP_REQ = 1;
 
     private ImageButton _fireButton;
     private Toolbar _toolbar;
@@ -286,6 +288,7 @@ public class LaunchActivity extends ActionBarActivity implements
             case R.id.action_add:
                 Intent intent = new Intent(this, NewItemActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.action_back:
                 if (_actionMode != null) {
@@ -322,6 +325,15 @@ public class LaunchActivity extends ActionBarActivity implements
         ItemFactory.setSelectedItemIndex(position);
         _selectedView = view;
         startActionMode(this);
+    }
+
+    @Override
+    public void OnListItemClicked(View view, int position) {
+
+        Intent intent = new Intent(this, ViewActivity.class);
+        intent.putExtra("POSITION", position);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -467,7 +479,8 @@ public class LaunchActivity extends ActionBarActivity implements
 //                updateDrawerItems();
 
                 Intent intent = new Intent(this, EditGroupActivity.class);
-                startActivityForResult(intent, 1989);
+                startActivityForResult(intent, EDIT_GROUP_REQ);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
 //                _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
                 Log.d(TAG, "updateDrawerItems is called!!");
@@ -481,7 +494,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 1989) {
+        if (requestCode == EDIT_GROUP_REQ) {
             if (resultCode == RESULT_OK) {
                 updateDrawerItems();
                 updateSlidingTabs();

@@ -20,12 +20,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <Button
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SUBMIT"
-            android:background="@color/ColorPrimary"
-            android:id="@+id/submit_change"/>
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:text="Add"
+                android:id="@+id/AddGroup"
+                android:background="@color/ColorPrimary"
+                android:layout_weight="0.5" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:text="Submit"
+                android:id="@+id/SubmitGroupChanges"
+                android:background="@color/ColorPrimary"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

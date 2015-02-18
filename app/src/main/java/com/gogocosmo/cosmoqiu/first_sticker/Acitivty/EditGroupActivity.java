@@ -21,7 +21,9 @@ public class EditGroupActivity extends ActionBarActivity {
     final private String TAG = "MEMORY-ACC";
 
     private Toolbar _toolbar;
+    private Button _addButton;
     private Button _submitButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +32,34 @@ public class EditGroupActivity extends ActionBarActivity {
 
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        _submitButton = (Button) findViewById(R.id.submit_change);
+        final ListView listview = (ListView) findViewById(R.id.listview);
+
+        final ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, ItemGroup._itemGroupList);
+        listview.setAdapter(adapter);
+
+        _addButton = (Button) findViewById(R.id.AddGroup);
+        _addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ItemGroup._itemGroupList.add("TAB " + String.valueOf(ItemGroup._itemGroupList.size()));
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        _submitButton = (Button) findViewById(R.id.SubmitGroupChanges);
         _submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent returnIntent = new Intent();
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }
         });
-
-        final ListView listview = (ListView) findViewById(R.id.listview);
-
-        ItemGroup._itemGroupList.add("TAB " + String.valueOf(ItemGroup._itemGroupList.size()));
-
-        final ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, ItemGroup._itemGroupList);
-        listview.setAdapter(adapter);
     }
 
 
@@ -65,12 +77,15 @@ public class EditGroupActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
+
     }
 
 }

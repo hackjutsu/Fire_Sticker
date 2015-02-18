@@ -1,11 +1,11 @@
 package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -13,10 +13,12 @@ import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.first_sticker.R;
 
 
-public class NewItemActivity extends Activity
+public class NewItemActivity extends ActionBarActivity
         implements View.OnClickListener {
 
     final private String TAG = "MEMORY-ACC";
+
+    private Toolbar _toolbar;
 
     private Button _cancelButton = null;
     private Button _newItemButton = null;
@@ -28,7 +30,8 @@ public class NewItemActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(_toolbar);
 
         _cancelButton = (Button) findViewById(R.id.CancelItem);
         _newItemButton = (Button) findViewById(R.id.AddItem);

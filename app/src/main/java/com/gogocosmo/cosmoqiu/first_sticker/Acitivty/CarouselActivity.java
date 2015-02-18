@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -44,6 +45,7 @@ public class CarouselActivity extends ActionBarActivity {
 
         _toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         _topFragment = new TopFragment();
         getSupportFragmentManager()
@@ -258,5 +260,21 @@ public class CarouselActivity extends ActionBarActivity {
     private void finishCarousel() {
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finishCarousel();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

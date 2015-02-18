@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.gogocosmo.cosmoqiu.first_sticker.Acitivty.ViewActivity">
+    <item
+        android:id="@+id/action_edit_view"
+        android:orderInCategory="300"
+        android:title="Edit"
+        android:icon="@drawable/editview_action"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_confirm_view"
+        android:orderInCategory="200"
+        android:title="  Confirm  "
+        android:icon="@drawable/confirm_action"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_blank_view"
+        android:orderInCategory="150"
+        android:icon="@drawable/slash_action"
+        android:enabled="false"
+        app:showAsAction="ifRoom"
+        android:title="Slash" />
+
+    <item
+        android:id="@+id/action_discard_view"
+        android:orderInCategory="100"
+        android:icon="@drawable/delete_action"
+        app:showAsAction="ifRoom"
+        android:title="Discard" />
+</menu>

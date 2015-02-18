@@ -20,12 +20,13 @@ public class TabFragment extends Fragment {
 
     private ListView _listView;
     private Context _context;
-    private OnListItemLongClickListener _longClickListener;
-    private int _selectedItem = -1;
+    private OnTabListItemClickListener _tabListItemClickListener;
 
-    public interface OnListItemLongClickListener {
+    public interface OnTabListItemClickListener {
 
         void OnListItemLongClicked(View view, int position);
+
+        void OnListItemClicked(View view, int position);
     };
 
     public TabFragment() {
@@ -36,8 +37,8 @@ public class TabFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         _context = activity;
-        if (activity instanceof OnListItemLongClickListener) {
-            _longClickListener = (OnListItemLongClickListener) activity;
+        if (activity instanceof OnTabListItemClickListener) {
+            _tabListItemClickListener = (OnTabListItemClickListener) activity;
         } else {
             throw new RuntimeException(
                     "Host Activity should implement " +
@@ -56,28 +57,23 @@ public class TabFragment extends Fragment {
                 ItemFactory.getItemList());
         _listView.setAdapter(itemArrayAdapter);
 
-//        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(_context, NewItemActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _longClickListener.OnListItemLongClicked(view, position);
+                _tabListItemClickListener.OnListItemLongClicked(view, position);
                 return true;
             }
         });
 
-        return v;
-    }
+        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    public void setSelectedItem(int selectedItem) {
-        this._selectedItem = selectedItem;
+                _tabListItemClickListener.OnListItemClicked(view, position);
+            }
+        });
+
+        return v;
     }
 }

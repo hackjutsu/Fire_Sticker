@@ -12,5 +12,6 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_edit_group">EditGroupActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_view">View Mode</string>
 
 </resources>
