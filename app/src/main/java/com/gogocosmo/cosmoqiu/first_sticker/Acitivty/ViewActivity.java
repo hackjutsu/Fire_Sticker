@@ -1,5 +1,6 @@
 package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.gogocosmo.cosmoqiu.first_sticker.Model.CardColor;
@@ -162,6 +164,12 @@ public class ViewActivity extends ActionBarActivity {
         _item.setAnswer(_originAnswer);
         _questionEditText.setText(_originQuestion);
         _answerEditText.setText(_originAnswer);
+
+        // hide the soft keyboard
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
     }
 
     private void confirmEdits() {
@@ -178,6 +186,12 @@ public class ViewActivity extends ActionBarActivity {
 
         _item.setQuestion(_questionEditText.getText().toString());
         _item.setAnswer(_answerEditText.getText().toString());
+
+        // hide the soft keyboard
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
     }
 
     @Override
