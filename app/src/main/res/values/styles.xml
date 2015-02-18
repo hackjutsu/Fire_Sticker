@@ -5,7 +5,7 @@
 
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
-
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
                 
         <!--<item name="android:windowTranslucentStatus">true</item>-->
 
@@ -24,6 +24,11 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/PURE_WHITE</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/PURE_WHITE</item>
     </style>
 
 </resources>

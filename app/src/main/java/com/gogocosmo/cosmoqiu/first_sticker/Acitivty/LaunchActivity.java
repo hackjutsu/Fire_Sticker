@@ -177,9 +177,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
         updateDrawerItems();
         setupDrawer();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void updateSlidingTabs() {
@@ -218,6 +215,7 @@ public class LaunchActivity extends ActionBarActivity implements
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                super.onDrawerSlide(drawerView, 0); // Disable hamburger/arrow animation
                 // code here will execute once the drawer is opened
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
                 if (_actionMode != null) {
@@ -233,7 +231,10 @@ public class LaunchActivity extends ActionBarActivity implements
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
-
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, 0); // Disable hamburger/arrow animation
+            }
         }; // Drawer Toggle Object Made
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -418,6 +419,7 @@ public class LaunchActivity extends ActionBarActivity implements
         }
 
         _actionMode = null;
+
     }
 
     @Override
