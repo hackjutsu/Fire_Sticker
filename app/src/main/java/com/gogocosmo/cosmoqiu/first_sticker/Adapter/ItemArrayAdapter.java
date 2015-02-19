@@ -1,7 +1,6 @@
 package com.gogocosmo.cosmoqiu.first_sticker.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,8 @@ import java.util.ArrayList;
 public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private final Context _context;
     private final ArrayList<Item> _values;
+    final private String TAG = "MEMORY-ACC";
+
 
     public class ViewHolder {
         public TextView _question;
@@ -49,10 +50,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         }
 
         if (position == ItemFactory.getSelectedItemIndex()) {
-            rowView.setBackgroundColor(Color.parseColor("#E57373"));
             LaunchActivity._selectedView = rowView;
-        } else {
-            rowView.setBackgroundColor(Color.WHITE);
         }
 
         viewHolder._question.setText(_values.get(position).getQuestion());

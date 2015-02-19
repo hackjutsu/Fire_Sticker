@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.first_sticker.Adapter.DrawerRecyclerViewAdapter;
@@ -25,7 +26,6 @@ import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TabFragment;
 import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemGroup;
 import com.gogocosmo.cosmoqiu.first_sticker.R;
-
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -114,6 +114,7 @@ public class LaunchActivity extends ActionBarActivity implements
     // Action Mode and Variables
     private Menu _menu;
     private android.view.ActionMode _actionMode;
+    private ListView _activatedItemListView;
 
     // The _selectedView keeps track of the reference of the current selected view. It has to be
     // static since the ItemArrayAdapter will update the selected view reference during the list
@@ -318,19 +319,25 @@ public class LaunchActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void OnListItemLongClicked(View view, int position) {
+    public void OnListItemLongClicked(ListView listView, View view, int position) {
 
-        if (_selectedView != null) {
-            _selectedView.setBackgroundColor(Color.WHITE);
-        }
+        listView.setItemChecked(position, true);
 
         ItemFactory.setSelectedItemIndex(position);
         _selectedView = view;
+        _activatedItemListView = listView;
+
         startActionMode(this);
     }
 
     @Override
-    public void OnListItemClicked(View view, int position) {
+    public void OnListItemClicked(ListView listView, View view, int position) {
+
+        if (_actionMode != null) {
+            _selectedView = view;
+            ItemFactory.setSelectedItemIndex(position);
+            return;
+        }
 
         Intent intent = new Intent(this, ViewActivity.class);
         intent.putExtra("POSITION", position);
@@ -356,12 +363,6 @@ public class LaunchActivity extends ActionBarActivity implements
         itemSlash.setVisible(true);
 
         _fireButton.setVisibility(View.INVISIBLE);
-
-        if (_selectedView != null) {
-
-            _selectedView.setBackgroundColor(Color.parseColor("#E57373"));
-        }
-
         _actionMode = mode;
 
         // Return false since we are using a fake Action Mode with a toolbar
@@ -399,27 +400,12 @@ public class LaunchActivity extends ActionBarActivity implements
         itemSlash.setVisible(false);
 
 
-//        _fireButton.animate().setDuration(1000).scaleX(1).scaleY(1)
-//                .withStartAction(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        _fireButton.setVisibility(View.VISIBLE);
-//                        _fireButton.setScaleX(1);
-//                        _fireButton.setScaleY(1);
-//
-//                    }});
         _fireButton.setVisibility(View.VISIBLE);
-
-        if (_selectedView != null) {
-            Log.d(TAG, "restore background color");
-
-            _selectedView.setBackgroundColor(Color.WHITE);
-            ItemFactory.setSelectedItemIndex(-1);
-            _selectedView = null;
-        }
-
         _actionMode = null;
 
+        if (_activatedItemListView != null) {
+            _activatedItemListView.setItemChecked(ItemFactory.getSelectedItemIndex(), false);
+        }
     }
 
     @Override
@@ -475,19 +461,10 @@ public class LaunchActivity extends ActionBarActivity implements
 
                 break;
             case DrawerRecyclerViewAdapter.TYPE_END:
-                String newColumn = "TAB " + String.valueOf(position);
-
-//                _viewPagerAdapter.addNewTab(newColumn);
-//                _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
-//                updateDrawerItems();
 
                 Intent intent = new Intent(this, EditGroupActivity.class);
                 startActivityForResult(intent, EDIT_GROUP_REQ);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-//                _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
-                Log.d(TAG, "updateDrawerItems is called!!");
-//                updateDrawerItems();
 
                 break;
             default:

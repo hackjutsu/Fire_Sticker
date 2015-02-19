@@ -22,6 +22,7 @@
     <color name="ITEMLIST_SIDE_BAR">@color/FANQIEHONG</color>
     <color name="ITEMLIST_BACKGROUND">@color/PURE_WHITE</color>
     <color name="ITEMLIST_ROW_TEXT">@color/PURE_BLACK</color>
+    <color name="ITEMLIST_ROW_SELECTED">#E57373</color>
 
     <!-- Drawer -->
     <color name="DRAWERLIST_BACKGROUND">@color/RED</color>

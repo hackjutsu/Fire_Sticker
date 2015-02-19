@@ -24,10 +24,12 @@ public class TabFragment extends Fragment {
 
     public interface OnTabListItemClickListener {
 
-        void OnListItemLongClicked(View view, int position);
+        void OnListItemLongClicked(ListView listView, View view, int position);
 
-        void OnListItemClicked(View view, int position);
-    };
+        void OnListItemClicked(ListView listView, View view, int position);
+    }
+
+    ;
 
     public TabFragment() {
         // Required empty public constructor
@@ -61,7 +63,7 @@ public class TabFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemLongClicked(view, position);
+                _tabListItemClickListener.OnListItemLongClicked(_listView, view, position);
                 return true;
             }
         });
@@ -70,10 +72,9 @@ public class TabFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemClicked(view, position);
+                _tabListItemClickListener.OnListItemClicked(_listView, view, position);
             }
         });
-
         return v;
     }
 }

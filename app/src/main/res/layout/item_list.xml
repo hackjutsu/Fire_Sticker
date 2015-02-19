@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:background="@color/ITEMLIST_BACKGROUND"
+            android:choiceMode="singleChoice"
             android:fadingEdgeLength="30dp"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none" />
