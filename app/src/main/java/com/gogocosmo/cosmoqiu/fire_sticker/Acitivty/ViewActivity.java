@@ -27,10 +27,10 @@ public class ViewActivity extends ActionBarActivity {
     private EditText _questionEditText;
     private EditText _answerEditText;
     private Menu _menu;
-    private  MenuItem _itemEdit;
-    private  MenuItem _itemConfirm;
-    private  MenuItem _itemBlank;
-    private  MenuItem _itemDelete;
+    private MenuItem _itemEdit;
+    private MenuItem _itemConfirm;
+    private MenuItem _itemBlank;
+    private MenuItem _itemDelete;
 
     private String _originQuestion;
     private String _originAnswer;
@@ -52,23 +52,20 @@ public class ViewActivity extends ActionBarActivity {
         int position = getIntent().getExtras().getInt("POSITION");
         _item = ItemFactory.getItemList().get(position);
 
+        // Get the width of the Windows and set it as the minHeight of the card
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int cardMinHeight = displaymetrics.widthPixels - 100;
-
+        int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
 
         _questionEditText = (EditText) findViewById(R.id.question_display);
         _questionEditText.setBackgroundColor(randomColor());
         _questionEditText.setFocusable(false);
         _questionEditText.setMinHeight(cardMinHeight);
 
-
         _answerEditText = (EditText) findViewById(R.id.answer_display);
         _answerEditText.setBackgroundColor(randomColor());
         _answerEditText.setFocusable(false);
         _answerEditText.setMinHeight(cardMinHeight);
-
-
 
         _questionEditText.setText(_item.getQuestion());
         _answerEditText.setText(_item.getAnswer());
@@ -173,7 +170,7 @@ public class ViewActivity extends ActionBarActivity {
         _answerEditText.setText(_originAnswer);
 
         // hide the soft keyboard
-        InputMethodManager imm = (InputMethodManager)getSystemService(
+        InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
@@ -192,7 +189,7 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitleTextColor(Color.WHITE);
 
         // hide the soft keyboard
-        InputMethodManager imm = (InputMethodManager)getSystemService(
+        InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
