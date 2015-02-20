@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -139,6 +140,7 @@ public class LaunchActivity extends ActionBarActivity implements
         _titles.add("TAB 0");
         _titles.add("TAB 1");
         _titles.add("TAB 2");
+        _titles.add("TAB 3");
 
         _pager = (ViewPager) findViewById(R.id.pager);
         _slidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -158,6 +160,9 @@ public class LaunchActivity extends ActionBarActivity implements
         _fireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+                v.startAnimation(buttonClick);
 
                 Intent intent = new Intent(LaunchActivity.this, CarouselActivity.class);
                 startActivity(intent);
@@ -468,7 +473,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
                 break;
             default:
-
         }
     }
 

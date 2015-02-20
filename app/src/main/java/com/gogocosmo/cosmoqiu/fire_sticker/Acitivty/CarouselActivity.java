@@ -1,6 +1,7 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -46,6 +48,7 @@ public class CarouselActivity extends ActionBarActivity {
         _toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        _toolbar.setTitleTextColor(Color.WHITE);
 
         _topFragment = new TopFragment();
         getSupportFragmentManager()
@@ -94,14 +97,14 @@ public class CarouselActivity extends ActionBarActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+                v.startAnimation(buttonClick);
+
                 finishCarousel();
             }
         });
-
-
         nextCard();
-
-
     }
 
     void swipeUpEvent() {
