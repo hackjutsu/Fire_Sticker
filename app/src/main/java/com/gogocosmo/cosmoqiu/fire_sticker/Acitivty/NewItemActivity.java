@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
+package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.first_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 
 public class NewItemActivity extends ActionBarActivity

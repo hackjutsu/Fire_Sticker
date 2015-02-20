@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Adapter;
+package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Acitivty.LaunchActivity;
-import com.gogocosmo.cosmoqiu.first_sticker.Model.Item;
-import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.first_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.ArrayList;
 

@@ -1,20 +1,21 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
+package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Model.CardColor;
-import com.gogocosmo.cosmoqiu.first_sticker.Model.Item;
-import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.first_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.Random;
 
@@ -48,18 +49,25 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-
         int position = getIntent().getExtras().getInt("POSITION");
         _item = ItemFactory.getItemList().get(position);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int cardMinHeight = displaymetrics.widthPixels - 100;
+
 
         _questionEditText = (EditText) findViewById(R.id.question_display);
         _questionEditText.setBackgroundColor(randomColor());
         _questionEditText.setFocusable(false);
+        _questionEditText.setMinHeight(cardMinHeight);
 
 
         _answerEditText = (EditText) findViewById(R.id.answer_display);
         _answerEditText.setBackgroundColor(randomColor());
         _answerEditText.setFocusable(false);
+        _answerEditText.setMinHeight(cardMinHeight);
+
 
 
         _questionEditText.setText(_item.getQuestion());
@@ -67,7 +75,6 @@ public class ViewActivity extends ActionBarActivity {
 
         _onEditMode = false;
     }
-
 
     private int randomColor() {
 
@@ -184,14 +191,14 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        _item.setQuestion(_questionEditText.getText().toString());
-        _item.setAnswer(_answerEditText.getText().toString());
-
         // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager)getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
+
+        _item.setQuestion(_questionEditText.getText().toString());
+        _item.setAnswer(_answerEditText.getText().toString());
     }
 
     @Override

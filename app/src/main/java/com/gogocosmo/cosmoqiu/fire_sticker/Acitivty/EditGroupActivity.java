@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
+package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -11,10 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemGroup;
-import com.gogocosmo.cosmoqiu.first_sticker.R;
-
-import java.util.ArrayList;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemGroup;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 public class EditGroupActivity extends ActionBarActivity {
 

@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.GesturesListener;
+package com.gogocosmo.cosmoqiu.fire_sticker.GesturesListener;
 
 import android.content.Context;
 import android.util.Log;

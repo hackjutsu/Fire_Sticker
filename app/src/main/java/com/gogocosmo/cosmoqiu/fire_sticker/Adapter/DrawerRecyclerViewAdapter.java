@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Adapter;
+package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gogocosmo.cosmoqiu.first_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 
 public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecyclerViewAdapter.ViewHolder> {

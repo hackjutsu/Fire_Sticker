@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Acitivty;
+package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -20,12 +20,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Adapter.DrawerRecyclerViewAdapter;
-import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ViewPagerAdapter;
-import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TabFragment;
-import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemGroup;
-import com.gogocosmo.cosmoqiu.first_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
+import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
+import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemGroup;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
 import java.util.ArrayList;

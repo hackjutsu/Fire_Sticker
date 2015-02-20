@@ -1,6 +1,6 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Adapter;
+package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Model.Item;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 
 /**
  * Created by cosmoqiu on 2/8/15.

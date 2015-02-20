@@ -1,10 +1,10 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Adapter;
+package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Fragment.TabFragment;
+import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
 
 import java.util.ArrayList;
 

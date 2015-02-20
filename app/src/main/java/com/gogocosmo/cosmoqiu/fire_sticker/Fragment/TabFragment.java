@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Fragment;
+package com.gogocosmo.cosmoqiu.fire_sticker.Fragment;
 
 
 import android.app.Activity;
@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.gogocosmo.cosmoqiu.first_sticker.Adapter.ItemArrayAdapter;
-import com.gogocosmo.cosmoqiu.first_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.first_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 
 public class TabFragment extends Fragment {

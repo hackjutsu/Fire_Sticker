@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gogocosmo.cosmoqiu.first_sticker.Acitivty.ViewActivity">
+    tools:context="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ViewActivity">
 
     <include
         android:id="@+id/tool_bar"
@@ -22,10 +22,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <LinearLayout
+                android:id="@+id/question_display_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="250dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="15dp"
@@ -35,18 +35,18 @@
                 <EditText
                     android:id="@+id/question_display"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="250dp"
+                    android:layout_height="match_parent"
+                    android:scrollbars = "none"
+                    android:maxLines="1000"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:padding="10dp"
-                    android:layout_weight="1" />
-            </FrameLayout>
+                    android:padding="10dp"/>
+            </LinearLayout>
 
-            <FrameLayout
+            <LinearLayout
+                android:id="@+id/answer_display_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="250dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -55,13 +55,13 @@
                 <EditText
                     android:id="@+id/answer_display"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="250dp"
+                    android:layout_height="match_parent"
+                    android:scrollbars = "none"
+                    android:maxLines="1000"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:padding="10dp"
-                    android:layout_weight="1" />
-            </FrameLayout>
+                    android:padding="10dp"/>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

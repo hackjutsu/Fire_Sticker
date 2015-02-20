@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker;
+package com.gogocosmo.cosmoqiu.fire_sticker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

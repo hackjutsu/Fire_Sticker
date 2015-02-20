@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Fragment;
+package com.gogocosmo.cosmoqiu.fire_sticker.Fragment;
 
 
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gogocosmo.cosmoqiu.first_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 public class TopFragment extends Fragment {
 

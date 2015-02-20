@@ -1,4 +1,4 @@
-package com.gogocosmo.cosmoqiu.first_sticker.Model;
+package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 
 import android.graphics.Color;
 

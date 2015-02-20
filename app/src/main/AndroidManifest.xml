@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gogocosmo.cosmoqiu.first_sticker" >
+    package="com.gogocosmo.cosmoqiu.fire_sticker" >
 
     <application
         android:allowBackup="true"
@@ -8,16 +8,16 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Acitivty.NewItemActivity"
+            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.NewItemActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".Acitivty.CarouselActivity"
+            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.CarouselActivity"
             android:label="@string/title_activity_carousel" />
         <activity
-            android:name=".Acitivty.ListViewActivity"
+            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ListViewActivity"
             android:label="@string/title_activity_list" />
         <activity
-            android:name=".Acitivty.LaunchActivity"
+            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity"
             android:label="@string/title_activity_launch" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,16 +26,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Acitivty.EditGroupActivity"
+            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.EditGroupActivity"
             android:label="@string/title_activity_edit_group" >
         </activity>
         <activity
-            android:name=".Acitivty.ViewActivity"
+            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ViewActivity"
             android:label="@string/title_activity_view" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gogocosmo.cosmoqiu.first_sticker.Acitivty.LaunchActivity" />
+                android:value="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity" />
         </activity>
     </application>
 
