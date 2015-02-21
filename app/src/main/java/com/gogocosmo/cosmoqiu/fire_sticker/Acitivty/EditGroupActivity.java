@@ -4,23 +4,35 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.GroupArrayAdapter;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemGroup;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
-public class EditGroupActivity extends ActionBarActivity {
+public class EditGroupActivity extends ActionBarActivity implements
+        android.view.ActionMode.Callback {
 
     final private String TAG = "MEMORY-ACC";
 
     private Toolbar _toolbar;
-    private Button _addButton;
-    private Button _submitButton;
+    private ListView _listView;
+    private GroupArrayAdapter _adapter;
+
+    private android.view.ActionMode _actionMode;
+    private Menu _menu;
+
+    private View _selectedView;
+    private int _selectedIndex;
 
 
     @Override
@@ -31,31 +43,37 @@ public class EditGroupActivity extends ActionBarActivity {
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
-        final ListView listview = (ListView) findViewById(R.id.listview);
+        _listView = (ListView) findViewById(R.id.listview);
 
-        final ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, ItemGroup._itemGroupList);
-        listview.setAdapter(adapter);
+        _adapter = new GroupArrayAdapter(this, ItemGroup._itemGroupList);
+        _listView.setAdapter(_adapter);
 
-        _addButton = (Button) findViewById(R.id.AddGroup);
-        _addButton.setOnClickListener(new View.OnClickListener() {
+        _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ItemGroup._itemGroupList.add("TAB " + String.valueOf(ItemGroup._itemGroupList.size()));
-                adapter.notifyDataSetChanged();
+                if (_selectedView != null) {
+                    _selectedView.setActivated(false);
+                }
+
+                // Important method: set the list item in this position activated.
+                // No matter whether this view is recycled or not.
+                _listView.setItemChecked(position, true);
+
+                _selectedIndex = position;
+                _selectedView = view;
+                startActionMode(EditGroupActivity.this);
+                return true;
             }
         });
 
-        _submitButton = (Button) findViewById(R.id.SubmitGroupChanges);
-        _submitButton.setOnClickListener(new View.OnClickListener() {
+        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Intent returnIntent = new Intent();
-                setResult(RESULT_OK, returnIntent);
-                finish();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                _selectedIndex = position;
+                _selectedView = view;
             }
         });
     }
@@ -65,6 +83,19 @@ public class EditGroupActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_group, menu);
+        _menu = menu;
+        _toolbar.setTitle("Group List");
+
+        MenuItem itemAdd = _menu.findItem(R.id.action_add);
+        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
+        MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+
+        itemAdd.setVisible(true);
+        itemBack.setVisible(false);
+        itemDelete.setVisible(false);
+        itemSlash.setVisible(false);
+
         return true;
     }
 
@@ -78,12 +109,79 @@ public class EditGroupActivity extends ActionBarActivity {
         switch (id) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                if (_actionMode != null) {
+                    _actionMode.finish();
+                } else {
+                    Intent returnIntent = new Intent();
+                    setResult(RESULT_OK, returnIntent);
+                    finish();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
                 return true;
+            case R.id.action_add:
+                ItemGroup._itemGroupList.add("TAB " + String.valueOf(ItemGroup._itemGroupList.size()));
+                _adapter.notifyDataSetChanged();
+                return true;
+            default:
         }
         return super.onOptionsItemSelected(item);
 
     }
 
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.menu_launch, menu);
+        _toolbar.setTitle("Edit Mode");
+
+        MenuItem itemAdd = _menu.findItem(R.id.action_add);
+        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
+        MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+
+        itemAdd.setVisible(false);
+        itemBack.setVisible(false);
+        itemDelete.setVisible(true);
+        itemSlash.setVisible(false);
+
+        _actionMode = mode;
+
+        // Return false since we are using a fake Action Mode with a toolbar
+        return false;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+
+        MenuItem itemAdd = _menu.findItem(R.id.action_add);
+        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
+        MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+
+        itemAdd.setVisible(true);
+        itemBack.setVisible(false);
+        itemDelete.setVisible(false);
+        itemSlash.setVisible(false);
+
+        _actionMode = null;
+
+        if (_selectedIndex >= 0 && _selectedIndex < ItemGroup._itemGroupList.size()) {
+
+            _listView.setItemChecked(_selectedIndex, false);
+        }
+
+        _toolbar.setTitle("Group List");
+    }
 }

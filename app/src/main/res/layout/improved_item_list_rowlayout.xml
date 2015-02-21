@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/pressed_background_indicator"    >
+    android:background="@drawable/pressed_background_indicator">
 
     <TextView
         android:id="@+id/item_title"
@@ -18,7 +18,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:singleLine="true"
-        android:ellipsize="marquee"/>
+        android:ellipsize="marquee" />
 
     <TextView
         android:id="@+id/item_question"
@@ -32,7 +32,7 @@
         android:paddingRight="20dp"
         android:layout_marginBottom="-4dp"
         android:singleLine="true"
-        android:ellipsize="marquee"/>
+        android:ellipsize="marquee" />
 
     <TextView
         android:id="@+id/item_answer"
@@ -46,6 +46,6 @@
         android:paddingRight="20dp"
         android:paddingBottom="4dp"
         android:singleLine="true"
-        android:ellipsize="marquee"/>
+        android:ellipsize="marquee" />
 
 </LinearLayout>

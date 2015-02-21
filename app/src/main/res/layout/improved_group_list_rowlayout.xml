@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/pressed_background_indicator">
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:textColor="@color/PURE_BLACK"
+        android:textSize="20sp"
+        android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:text="Awesome Group Name"/>
+
+    <TextView
+        android:id="@+id/group_size"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:textColor="@color/PURE_BLACK"
+        android:textSize="20sp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:text="99"/>
+
+</LinearLayout>

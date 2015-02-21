@@ -2,6 +2,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.EditGroupActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_add"
+        android:orderInCategory="300"
+        android:title="Add"
+        android:icon="@drawable/add_action"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_back"
+        android:orderInCategory="100"
+        android:title="  Back  "
+        android:icon="@drawable/back_action"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_blank"
+        android:orderInCategory="150"
+        android:icon="@drawable/slash_action"
+        android:enabled="false"
+        app:showAsAction="ifRoom"
+        android:title="Slash" />
+
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="200"
+        android:title="  Delete  "
+        android:icon="@drawable/delete_action"
+        app:showAsAction="ifRoom" />
 </menu>
