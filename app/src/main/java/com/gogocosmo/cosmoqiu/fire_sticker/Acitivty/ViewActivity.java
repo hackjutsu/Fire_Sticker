@@ -1,6 +1,7 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +27,7 @@ public class ViewActivity extends ActionBarActivity {
     private Toolbar _toolbar;
     private EditText _questionEditText;
     private EditText _answerEditText;
+    private EditText _titleEditText;
     private Menu _menu;
     private MenuItem _itemEdit;
     private MenuItem _itemConfirm;
@@ -34,6 +36,7 @@ public class ViewActivity extends ActionBarActivity {
 
     private String _originQuestion;
     private String _originAnswer;
+    private String _originTitle;
     private Item _item;
 
     private boolean _onEditMode;
@@ -67,8 +70,12 @@ public class ViewActivity extends ActionBarActivity {
         _answerEditText.setFocusable(false);
         _answerEditText.setMinHeight(cardMinHeight);
 
+        _titleEditText = (EditText) findViewById(R.id.title_display);
+        _titleEditText.setFocusable(false);
+
         _questionEditText.setText(_item.getQuestion());
         _answerEditText.setText(_item.getAnswer());
+        _titleEditText.setText(_item.getTitle());
 
         _onEditMode = false;
     }
@@ -114,6 +121,8 @@ public class ViewActivity extends ActionBarActivity {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 _onEditMode = false;
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
@@ -141,6 +150,7 @@ public class ViewActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         _questionEditText.setFocusableInTouchMode(true);
         _answerEditText.setFocusableInTouchMode(true);
+        _titleEditText.setFocusableInTouchMode(true);
         _itemConfirm.setVisible(true);
         _itemEdit.setVisible(false);
         _itemBlank.setVisible(true);
@@ -150,6 +160,7 @@ public class ViewActivity extends ActionBarActivity {
 
         _originQuestion = _item.getQuestion();
         _originAnswer = _item.getAnswer();
+        _originTitle = _item.getTitle();
     }
 
     private void discardEdits() {
@@ -157,6 +168,7 @@ public class ViewActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _questionEditText.setFocusable(false);
         _answerEditText.setFocusable(false);
+        _titleEditText.setFocusable(false);
         _itemConfirm.setVisible(false);
         _itemEdit.setVisible(true);
         _itemBlank.setVisible(false);
@@ -164,16 +176,19 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        _item.setQuestion(_originQuestion);
-        _item.setAnswer(_originAnswer);
+//        _item.setQuestion(_originQuestion);
+//        _item.setAnswer(_originAnswer);
+//        _item.setTitle(_originAnswer);
         _questionEditText.setText(_originQuestion);
         _answerEditText.setText(_originAnswer);
+        _titleEditText.setText(_originTitle);
 
         // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
     }
 
     private void confirmEdits() {
@@ -181,6 +196,7 @@ public class ViewActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _questionEditText.setFocusable(false);
         _answerEditText.setFocusable(false);
+        _titleEditText.setFocusable(false);
         _itemConfirm.setVisible(false);
         _itemEdit.setVisible(true);
         _itemBlank.setVisible(false);
@@ -193,9 +209,11 @@ public class ViewActivity extends ActionBarActivity {
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
 
         _item.setQuestion(_questionEditText.getText().toString());
         _item.setAnswer(_answerEditText.getText().toString());
+        _item.setTitle(_titleEditText.getText().toString());
     }
 
     @Override
@@ -204,6 +222,9 @@ public class ViewActivity extends ActionBarActivity {
         if (_onEditMode == true) {
             discardEdits();
         }
+
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK, returnIntent);
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }

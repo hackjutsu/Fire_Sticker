@@ -57,7 +57,7 @@ public class ListViewActivity extends ActionBarActivity
         };
 
         for (int i=0; i< 10; ++i) {
-            ItemFactory.createItem(questionSamples[i], answerSamples[i]);
+            ItemFactory.createItem(questionSamples[i], answerSamples[i], "Happy Title");
         }
     }
 

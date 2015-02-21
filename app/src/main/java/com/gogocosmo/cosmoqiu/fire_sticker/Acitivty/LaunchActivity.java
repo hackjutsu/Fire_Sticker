@@ -87,13 +87,20 @@ public class LaunchActivity extends ActionBarActivity implements
         };
 
         for (int i = 0; i < 20; ++i) {
-            ItemFactory.createItem(questionSamples[i], answerSamples[i]);
+            String title = "";
+
+            if (i % 3 == 0) {
+                title = "Awesome Title";
+            }
+
+            ItemFactory.createItem(questionSamples[i], answerSamples[i], title);
         }
     }
 
     final private String TAG = "MEMORY-ACC";
 
     final private int EDIT_GROUP_REQ = 1;
+    final private int VIEW_DETIALS_REQ = 2;
 
     private ImageButton _fireButton;
     private Toolbar _toolbar;
@@ -346,7 +353,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         Intent intent = new Intent(this, ViewActivity.class);
         intent.putExtra("POSITION", position);
-        startActivity(intent);
+        startActivityForResult(intent, VIEW_DETIALS_REQ);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
@@ -479,6 +486,14 @@ public class LaunchActivity extends ActionBarActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == EDIT_GROUP_REQ) {
+            if (resultCode == RESULT_OK) {
+                updateDrawerItems();
+                updateSlidingTabs();
+            }
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        } else if (requestCode == VIEW_DETIALS_REQ) {
             if (resultCode == RESULT_OK) {
                 updateDrawerItems();
                 updateSlidingTabs();

@@ -24,10 +24,11 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
     public class ViewHolder {
         public TextView _question;
         public TextView _answer;
+        public TextView _title;
     }
 
     public ItemArrayAdapter(Context context, ArrayList<Item> values) {
-        super(context, R.layout.item_list_rowlayout, values);
+        super(context, R.layout.improved_item_list_rowlayout, values);
         this._context = context;
         this._values = values;
     }
@@ -40,10 +41,12 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         //reuse views
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(_context);
-            rowView = inflater.inflate(R.layout.item_list_rowlayout, null);
+            rowView = inflater.inflate(R.layout.improved_item_list_rowlayout, null);
             // configure view holder
             viewHolder = new ViewHolder();
-            viewHolder._question = (TextView) rowView.findViewById(R.id.label_question);
+            viewHolder._question = (TextView) rowView.findViewById(R.id.item_question);
+            viewHolder._answer = (TextView) rowView.findViewById(R.id.item_answer);
+            viewHolder._title = (TextView) rowView.findViewById(R.id.item_title);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
@@ -54,6 +57,8 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         }
 
         viewHolder._question.setText(_values.get(position).getQuestion());
+        viewHolder._answer.setText(_values.get(position).getAnswer());
+        viewHolder._title.setText(_values.get(position).getTitle());
 
         return rowView;
     }

@@ -86,6 +86,6 @@ public class NewItemActivity extends ActionBarActivity
         String newQuestion = _questionInput.getText().toString();
         String newAnswer = _answerInput.getText().toString();
 
-        ItemFactory.createItem(newQuestion, newAnswer);
+        ItemFactory.createItem(newQuestion, newAnswer, "Happy Title");
     }
 }

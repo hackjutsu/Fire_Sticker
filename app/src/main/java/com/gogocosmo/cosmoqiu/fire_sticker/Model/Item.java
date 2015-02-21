@@ -7,10 +7,12 @@ public class Item {
 
     private String _question = null;
     private String _answer = null;
+    private String _title = null;
 
-    public Item(String question, String answer) {
+    public Item(String question, String answer, String title) {
         _question = question;
         _answer = answer;
+        _title = title;
     }
 
     public void setQuestion(String _question) {
@@ -21,6 +23,10 @@ public class Item {
         this._answer = _answer;
     }
 
+    public void setTitle(String _title) {
+        this._title = _title;
+    }
+
     public String getQuestion() {
         return _question;
     }
@@ -29,7 +35,11 @@ public class Item {
         return _answer;
     }
 
+    public String getTitle() {
+        return _title;
+    }
+
     public String toString() {
-        return "Question: " + _question + ", " + "Answer: " + _answer ;
+        return "Title: " + _title + "," + "Question: " + _question + ", " + "Answer: " + _answer ;
     }
 }
