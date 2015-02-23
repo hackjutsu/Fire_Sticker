@@ -14,9 +14,6 @@
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.CarouselActivity"
             android:label="@string/title_activity_carousel" />
         <activity
-            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ListViewActivity"
-            android:label="@string/title_activity_list" />
-        <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity"
             android:label="@string/title_activity_launch" >
             <intent-filter>
