@@ -8,11 +8,19 @@ public class Item {
     private String _frontSide = null;
     private String _backSide = null;
     private String _title = null;
+    private boolean _light = false;
 
     public Item(String frontSide, String backSide, String title) {
         _frontSide = frontSide;
         _backSide = backSide;
         _title = title;
+    }
+
+    public Item(String frontSide, String backSide, String title, boolean light) {
+        _frontSide = frontSide;
+        _backSide = backSide;
+        _title = title;
+        _light = light;
     }
 
     public void setFrontSide(String frontSide) {
@@ -26,6 +34,9 @@ public class Item {
     public void setTitle(String _title) {
         this._title = _title;
     }
+    public void setLight(boolean light) {
+        _light = light;
+    }
 
     public String getFrontSide() {
         return _frontSide;
@@ -37,6 +48,10 @@ public class Item {
 
     public String getTitle() {
         return _title;
+    }
+
+    public boolean getLight() {
+        return _light;
     }
 
     public String toString() {

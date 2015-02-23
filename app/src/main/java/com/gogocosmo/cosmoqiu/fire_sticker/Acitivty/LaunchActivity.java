@@ -86,14 +86,17 @@ public class LaunchActivity extends ActionBarActivity implements
                 "Dr No"
         };
 
+
         for (int i = 0; i < 20; ++i) {
             String title = "";
+            Boolean light = false;
 
             if (i % 3 == 0) {
                 title = "Awesome Title";
+                light = true;
             }
 
-            ItemFactory.createItem(questionSamples[i], answerSamples[i], title);
+            ItemFactory.createItem(questionSamples[i], answerSamples[i], title, light);
         }
     }
 

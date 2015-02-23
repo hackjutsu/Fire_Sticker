@@ -12,7 +12,7 @@ public class ItemFactory {
     private static ArrayList<Item> _itemList = new ArrayList<>();
     private static int _selectedItemIndex = -1;
 
-    public static Item createItem(String question, String answer, String title) {
+    public static Item createItem(String question, String answer, String title, Boolean light) {
 
         String realTitle = title;
         if (realTitle == "") {
@@ -53,7 +53,7 @@ public class ItemFactory {
         }
 
 
-        Item newItem = new Item(question, answer, realTitle);
+        Item newItem = new Item(question, answer, realTitle, light);
         _itemList.add(0, newItem);
         return newItem;
     }

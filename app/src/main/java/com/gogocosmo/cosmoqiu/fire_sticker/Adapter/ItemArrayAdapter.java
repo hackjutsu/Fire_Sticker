@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity;
@@ -25,6 +26,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         public TextView _frontSide;
         public TextView _backSide;
         public TextView _title;
+        public ImageView _light;
     }
 
     public ItemArrayAdapter(Context context, ArrayList<Item> values) {
@@ -47,6 +49,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             viewHolder._frontSide = (TextView) rowView.findViewById(R.id.item_question);
             viewHolder._backSide = (TextView) rowView.findViewById(R.id.item_answer);
             viewHolder._title = (TextView) rowView.findViewById(R.id.item_title);
+            viewHolder._light = (ImageView) rowView.findViewById(R.id.item_light);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
@@ -58,6 +61,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         String frontStr = _values.get(position).getFrontSide();
         String backStr = _values.get(position).getBackSide();
+        boolean light = _values.get(position).getLight();
 
         if (frontStr.isEmpty()) {
             frontStr = "Blank Front Side";
@@ -67,9 +71,16 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             backStr = "Blank Back Side";
         }
 
+        if (light == true) {
+            viewHolder._light.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder._light.setVisibility(View.INVISIBLE);
+        }
+
         viewHolder._frontSide.setText(frontStr);
         viewHolder._backSide.setText(backStr);
         viewHolder._title.setText(_values.get(position).getTitle());
+
 
         return rowView;
     }
