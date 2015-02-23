@@ -1,5 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,10 +10,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.GroupArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
@@ -34,6 +40,7 @@ public class EditGroupActivity extends ActionBarActivity implements
     private View _selectedView;
     private int _selectedIndex;
 
+    private TextView _totalStickerNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +81,64 @@ public class EditGroupActivity extends ActionBarActivity implements
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _selectedIndex = position;
                 _selectedView = view;
+
+                startDialog();
             }
         });
+
+        _totalStickerNum = (TextView) findViewById(R.id.total_sticker_num);
+        updateTotalStickerNum();
     }
 
+    private void updateTotalStickerNum() {
+
+        int totalGroupNum = ItemGroup._itemGroupList.size();
+
+        _totalStickerNum.setText(String.valueOf(totalGroupNum * ItemFactory.getItemList().size()));
+    }
+
+    private void startDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edit_group);
+
+        dialog.setCanceledOnTouchOutside(false);
+
+        ImageView cancelImage = (ImageView) dialog.findViewById(R.id.cancel_dialog);
+        ImageView confirmImage = (ImageView) dialog.findViewById(R.id.confirm_dialog);
+        final EditText groupName = (EditText) dialog.findViewById(R.id.editText_groupName);
+
+        String originalTitle = ItemGroup._itemGroupList.get(_selectedIndex);
+        groupName.setText(originalTitle);
+
+        cancelImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        confirmImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newTitle = groupName.getText().toString();
+                ItemGroup._itemGroupList.set(_selectedIndex, newTitle);
+                _adapter.notifyDataSetChanged();
+                _selectedView.setActivated(false);
+                updateTotalStickerNum();
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+
+        WindowManager.LayoutParams paramsWindow = dialog.getWindow().getAttributes();
+        paramsWindow.width = WindowManager.LayoutParams.MATCH_PARENT;
+        paramsWindow.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(paramsWindow);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,8 +181,9 @@ public class EditGroupActivity extends ActionBarActivity implements
                 }
                 return true;
             case R.id.action_add:
-                ItemGroup._itemGroupList.add("TAB " + String.valueOf(ItemGroup._itemGroupList.size()));
+                ItemGroup._itemGroupList.add("GROUP " + String.valueOf(ItemGroup._itemGroupList.size()));
                 _adapter.notifyDataSetChanged();
+                updateTotalStickerNum();
                 return true;
             default:
         }

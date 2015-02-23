@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.NewItemActivity"
-            android:label="@string/app_name" />
+            android:label="" />
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.CarouselActivity"
             android:label="@string/title_activity_carousel" />

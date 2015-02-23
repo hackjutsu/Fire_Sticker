@@ -342,6 +342,11 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     // New Function
+    public int getCurrentTabPosition() {
+        return mViewPager.getCurrentItem();
+    }
+
+    // New Function
     public void registerPageScrollListener(OnPageScrollListener listener) {
         _pageScrollListener = listener;
     }

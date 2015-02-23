@@ -11,56 +11,162 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="QUESTION:"
-        android:id="@+id/textView" />
-
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText_question"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="8" />
+        android:background="@drawable/bottom_shadow"
+        android:scrollbars="none">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ANSWER:"
-        android:id="@+id/textView2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText_answer"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="8" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:textSize="25sp"
+                    android:text="Group: " />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:id="@+id/spinner" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/question_display_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@android:drawable/dialog_holo_light_frame">
+
+                <EditText
+                    android:id="@+id/question_display"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none"
+                    android:maxLines="1000"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:hint="   Front Side   " />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/answer_display_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@android:drawable/dialog_holo_light_frame">
+
+                <EditText
+                    android:id="@+id/answer_display"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none"
+                    android:maxLines="1000"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:hint="  (Optional) Back Side   " />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18sp"
+                    android:text="Title: "
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/title_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="25dp"
+                    android:hint="   Optional   "
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="QUESTION:"-->
+    <!--android:id="@+id/textView" />-->
+
+    <!--<EditText-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/editText_question"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_weight="8" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="ANSWER:"-->
+    <!--android:id="@+id/textView2" />-->
+
+    <!--<EditText-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/editText_answer"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_weight="8" />-->
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1">
+    <!--<LinearLayout-->
+    <!--android:orientation="horizontal"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_weight="1">-->
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="Cancel"
-            android:id="@+id/CancelItem"
-            android:layout_weight="0.5" />
+    <!--<Button-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Cancel"-->
+    <!--android:id="@+id/CancelItem"-->
+    <!--android:layout_weight="0.5" />-->
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="Add"
-            android:id="@+id/AddItem"
-            android:layout_weight="0.5" />
+    <!--<Button-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Add"-->
+    <!--android:id="@+id/AddItem"-->
+    <!--android:layout_weight="0.5" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 </LinearLayout>

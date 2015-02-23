@@ -165,7 +165,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             //holder._email.setText(_email);
         } else if (holder._viewType == TYPE_END) {
 
-            holder._textView.setText("Edit Group Lists");
+            holder._textView.setText("Edit Group List");
             holder._position = position;
         }
     }

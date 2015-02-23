@@ -16,4 +16,7 @@
     <!-- Item List -->
     <dimen name="ITEMLIST_SIDE_BAR_DIMEN">3dp</dimen>
 
+    <!-- Edit Group List -->
+    <dimen name="EDIT_GROUP_LIST_ITEM_HEIGHT">60dp</dimen>
+
 </resources>

@@ -21,6 +21,7 @@ public class TabFragment extends Fragment {
     private ListView _listView;
     private Context _context;
     private OnTabListItemClickListener _tabListItemClickListener;
+    private ItemArrayAdapter _itemArrayAdapter;
 
     public interface OnTabListItemClickListener {
 
@@ -55,9 +56,9 @@ public class TabFragment extends Fragment {
 
         _listView = (ListView) v.findViewById(R.id.listview);
 
-        final ItemArrayAdapter itemArrayAdapter = new ItemArrayAdapter(_context,
+        _itemArrayAdapter = new ItemArrayAdapter(_context,
                 ItemFactory.getItemList());
-        _listView.setAdapter(itemArrayAdapter);
+        _listView.setAdapter(_itemArrayAdapter);
 
         _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -76,5 +77,11 @@ public class TabFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    public void notifyDataChanged() {
+        if (_itemArrayAdapter != null) {
+            _itemArrayAdapter.notifyDataSetChanged();
+        }
     }
 }

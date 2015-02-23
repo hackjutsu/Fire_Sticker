@@ -101,6 +101,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     final private int EDIT_GROUP_REQ = 1;
     final private int VIEW_DETIALS_REQ = 2;
+    final private int NEW_ITEM_REQ = 3;
 
     private ImageButton _fireButton;
     private Toolbar _toolbar;
@@ -144,10 +145,10 @@ public class LaunchActivity extends ActionBarActivity implements
 
         /*********************************  Tabs Configurations  **********************************/
         _titles = ItemGroup._itemGroupList;
-        _titles.add("TAB 0");
-        _titles.add("TAB 1");
-        _titles.add("TAB 2");
-        _titles.add("TAB 3");
+        _titles.add("GROUP 0");
+        _titles.add("GROUP 1");
+        _titles.add("GROUP 2");
+        _titles.add("GROUP 3");
 
         _pager = (ViewPager) findViewById(R.id.pager);
         _slidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -302,7 +303,8 @@ public class LaunchActivity extends ActionBarActivity implements
                 return true;
             case R.id.action_add:
                 Intent intent = new Intent(this, NewItemActivity.class);
-                startActivity(intent);
+                intent.putExtra("CURRENT_TAB", _slidingTabsLayout.getCurrentTabPosition());
+                startActivityForResult(intent, NEW_ITEM_REQ);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.action_back:
@@ -495,6 +497,15 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         } else if (requestCode == VIEW_DETIALS_REQ) {
             if (resultCode == RESULT_OK) {
+                updateDrawerItems();
+                updateSlidingTabs();
+            }
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        } else if (requestCode == NEW_ITEM_REQ) {
+            if (resultCode == RESULT_OK) {
+                int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
                 updateDrawerItems();
                 updateSlidingTabs();
             }

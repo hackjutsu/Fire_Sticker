@@ -1,10 +1,12 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity;
@@ -24,6 +26,7 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
     public class ViewHolder {
         public TextView _groupName;
         public TextView _groupSize;
+        public ProgressBar _progressBar;
     }
 
     public GroupArrayAdapter(Context context, ArrayList<String> values) {
@@ -45,6 +48,7 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
             viewHolder = new ViewHolder();
             viewHolder._groupName = (TextView) rowView.findViewById(R.id.group_name);
             viewHolder._groupSize = (TextView) rowView.findViewById(R.id.group_size);
+            viewHolder._progressBar = (ProgressBar) rowView.findViewById(R.id.progressBar);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
@@ -56,6 +60,11 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
 
         viewHolder._groupName.setText(_values.get(position));
         viewHolder._groupSize.setText(String.valueOf(ItemFactory.getItemList().size()));
+
+        int percentage = (int)((float)ItemFactory.getItemList().size()/50 * 100);
+//        int percentage = (int)((float)5/50 * 100);
+        Log.d(TAG, String.valueOf(percentage));
+        viewHolder._progressBar.setProgress(percentage);
 
         return rowView;
     }

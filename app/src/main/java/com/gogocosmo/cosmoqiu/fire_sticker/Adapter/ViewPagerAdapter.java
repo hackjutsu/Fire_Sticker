@@ -32,8 +32,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         {
             TabFragment tabFragment = new TabFragment();
             return tabFragment;
-        } else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
+        } else {
             TabFragment tabFragment = new TabFragment();
             return tabFragment;
         }
@@ -57,5 +56,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         this._titles.add(title);
         this.Titles = _titles.toArray(new CharSequence[_titles.size()]);
         notifyDataSetChanged();
+    }
+
+    public void notifyListViewDataChanged(int groupId) {
+        //TODO: UPDATE MODEL SYSTEM TO SUPPORT MULTIPLE GROUPS
+//        ((TabFragment)getItem(groupId)).notifyDataChanged();
     }
 }

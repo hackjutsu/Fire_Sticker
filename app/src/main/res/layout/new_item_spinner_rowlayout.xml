@@ -1,0 +1,13 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/label_question"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:textSize="18sp"
+    android:textStyle="italic"
+    android:singleLine="true"
+    android:ellipsize="marquee"/>
+
