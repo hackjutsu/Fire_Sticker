@@ -1,7 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -128,7 +127,7 @@ public class CarouselActivity extends ActionBarActivity {
                         .commit();
 
                 _currentCard.swipeUpEvent(
-                        ItemFactory.getItemList().get(_itemIndex).getAnswer());
+                        ItemFactory.getItemList().get(_itemIndex).getBackSide());
             }
         }
     }
@@ -145,7 +144,7 @@ public class CarouselActivity extends ActionBarActivity {
 //                        )
                         .hide(_topFragment)
                         .commit();
-                _currentCard.swipeDownEvent(ItemFactory.getItemList().get(_itemIndex).getQuestion());
+                _currentCard.swipeDownEvent(ItemFactory.getItemList().get(_itemIndex).getFrontSide());
             }
         }
     }
@@ -181,7 +180,7 @@ public class CarouselActivity extends ActionBarActivity {
         CardFragment newCard = new CardFragment();
         int cardColor = randomColor();
         newCard.setCardColor(cardColor);
-        newCard.setCardText(item.getQuestion());
+        newCard.setCardText(item.getFrontSide());
 
         // Add this new card info to card trace
         _cardTrace.add(new CardHolder(cardColor, item));
@@ -229,7 +228,7 @@ public class CarouselActivity extends ActionBarActivity {
         // Create a new card fragment that restores the previous card info
         CardFragment preCard = new CardFragment();
         preCard.setCardColor(currentHolder.getColor());
-        preCard.setCardText(currentHolder.getItem().getQuestion());
+        preCard.setCardText(currentHolder.getItem().getFrontSide());
         _currentCard = preCard;
 
         String id = UUID.randomUUID().toString();

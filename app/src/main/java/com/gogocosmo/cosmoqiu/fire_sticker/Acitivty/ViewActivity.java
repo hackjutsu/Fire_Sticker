@@ -25,8 +25,8 @@ public class ViewActivity extends ActionBarActivity {
     final private String TAG = "MEMORY-ACC";
 
     private Toolbar _toolbar;
-    private EditText _questionEditText;
-    private EditText _answerEditText;
+    private EditText _frontSideEditText;
+    private EditText _backSideEditText;
     private EditText _titleEditText;
     private Menu _menu;
     private MenuItem _itemEdit;
@@ -34,8 +34,8 @@ public class ViewActivity extends ActionBarActivity {
     private MenuItem _itemBlank;
     private MenuItem _itemDelete;
 
-    private String _originQuestion;
-    private String _originAnswer;
+    private String _originFrontSide;
+    private String _originBackSide;
     private String _originTitle;
     private Item _item;
 
@@ -60,21 +60,21 @@ public class ViewActivity extends ActionBarActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
 
-        _questionEditText = (EditText) findViewById(R.id.question_display);
-        _questionEditText.setBackgroundColor(randomColor());
-        _questionEditText.setFocusable(false);
-        _questionEditText.setMinHeight(cardMinHeight);
+        _frontSideEditText = (EditText) findViewById(R.id.frontSide_display_EditText);
+        _frontSideEditText.setBackgroundColor(randomColor());
+        _frontSideEditText.setFocusable(false);
+        _frontSideEditText.setMinHeight(cardMinHeight);
 
-        _answerEditText = (EditText) findViewById(R.id.answer_display);
-        _answerEditText.setBackgroundColor(randomColor());
-        _answerEditText.setFocusable(false);
-        _answerEditText.setMinHeight(cardMinHeight);
+        _backSideEditText = (EditText) findViewById(R.id.backSide_display_editText);
+        _backSideEditText.setBackgroundColor(randomColor());
+        _backSideEditText.setFocusable(false);
+        _backSideEditText.setMinHeight(cardMinHeight);
 
-        _titleEditText = (EditText) findViewById(R.id.title_display);
+        _titleEditText = (EditText) findViewById(R.id.title_display_editText);
         _titleEditText.setFocusable(false);
 
-        _questionEditText.setText(_item.getQuestion());
-        _answerEditText.setText(_item.getAnswer());
+        _frontSideEditText.setText(_item.getFrontSide());
+        _backSideEditText.setText(_item.getBackSide());
         _titleEditText.setText(_item.getTitle());
 
         _onEditMode = false;
@@ -148,8 +148,8 @@ public class ViewActivity extends ActionBarActivity {
     private void startEdits() {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        _questionEditText.setFocusableInTouchMode(true);
-        _answerEditText.setFocusableInTouchMode(true);
+        _frontSideEditText.setFocusableInTouchMode(true);
+        _backSideEditText.setFocusableInTouchMode(true);
         _titleEditText.setFocusableInTouchMode(true);
         _itemConfirm.setVisible(true);
         _itemEdit.setVisible(false);
@@ -158,16 +158,16 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("Edit Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        _originQuestion = _item.getQuestion();
-        _originAnswer = _item.getAnswer();
+        _originFrontSide = _item.getFrontSide();
+        _originBackSide = _item.getBackSide();
         _originTitle = _item.getTitle();
     }
 
     private void discardEdits() {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _questionEditText.setFocusable(false);
-        _answerEditText.setFocusable(false);
+        _frontSideEditText.setFocusable(false);
+        _backSideEditText.setFocusable(false);
         _titleEditText.setFocusable(false);
         _itemConfirm.setVisible(false);
         _itemEdit.setVisible(true);
@@ -176,26 +176,23 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-//        _item.setQuestion(_originQuestion);
-//        _item.setAnswer(_originAnswer);
-//        _item.setTitle(_originAnswer);
-        _questionEditText.setText(_originQuestion);
-        _answerEditText.setText(_originAnswer);
+        _frontSideEditText.setText(_originFrontSide);
+        _backSideEditText.setText(_originBackSide);
         _titleEditText.setText(_originTitle);
 
         // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
     }
 
     private void confirmEdits() {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _questionEditText.setFocusable(false);
-        _answerEditText.setFocusable(false);
+        _frontSideEditText.setFocusable(false);
+        _backSideEditText.setFocusable(false);
         _titleEditText.setFocusable(false);
         _itemConfirm.setVisible(false);
         _itemEdit.setVisible(true);
@@ -207,12 +204,12 @@ public class ViewActivity extends ActionBarActivity {
         // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(_questionEditText.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(_answerEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
 
-        _item.setQuestion(_questionEditText.getText().toString());
-        _item.setAnswer(_answerEditText.getText().toString());
+        _item.setFrontSide(_frontSideEditText.getText().toString());
+        _item.setBackSide(_backSideEditText.getText().toString());
         _item.setTitle(_titleEditText.getText().toString());
     }
 

@@ -144,7 +144,7 @@ public class ListViewActivity extends ActionBarActivity
                 view.setSelected(true);
 
                 Toast.makeText(ListViewActivity.this,
-                        "Long Click " + item.getQuestion(),
+                        "Long Click " + item.getFrontSide(),
                         Toast.LENGTH_SHORT).show();
 
                 return true;

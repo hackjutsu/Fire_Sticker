@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity;
-import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
@@ -30,7 +29,7 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
     }
 
     public GroupArrayAdapter(Context context, ArrayList<String> values) {
-        super(context, R.layout.improved_group_list_rowlayout, values);
+        super(context, R.layout.group_list_rowlayout_improved, values);
         this._context = context;
         this._values = values;
     }
@@ -43,7 +42,7 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
         //reuse views
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(_context);
-            rowView = inflater.inflate(R.layout.improved_group_list_rowlayout, null);
+            rowView = inflater.inflate(R.layout.group_list_rowlayout_improved, null);
             // configure view holder
             viewHolder = new ViewHolder();
             viewHolder._groupName = (TextView) rowView.findViewById(R.id.group_name);

@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/question_display_frame"
+                android:id="@+id/frontSide_display_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -33,7 +33,7 @@
                 android:background="@android:drawable/dialog_holo_light_frame">
 
                 <EditText
-                    android:id="@+id/question_display"
+                    android:id="@+id/frontSide_display_EditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars = "none"
@@ -44,7 +44,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/answer_display_frame"
+                android:id="@+id/backSide_display_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -53,7 +53,7 @@
                 android:background="@android:drawable/dialog_holo_light_frame">
 
                 <EditText
-                    android:id="@+id/answer_display"
+                    android:id="@+id/backSide_display_editText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars = "none"
@@ -64,7 +64,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/title_display"
+                android:id="@+id/title_display_editText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

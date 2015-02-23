@@ -8,9 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -22,20 +20,14 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import java.util.Random;
 
 
-public class NewItemActivity extends ActionBarActivity
-        implements View.OnClickListener {
+public class NewItemActivity extends ActionBarActivity {
 
     final private String TAG = "MEMORY-ACC";
 
     private Toolbar _toolbar;
 
-    private Button _cancelButton = null;
-    private Button _newItemButton = null;
-    private EditText _questionInput = null;
-    private EditText _answerInput = null;
-
-    private EditText _questionEditText;
-    private EditText _answerEditText;
+    private EditText _frontSideEditText;
+    private EditText _backSideEditText;
     private EditText _titleEditText;
 
     private Spinner _spinner;
@@ -48,7 +40,6 @@ public class NewItemActivity extends ActionBarActivity
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _toolbar.setTitle("Create a New Sticker");
         _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
         // Get the width of the Windows and set it as the minHeight of the card
@@ -56,15 +47,15 @@ public class NewItemActivity extends ActionBarActivity
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
 
-        _questionEditText = (EditText) findViewById(R.id.question_display);
-        _questionEditText.setBackgroundColor(randomColor());
-        _questionEditText.setMinHeight(cardMinHeight);
+        _frontSideEditText = (EditText) findViewById(R.id.frontSide_input_EditText);
+        _frontSideEditText.setBackgroundColor(randomColor());
+        _frontSideEditText.setMinHeight(cardMinHeight);
 
-        _answerEditText = (EditText) findViewById(R.id.answer_display);
-        _answerEditText.setBackgroundColor(randomColor());
-        _answerEditText.setMinHeight(cardMinHeight);
+        _backSideEditText = (EditText) findViewById(R.id.backSide_input_editText);
+        _backSideEditText.setBackgroundColor(randomColor());
+        _backSideEditText.setMinHeight(cardMinHeight);
 
-        _titleEditText = (EditText) findViewById(R.id.title_display);
+        _titleEditText = (EditText) findViewById(R.id.title_input_editText);
 
 //        _cancelButton = (Button) findViewById(R.id.CancelItem);
 //        _newItemButton = (Button) findViewById(R.id.AddItem);
@@ -74,7 +65,6 @@ public class NewItemActivity extends ActionBarActivity
 //
 //        _questionInput = (EditText) findViewById(R.id.editText_question);
 //        _answerInput = (EditText) findViewById(R.id.editText_answer);
-
 
 
         _spinner = (Spinner) findViewById(R.id.spinner);
@@ -129,29 +119,23 @@ public class NewItemActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
-
-//        switch (v.getId()) {
-//            case R.id.CancelItem:
-//                finish();
-//                break;
-//            case R.id.AddItem:
-//                addNewItem();
-//                finish();
-//                break;
-//            default:
-//        }
-    }
-
     private void addNewItem() {
-        String newQuestion = _questionEditText.getText().toString();
-        String newAnswer = _answerEditText.getText().toString();
+        String newFrontSide = _frontSideEditText.getText().toString();
+        String newBackSide = _backSideEditText.getText().toString();
         String newTitle = _titleEditText.getText().toString();
+
         if (newTitle.isEmpty()) {
             newTitle = "";
         }
 
-        ItemFactory.createItem(newQuestion, newAnswer, newTitle);
+        if (newFrontSide.isEmpty()) {
+            newFrontSide = "";
+        }
+
+        if (newBackSide.isEmpty()) {
+            newBackSide = "";
+        }
+
+        ItemFactory.createItem(newFrontSide, newBackSide, newTitle);
     }
 }

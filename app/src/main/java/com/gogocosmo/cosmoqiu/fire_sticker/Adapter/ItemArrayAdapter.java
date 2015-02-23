@@ -22,13 +22,13 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
 
     public class ViewHolder {
-        public TextView _question;
-        public TextView _answer;
+        public TextView _frontSide;
+        public TextView _backSide;
         public TextView _title;
     }
 
     public ItemArrayAdapter(Context context, ArrayList<Item> values) {
-        super(context, R.layout.improved_item_list_rowlayout, values);
+        super(context, R.layout.item_list_rowlayout_improved, values);
         this._context = context;
         this._values = values;
     }
@@ -41,11 +41,11 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         //reuse views
         if (rowView == null) {
             LayoutInflater inflater = LayoutInflater.from(_context);
-            rowView = inflater.inflate(R.layout.improved_item_list_rowlayout, null);
+            rowView = inflater.inflate(R.layout.item_list_rowlayout_improved, null);
             // configure view holder
             viewHolder = new ViewHolder();
-            viewHolder._question = (TextView) rowView.findViewById(R.id.item_question);
-            viewHolder._answer = (TextView) rowView.findViewById(R.id.item_answer);
+            viewHolder._frontSide = (TextView) rowView.findViewById(R.id.item_question);
+            viewHolder._backSide = (TextView) rowView.findViewById(R.id.item_answer);
             viewHolder._title = (TextView) rowView.findViewById(R.id.item_title);
             rowView.setTag(viewHolder);
         } else {
@@ -56,8 +56,19 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             LaunchActivity._selectedView = rowView;
         }
 
-        viewHolder._question.setText(_values.get(position).getQuestion());
-        viewHolder._answer.setText(_values.get(position).getAnswer());
+        String frontStr = _values.get(position).getFrontSide();
+        String backStr = _values.get(position).getBackSide();
+
+        if (frontStr.isEmpty()) {
+            frontStr = "Blank Front Side";
+        }
+
+        if (backStr.isEmpty()) {
+            backStr = "Blank Back Side";
+        }
+
+        viewHolder._frontSide.setText(frontStr);
+        viewHolder._backSide.setText(backStr);
         viewHolder._title.setText(_values.get(position).getTitle());
 
         return rowView;

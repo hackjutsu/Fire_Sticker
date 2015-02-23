@@ -54,7 +54,7 @@ public class ItemFactory {
 
 
         Item newItem = new Item(question, answer, realTitle);
-        _itemList.add(newItem);
+        _itemList.add(0, newItem);
         return newItem;
     }
 

@@ -5,34 +5,34 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Model;
  */
 public class Item {
 
-    private String _question = null;
-    private String _answer = null;
+    private String _frontSide = null;
+    private String _backSide = null;
     private String _title = null;
 
-    public Item(String question, String answer, String title) {
-        _question = question;
-        _answer = answer;
+    public Item(String frontSide, String backSide, String title) {
+        _frontSide = frontSide;
+        _backSide = backSide;
         _title = title;
     }
 
-    public void setQuestion(String _question) {
-        this._question = _question;
+    public void setFrontSide(String frontSide) {
+        this._frontSide = frontSide;
     }
 
-    public void setAnswer(String _answer) {
-        this._answer = _answer;
+    public void setBackSide(String backSide) {
+        this._backSide = backSide;
     }
 
     public void setTitle(String _title) {
         this._title = _title;
     }
 
-    public String getQuestion() {
-        return _question;
+    public String getFrontSide() {
+        return _frontSide;
     }
 
-    public String getAnswer() {
-        return _answer;
+    public String getBackSide() {
+        return _backSide;
     }
 
     public String getTitle() {
@@ -40,6 +40,6 @@ public class Item {
     }
 
     public String toString() {
-        return "Title: " + _title + "," + "Question: " + _question + ", " + "Answer: " + _answer ;
+        return "Title: " + _title + "," + "Front: " + _frontSide + ", " + "Back: " + _backSide;
     }
 }
