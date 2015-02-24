@@ -178,7 +178,7 @@ public class CarouselActivity extends ActionBarActivity {
         int cardColor = randomColor();
         newCard.setCardColor(cardColor);
         newCard.setCardText(item.getFrontSide());
-        newCard.setMarked(item.getLight());
+        newCard.setMarked(item.getBookMark());
 
         // Add this new card info to card trace
         _cardTrace.add(new CardHolder(cardColor, item));
@@ -227,7 +227,7 @@ public class CarouselActivity extends ActionBarActivity {
         CardFragment preCard = new CardFragment();
         preCard.setCardColor(currentHolder.getColor());
         preCard.setCardText(currentHolder.getItem().getFrontSide());
-        preCard.setMarked(currentHolder.getItem().getLight());
+        preCard.setMarked(currentHolder.getItem().getBookMark());
 
         _currentCard = preCard;
 

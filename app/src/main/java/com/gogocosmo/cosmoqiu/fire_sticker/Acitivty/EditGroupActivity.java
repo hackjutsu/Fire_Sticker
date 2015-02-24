@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.GroupArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemGroup;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 public class EditGroupActivity extends ActionBarActivity implements
@@ -52,16 +51,16 @@ public class EditGroupActivity extends ActionBarActivity implements
 
         _listView = (ListView) findViewById(R.id.listview);
 
-        _adapter = new GroupArrayAdapter(this, ItemGroup._itemGroupList);
+        _adapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupList());
         _listView.setAdapter(_adapter);
 
         _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (_selectedView != null) {
-                    _selectedView.setActivated(false);
-                }
+//                if (_selectedView != null) {
+//                    _selectedView.setActivated(false);
+//                }
 
                 // Important method: set the list item in this position activated.
                 // No matter whether this view is recycled or not.
@@ -78,9 +77,13 @@ public class EditGroupActivity extends ActionBarActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _selectedIndex = position;
-                _selectedView = view;
+//                _selectedView = view;
 
-                startDialog();
+                if (_actionMode != null) {
+                    return;
+                }
+
+                startEditDialog();
             }
         });
 
@@ -90,12 +93,17 @@ public class EditGroupActivity extends ActionBarActivity implements
 
     private void updateTotalStickerNum() {
 
-        int totalGroupNum = ItemGroup._itemGroupList.size();
+        int totalGroupNum = ItemFactory.getItemGroupList().size();
+        int totalStickers = 0;
 
-        _totalStickerNum.setText(String.valueOf(totalGroupNum * ItemFactory.getItemList().size()));
+        for (int i = 0; i < totalGroupNum; ++i) {
+            totalStickers += ItemFactory.getItemList(i).size();
+        }
+
+        _totalStickerNum.setText(String.valueOf(totalStickers));
     }
 
-    private void startDialog() {
+    private void startEditDialog() {
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -107,7 +115,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         ImageView confirmImage = (ImageView) dialog.findViewById(R.id.confirm_dialog);
         final EditText groupName = (EditText) dialog.findViewById(R.id.editText_groupName);
 
-        String originalTitle = ItemGroup._itemGroupList.get(_selectedIndex);
+        String originalTitle = ItemFactory.getItemGroupList().get(_selectedIndex);
         groupName.setText(originalTitle);
 
         cancelImage.setOnClickListener(new View.OnClickListener() {
@@ -121,10 +129,56 @@ public class EditGroupActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 String newTitle = groupName.getText().toString();
-                ItemGroup._itemGroupList.set(_selectedIndex, newTitle);
+                ItemFactory.getItemGroupList().set(_selectedIndex, newTitle);
                 _adapter.notifyDataSetChanged();
-                _selectedView.setActivated(false);
                 updateTotalStickerNum();
+                dialog.dismiss();
+                _listView.setItemChecked(ItemFactory.getItemGroupList().size()-1 ,true);
+            }
+        });
+
+
+        dialog.show();
+
+        WindowManager.LayoutParams paramsWindow = dialog.getWindow().getAttributes();
+        paramsWindow.width = WindowManager.LayoutParams.MATCH_PARENT;
+        paramsWindow.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(paramsWindow);
+    }
+
+    private void startNewItemDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edit_group);
+
+        dialog.setCanceledOnTouchOutside(false);
+
+        ImageView cancelImage = (ImageView) dialog.findViewById(R.id.cancel_dialog);
+        ImageView confirmImage = (ImageView) dialog.findViewById(R.id.confirm_dialog);
+        final EditText groupName = (EditText) dialog.findViewById(R.id.editText_groupName);
+
+        groupName.setText("");
+
+        cancelImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        confirmImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String newTitle = groupName.getText().toString();
+
+                ItemFactory.createGroup(newTitle);
+                _adapter.notifyDataSetChanged();
+                updateTotalStickerNum();
+                _selectedIndex = ItemFactory.getItemGroupList().size()-1;
+                _listView.setItemChecked(ItemFactory.getItemGroupList().size()-1 ,true);
+
                 dialog.dismiss();
             }
         });
@@ -179,9 +233,9 @@ public class EditGroupActivity extends ActionBarActivity implements
                 }
                 return true;
             case R.id.action_add:
-                ItemGroup._itemGroupList.add("GROUP " + String.valueOf(ItemGroup._itemGroupList.size()));
-                _adapter.notifyDataSetChanged();
-                updateTotalStickerNum();
+
+                startNewItemDialog();
+
                 return true;
             default:
         }
@@ -237,11 +291,26 @@ public class EditGroupActivity extends ActionBarActivity implements
 
         _actionMode = null;
 
-        if (_selectedIndex >= 0 && _selectedIndex < ItemGroup._itemGroupList.size()) {
+        if (_selectedIndex >= 0 && _selectedIndex < ItemFactory.getItemList().size()) {
 
             _listView.setItemChecked(_selectedIndex, false);
         }
 
         _toolbar.setTitle("Group List");
     }
+
+    @Override
+    public void onBackPressed() {
+
+        if (_actionMode != null) {
+            _actionMode.finish();
+        } else {
+            Intent returnIntent = new Intent();
+            setResult(RESULT_OK, returnIntent);
+            finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        }
+    }
 }
+
+

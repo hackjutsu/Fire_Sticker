@@ -8,7 +8,7 @@ public class Item {
     private String _frontSide = null;
     private String _backSide = null;
     private String _title = null;
-    private boolean _light = false;
+    private boolean _bookMark = false;
 
     public Item(String frontSide, String backSide, String title) {
         _frontSide = frontSide;
@@ -16,11 +16,11 @@ public class Item {
         _title = title;
     }
 
-    public Item(String frontSide, String backSide, String title, boolean light) {
+    public Item(String frontSide, String backSide, String title, boolean bookMark) {
         _frontSide = frontSide;
         _backSide = backSide;
         _title = title;
-        _light = light;
+        _bookMark = bookMark;
     }
 
     public void setFrontSide(String frontSide) {
@@ -34,8 +34,9 @@ public class Item {
     public void setTitle(String _title) {
         this._title = _title;
     }
-    public void setLight(boolean light) {
-        _light = light;
+
+    public void setBookMark(boolean bookMark) {
+        _bookMark = bookMark;
     }
 
     public String getFrontSide() {
@@ -50,8 +51,8 @@ public class Item {
         return _title;
     }
 
-    public boolean getLight() {
-        return _light;
+    public boolean getBookMark() {
+        return _bookMark;
     }
 
     public String toString() {

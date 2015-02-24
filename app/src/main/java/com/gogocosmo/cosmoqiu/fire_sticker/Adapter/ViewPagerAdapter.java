@@ -27,15 +27,23 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
+        //TODO:Add Support for Group Id
 
-        if (position == 0) // if the position is 0 we are returning the First tab
-        {
-            TabFragment tabFragment = new TabFragment();
-            return tabFragment;
-        } else {
-            TabFragment tabFragment = new TabFragment();
-            return tabFragment;
-        }
+        TabFragment tabFragment = new TabFragment();
+        tabFragment.setGrouId(position);
+        return tabFragment;
+
+
+
+
+//        if (position == 0) // if the position is 0 we are returning the First tab
+//        {
+//            TabFragment tabFragment = new TabFragment();
+//            return tabFragment;
+//        } else {
+//            TabFragment tabFragment = new TabFragment();
+//            return tabFragment;
+//        }
     }
 
     // This method return the titles for the Tabs in the Tab Strip

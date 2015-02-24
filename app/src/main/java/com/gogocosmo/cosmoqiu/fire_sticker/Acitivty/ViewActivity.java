@@ -20,6 +20,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ViewActivity extends ActionBarActivity {
@@ -42,6 +43,7 @@ public class ViewActivity extends ActionBarActivity {
     private String _originBackSide;
     private String _originTitle;
     private Item _item;
+    private int _groupId;
 
     private boolean _onEditMode;
 
@@ -56,8 +58,11 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
+        _groupId = getIntent().getExtras().getInt("GROUP");
+        ArrayList<Item> itemList = ItemFactory.getItemList(_groupId);
+
         int position = getIntent().getExtras().getInt("POSITION");
-        _item = ItemFactory.getItemList().get(position);
+        _item = itemList.get(position);
 
         // Get the width of the Windows and set it as the minHeight of the card
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -70,7 +75,7 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setMinHeight(cardMinHeight);
 
         _bookMark = (ImageView) findViewById(R.id.item_display_bookmark);
-        if (!_item.getLight()) {
+        if (!_item.getBookMark()) {
             _bookMark.setVisibility(View.INVISIBLE);
         }
 
@@ -134,9 +139,10 @@ public class ViewActivity extends ActionBarActivity {
             case android.R.id.home:
                 _onEditMode = false;
                 Intent returnIntent = new Intent();
+                returnIntent.putExtra("GROUP", _groupId);
                 setResult(RESULT_OK, returnIntent);
                 finish();
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
 
             case R.id.action_edit_view:
@@ -155,11 +161,11 @@ public class ViewActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_flag_view:
-                if (_item.getLight()){
-                    _item.setLight(false);
+                if (_item.getBookMark()){
+                    _item.setBookMark(false);
                     _bookMark.setVisibility(View.INVISIBLE);
                 } else {
-                    _item.setLight(true);
+                    _item.setBookMark(true);
                     _bookMark.setVisibility(View.VISIBLE);
                 }
                 return true;
@@ -250,8 +256,9 @@ public class ViewActivity extends ActionBarActivity {
         }
 
         Intent returnIntent = new Intent();
+        returnIntent.putExtra("GROUP", _groupId);
         setResult(RESULT_OK, returnIntent);
         finish();
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

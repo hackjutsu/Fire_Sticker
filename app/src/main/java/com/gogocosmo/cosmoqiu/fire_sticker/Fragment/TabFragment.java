@@ -22,18 +22,23 @@ public class TabFragment extends Fragment {
     private Context _context;
     private OnTabListItemClickListener _tabListItemClickListener;
     private ItemArrayAdapter _itemArrayAdapter;
+    private int _groupId;
 
     public interface OnTabListItemClickListener {
 
-        void OnListItemLongClicked(ListView listView, View view, int position);
+        void OnListItemLongClicked(ListView listView, View view, int groupId, int position);
 
-        void OnListItemClicked(ListView listView, View view, int position);
+        void OnListItemClicked(ListView listView, View view, int groupId, int position);
     }
 
-    ;
-
     public TabFragment() {
-        // Required empty public constructor
+
+    }
+
+    //TODO:Learn and change it to setArgument() later
+    public void setGrouId(int groupId) {
+
+        _groupId = groupId;
     }
 
     @Override
@@ -57,14 +62,14 @@ public class TabFragment extends Fragment {
         _listView = (ListView) v.findViewById(R.id.listview);
 
         _itemArrayAdapter = new ItemArrayAdapter(_context,
-                ItemFactory.getItemList());
+                ItemFactory.getItemList(_groupId));
         _listView.setAdapter(_itemArrayAdapter);
 
         _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemLongClicked(_listView, view, position);
+                _tabListItemClickListener.OnListItemLongClicked(_listView, view, _groupId ,position);
                 return true;
             }
         });
@@ -73,7 +78,7 @@ public class TabFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemClicked(_listView, view, position);
+                _tabListItemClickListener.OnListItemClicked(_listView, view, _groupId ,position);
             }
         });
         return v;

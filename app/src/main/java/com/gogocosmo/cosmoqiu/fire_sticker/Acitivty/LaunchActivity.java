@@ -24,8 +24,8 @@ import android.widget.Toast;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemGroup;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
@@ -36,6 +36,9 @@ public class LaunchActivity extends ActionBarActivity implements
         DrawerRecyclerViewAdapter.IDrawerListItemClickListener,
         android.view.ActionMode.Callback,
         SlidingTabLayout.OnPageScrollListener {
+
+    static final private String TAG = "MEMORY-ACC";
+
 
     // Load the inital data for testing purpose
     static {
@@ -86,21 +89,24 @@ public class LaunchActivity extends ActionBarActivity implements
                 "Dr No"
         };
 
+        for (int j = 0; j < 4; ++j) {
 
-        for (int i = 0; i < 20; ++i) {
-            String title = "";
-            Boolean light = false;
+            ArrayList<Item> list = ItemFactory.createGroup("Group " + String.valueOf(j));
 
-            if (i % 3 == 0) {
-                title = "Awesome Title";
-                light = true;
+            for (int i = 0; i < 20; ++i) {
+                String title = "";
+                Boolean light = false;
+
+                if (i % (j + 1) == 0) {
+                    title = "Awesome Title";
+                    light = true;
+                }
+
+                ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, light);
             }
-
-            ItemFactory.createItem(questionSamples[i], answerSamples[i], title, light);
         }
     }
 
-    final private String TAG = "MEMORY-ACC";
 
     final private int EDIT_GROUP_REQ = 1;
     final private int VIEW_DETIALS_REQ = 2;
@@ -127,6 +133,7 @@ public class LaunchActivity extends ActionBarActivity implements
     private Menu _menu;
     private android.view.ActionMode _actionMode;
     private ListView _activatedItemListView;
+    private int _activatedGroupId;
 
     // The _selectedView keeps track of the reference of the current selected view. It has to be
     // static since the ItemArrayAdapter will update the selected view reference during the list
@@ -147,11 +154,11 @@ public class LaunchActivity extends ActionBarActivity implements
         _toolbar.setTitleTextColor(Color.WHITE);
 
         /*********************************  Tabs Configurations  **********************************/
-        _titles = ItemGroup._itemGroupList;
-        _titles.add("GROUP 0");
-        _titles.add("GROUP 1");
-        _titles.add("GROUP 2");
-        _titles.add("GROUP 3");
+        _titles = ItemFactory.getItemGroupList();
+//        _titles.add("GROUP 0");
+//        _titles.add("GROUP 1");
+//        _titles.add("GROUP 2");
+//        _titles.add("GROUP 3");
 
         _pager = (ViewPager) findViewById(R.id.pager);
         _slidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -201,11 +208,11 @@ public class LaunchActivity extends ActionBarActivity implements
 
         _viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
-                ItemGroup._itemGroupList,
-                ItemGroup._itemGroupList.size());
+                ItemFactory.getItemGroupList(),
+                ItemFactory.getItemGroupList().size());
         _pager.setAdapter(_viewPagerAdapter);
 
-        if (ItemGroup._itemGroupList.size() <= 4) {
+        if (ItemFactory.getItemGroupList().size() <= 4) {
             // To make the Tabs Fixed set this true, This makes the _slidingTabsLayout Space Evenly
             // in Available width
             _slidingTabsLayout.setDistributeEvenly(true);
@@ -218,7 +225,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void updateDrawerItems() {
 
-        String[] osArray = ItemGroup._itemGroupList.toArray(new String[ItemGroup._itemGroupList.size()]);
+        String[] osArray = ItemFactory.getItemGroupList().toArray(new String[ItemFactory.getItemGroupList().size()]);
         _drawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, "", "", PROFILE, this);
 
         // Setting the adapter to RecyclerView
@@ -337,28 +344,30 @@ public class LaunchActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void OnListItemLongClicked(ListView listView, View view, int position) {
-
+    public void OnListItemLongClicked(ListView listView, View view, int groupId, int position) {
+        //TODO:Add Support for item list click
         listView.setItemChecked(position, true);
 
-        ItemFactory.setSelectedItemIndex(position);
+        ItemFactory.setSelectedGroupItemIndex(groupId, position);
         _selectedView = view;
         _activatedItemListView = listView;
+        _activatedGroupId = groupId;
 
         startActionMode(this);
     }
 
     @Override
-    public void OnListItemClicked(ListView listView, View view, int position) {
-
+    public void OnListItemClicked(ListView listView, View view, int groupId, int position) {
+        //TODO:Add Support for item list long click
         if (_actionMode != null) {
             _selectedView = view;
-            ItemFactory.setSelectedItemIndex(position);
+            ItemFactory.setSelectedGroupItemIndex(groupId, position);
             return;
         }
 
         Intent intent = new Intent(this, ViewActivity.class);
         intent.putExtra("POSITION", position);
+        intent.putExtra("GROUP", groupId);
         startActivityForResult(intent, VIEW_DETIALS_REQ);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
@@ -422,7 +431,8 @@ public class LaunchActivity extends ActionBarActivity implements
         _actionMode = null;
 
         if (_activatedItemListView != null) {
-            _activatedItemListView.setItemChecked(ItemFactory.getSelectedItemIndex(), false);
+            //TODO:Add Support for Group ID
+            _activatedItemListView.setItemChecked(ItemFactory.getSelectedItemIndex(_activatedGroupId), false);
         }
     }
 
@@ -503,6 +513,9 @@ public class LaunchActivity extends ActionBarActivity implements
             if (resultCode == RESULT_OK) {
                 updateDrawerItems();
                 updateSlidingTabs();
+                int groupId = data.getExtras().getInt("GROUP");
+                _slidingTabsLayout.setCurrentTab(groupId);
+
             }
             if (resultCode == RESULT_CANCELED) {
 
@@ -512,6 +525,7 @@ public class LaunchActivity extends ActionBarActivity implements
                 int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
                 updateDrawerItems();
                 updateSlidingTabs();
+                _slidingTabsLayout.setCurrentTab(updatedGroupId);
             }
             if (resultCode == RESULT_CANCELED) {
 

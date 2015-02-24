@@ -61,7 +61,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         String frontStr = _values.get(position).getFrontSide();
         String backStr = _values.get(position).getBackSide();
-        boolean light = _values.get(position).getLight();
+        boolean light = _values.get(position).getBookMark();
 
         if (frontStr.isEmpty()) {
             frontStr = "Blank Front Side";

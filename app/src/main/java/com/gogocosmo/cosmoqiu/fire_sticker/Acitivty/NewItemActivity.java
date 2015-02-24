@@ -14,7 +14,6 @@ import android.widget.Spinner;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
-import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemGroup;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.Random;
@@ -69,7 +68,7 @@ public class NewItemActivity extends ActionBarActivity {
 
         _spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                R.layout.new_item_spinner_rowlayout, ItemGroup._itemGroupList);
+                R.layout.new_item_spinner_rowlayout, ItemFactory.getItemGroupList());
         dataAdapter.setDropDownViewResource(R.layout.new_item_spinner_rowlayout);
         _spinner.setAdapter(dataAdapter);
         _spinner.setSelection(getIntent().getExtras().getInt("CURRENT_TAB"));
@@ -136,6 +135,6 @@ public class NewItemActivity extends ActionBarActivity {
             newBackSide = "";
         }
 
-        ItemFactory.createItem(newFrontSide, newBackSide, newTitle, false);
+        ItemFactory.createItem(_spinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, false);
     }
 }
