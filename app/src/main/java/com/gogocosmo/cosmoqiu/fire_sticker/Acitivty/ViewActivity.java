@@ -10,8 +10,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
@@ -28,11 +30,13 @@ public class ViewActivity extends ActionBarActivity {
     private EditText _frontSideEditText;
     private EditText _backSideEditText;
     private EditText _titleEditText;
+    private ImageView _bookMark;
     private Menu _menu;
     private MenuItem _itemEdit;
     private MenuItem _itemConfirm;
     private MenuItem _itemBlank;
     private MenuItem _itemDelete;
+    private MenuItem _itemFlag;
 
     private String _originFrontSide;
     private String _originBackSide;
@@ -64,6 +68,11 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setBackgroundColor(randomColor());
         _frontSideEditText.setFocusable(false);
         _frontSideEditText.setMinHeight(cardMinHeight);
+
+        _bookMark = (ImageView) findViewById(R.id.item_display_bookmark);
+        if (!_item.getLight()) {
+            _bookMark.setVisibility(View.INVISIBLE);
+        }
 
         _backSideEditText = (EditText) findViewById(R.id.backSide_display_editText);
         _backSideEditText.setBackgroundColor(randomColor());
@@ -101,11 +110,14 @@ public class ViewActivity extends ActionBarActivity {
         _itemConfirm = _menu.findItem(R.id.action_confirm_view);
         _itemBlank = _menu.findItem(R.id.action_blank_view);
         _itemDelete = _menu.findItem(R.id.action_discard_view);
+        _itemFlag = _menu.findItem(R.id.action_flag_view);
+
 
         _itemEdit.setVisible(true);
         _itemConfirm.setVisible(false);
         _itemBlank.setVisible(false);
         _itemDelete.setVisible(false);
+        _itemFlag.setVisible(true);
 
         return true;
     }
@@ -141,6 +153,18 @@ public class ViewActivity extends ActionBarActivity {
                 _onEditMode = false;
                 discardEdits();
                 return true;
+
+            case R.id.action_flag_view:
+                if (_item.getLight()){
+                    _item.setLight(false);
+                    _bookMark.setVisibility(View.INVISIBLE);
+                } else {
+                    _item.setLight(true);
+                    _bookMark.setVisibility(View.VISIBLE);
+                }
+                return true;
+
+            default:
         }
         return super.onOptionsItemSelected(item);
     }
@@ -155,6 +179,7 @@ public class ViewActivity extends ActionBarActivity {
         _itemEdit.setVisible(false);
         _itemBlank.setVisible(true);
         _itemDelete.setVisible(true);
+        _itemFlag.setVisible(false);
         _toolbar.setTitle("Edit Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
@@ -173,6 +198,7 @@ public class ViewActivity extends ActionBarActivity {
         _itemEdit.setVisible(true);
         _itemBlank.setVisible(false);
         _itemDelete.setVisible(false);
+        _itemFlag.setVisible(true);
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
@@ -186,6 +212,7 @@ public class ViewActivity extends ActionBarActivity {
         imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
+
     }
 
     private void confirmEdits() {
@@ -198,6 +225,7 @@ public class ViewActivity extends ActionBarActivity {
         _itemEdit.setVisible(true);
         _itemBlank.setVisible(false);
         _itemDelete.setVisible(false);
+        _itemFlag.setVisible(true);
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
@@ -218,6 +246,7 @@ public class ViewActivity extends ActionBarActivity {
 
         if (_onEditMode == true) {
             discardEdits();
+            return;
         }
 
         Intent returnIntent = new Intent();

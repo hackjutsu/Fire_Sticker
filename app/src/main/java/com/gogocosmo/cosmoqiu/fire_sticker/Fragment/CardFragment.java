@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
@@ -15,8 +16,11 @@ public class CardFragment extends Fragment {
 
     private final String TAG = "MEMORY-ACC";
     private TextView _card;
+    private boolean _marked = false;
     private int _color;
     private String _text;
+
+
 
 
     @Override
@@ -40,6 +44,11 @@ public class CardFragment extends Fragment {
         _card = (TextView) view.findViewById(R.id.card);
         _card.setBackgroundColor(_color);
         _card.setText(_text);
+
+        ImageView bookMark = (ImageView) view.findViewById(R.id.item_card_bookmark);
+        if (!_marked) {
+            bookMark.setVisibility(View.INVISIBLE);
+        }
 
 
         return view;
@@ -87,6 +96,10 @@ public class CardFragment extends Fragment {
 
     public void setCardText(String text) {
         _text = text;
+    }
+
+    public void setMarked(boolean marked) {
+        _marked = marked;
     }
 
 }

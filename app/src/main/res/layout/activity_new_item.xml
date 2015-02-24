@@ -46,7 +46,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/frontSide_input_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,9 +66,9 @@
                     android:textSize="20sp"
                     android:padding="10dp"
                     android:hint="   Front Side   " />
-            </LinearLayout>
+            </FrameLayout>
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/backSide_input_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                     android:textSize="20sp"
                     android:padding="10dp"
                     android:hint="  (Optional) Back Side   " />
-            </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"

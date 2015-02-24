@@ -51,9 +51,6 @@ public class CarouselActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         _title = (TextView) findViewById(R.id.toolbar_title);
-        _title.setText("Awesome!!");
-//        _toolbar.setTitleTextColor(Color.WHITE);
-//        _toolbar.text
 
         _topFragment = new TopFragment();
         getSupportFragmentManager()
@@ -181,6 +178,7 @@ public class CarouselActivity extends ActionBarActivity {
         int cardColor = randomColor();
         newCard.setCardColor(cardColor);
         newCard.setCardText(item.getFrontSide());
+        newCard.setMarked(item.getLight());
 
         // Add this new card info to card trace
         _cardTrace.add(new CardHolder(cardColor, item));
@@ -229,6 +227,8 @@ public class CarouselActivity extends ActionBarActivity {
         CardFragment preCard = new CardFragment();
         preCard.setCardColor(currentHolder.getColor());
         preCard.setCardText(currentHolder.getItem().getFrontSide());
+        preCard.setMarked(currentHolder.getItem().getLight());
+
         _currentCard = preCard;
 
         String id = UUID.randomUUID().toString();
