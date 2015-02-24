@@ -161,6 +161,7 @@ public class LaunchActivity extends ActionBarActivity implements
             @Override
             public int getIndicatorColor(int position) {
                 return getResources().getColor(R.color.tabsScrollColor);
+//                return getResources().getColor(R.color.BLUE);
             }
         });
 

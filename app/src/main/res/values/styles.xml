@@ -6,8 +6,10 @@
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-                
+
+        <!--<item name="android:windowBackground">@color/ColorPrimary</item>                -->
         <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">false</item>-->
 
 
         <item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>
