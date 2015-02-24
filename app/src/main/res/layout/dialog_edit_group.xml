@@ -61,7 +61,7 @@
             android:layout_weight="1"
             android:paddingLeft="3dp"
             android:gravity="center"
-            android:hint="NEW GROUP"/>
+            android:hint="GROUP NAME"/>
 
     </LinearLayout>
 

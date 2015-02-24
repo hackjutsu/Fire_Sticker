@@ -89,9 +89,12 @@ public class LaunchActivity extends ActionBarActivity implements
                 "Dr No"
         };
 
-        for (int j = 0; j < 4; ++j) {
+        ItemFactory.createGroup("Job Steve");
+        ItemFactory.createGroup("Larry Page");
+        ItemFactory.createGroup("Elon Musk");
+        ItemFactory.createGroup("Bill Gates");
 
-            ArrayList<Item> list = ItemFactory.createGroup("Group " + String.valueOf(j));
+        for (int j = 0; j < ItemFactory.getItemGroupList().size(); ++j) {
 
             for (int i = 0; i < 20; ++i) {
                 String title = "";
@@ -109,7 +112,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
 
     final private int EDIT_GROUP_REQ = 1;
-    final private int VIEW_DETIALS_REQ = 2;
+    final private int VIEW_DETAILS_REQ = 2;
     final private int NEW_ITEM_REQ = 3;
 
     private ImageButton _fireButton;
@@ -155,10 +158,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
         /*********************************  Tabs Configurations  **********************************/
         _titles = ItemFactory.getItemGroupList();
-//        _titles.add("GROUP 0");
-//        _titles.add("GROUP 1");
-//        _titles.add("GROUP 2");
-//        _titles.add("GROUP 3");
 
         _pager = (ViewPager) findViewById(R.id.pager);
         _slidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
@@ -168,7 +167,6 @@ public class LaunchActivity extends ActionBarActivity implements
             @Override
             public int getIndicatorColor(int position) {
                 return getResources().getColor(R.color.tabsScrollColor);
-//                return getResources().getColor(R.color.BLUE);
             }
         });
 
@@ -183,7 +181,9 @@ public class LaunchActivity extends ActionBarActivity implements
                 AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
                 v.startAnimation(buttonClick);
 
+                // TODO: (DONE) add groupId support for carousel activity
                 Intent intent = new Intent(LaunchActivity.this, CarouselActivity.class);
+                intent.putExtra("GROUP", _activatedGroupId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -206,6 +206,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void updateSlidingTabs() {
 
+        // TODO: Maybe add support for method notifyDataChanged() here
         _viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
                 ItemFactory.getItemGroupList(),
@@ -345,7 +346,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     @Override
     public void OnListItemLongClicked(ListView listView, View view, int groupId, int position) {
-        //TODO:Add Support for item list click
+        //TODO: (DONE) Add Support for item list click
         listView.setItemChecked(position, true);
 
         ItemFactory.setSelectedGroupItemIndex(groupId, position);
@@ -358,7 +359,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     @Override
     public void OnListItemClicked(ListView listView, View view, int groupId, int position) {
-        //TODO:Add Support for item list long click
+        //TODO: (DONE) Add Support for item list long click
         if (_actionMode != null) {
             _selectedView = view;
             ItemFactory.setSelectedGroupItemIndex(groupId, position);
@@ -368,7 +369,7 @@ public class LaunchActivity extends ActionBarActivity implements
         Intent intent = new Intent(this, ViewActivity.class);
         intent.putExtra("POSITION", position);
         intent.putExtra("GROUP", groupId);
-        startActivityForResult(intent, VIEW_DETIALS_REQ);
+        startActivityForResult(intent, VIEW_DETAILS_REQ);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
@@ -431,7 +432,7 @@ public class LaunchActivity extends ActionBarActivity implements
         _actionMode = null;
 
         if (_activatedItemListView != null) {
-            //TODO:Add Support for Group ID
+            //TODO: (DONE) Add Support for Group ID
             _activatedItemListView.setItemChecked(ItemFactory.getSelectedItemIndex(_activatedGroupId), false);
         }
     }
@@ -455,11 +456,14 @@ public class LaunchActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void OnPageScrolled() {
+    public void OnPageScrolled(int position) {
         // Called when clients scroll the page tab
         if (_actionMode != null) {
             _actionMode.finish();
         }
+
+        _activatedGroupId = position;
+//        Log.d(TAG, "_activatedGroupId = " + String.valueOf(_activatedGroupId));
     }
 
     @Override
@@ -509,12 +513,13 @@ public class LaunchActivity extends ActionBarActivity implements
             if (resultCode == RESULT_CANCELED) {
 
             }
-        } else if (requestCode == VIEW_DETIALS_REQ) {
+        } else if (requestCode == VIEW_DETAILS_REQ) {
             if (resultCode == RESULT_OK) {
-                updateDrawerItems();
+//                updateDrawerItems(); // We don't need to update Drawer list here
                 updateSlidingTabs();
-                int groupId = data.getExtras().getInt("GROUP");
-                _slidingTabsLayout.setCurrentTab(groupId);
+//                int groupId = data.getExtras().getInt("GROUP");
+//                Log.d(TAG, "VIEW_DETAILS_REQ!");
+                _slidingTabsLayout.setCurrentTab(_activatedGroupId);
 
             }
             if (resultCode == RESULT_CANCELED) {
@@ -523,7 +528,7 @@ public class LaunchActivity extends ActionBarActivity implements
         } else if (requestCode == NEW_ITEM_REQ) {
             if (resultCode == RESULT_OK) {
                 int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
-                updateDrawerItems();
+//                updateDrawerItems();
                 updateSlidingTabs();
                 _slidingTabsLayout.setCurrentTab(updatedGroupId);
             }

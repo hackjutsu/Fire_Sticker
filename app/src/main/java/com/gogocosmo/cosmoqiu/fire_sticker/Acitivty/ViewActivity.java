@@ -252,6 +252,7 @@ public class ViewActivity extends ActionBarActivity {
 
         if (_onEditMode == true) {
             discardEdits();
+            _onEditMode = false;
             return;
         }
 

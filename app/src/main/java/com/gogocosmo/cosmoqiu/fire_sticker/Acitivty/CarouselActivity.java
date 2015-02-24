@@ -36,8 +36,9 @@ public class CarouselActivity extends ActionBarActivity {
     private TopFragment _topFragment;
     private CardFragment _currentCard;
 
-    Toolbar _toolbar;
-    TextView _title;
+    private Toolbar _toolbar;
+    private TextView _title;
+    private int _groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,9 @@ public class CarouselActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         _title = (TextView) findViewById(R.id.toolbar_title);
+
+
+        _groupId = getIntent().getExtras().getInt("GROUP");
 
         _topFragment = new TopFragment();
         getSupportFragmentManager()
@@ -124,7 +128,7 @@ public class CarouselActivity extends ActionBarActivity {
                         .commit();
 
                 _currentCard.swipeUpEvent(
-                        ItemFactory.getItemList().get(_itemIndex).getBackSide());
+                        ItemFactory.getItemList(_groupId).get(_itemIndex).getBackSide());
             }
         }
     }
@@ -141,7 +145,7 @@ public class CarouselActivity extends ActionBarActivity {
 //                        )
                         .hide(_topFragment)
                         .commit();
-                _currentCard.swipeDownEvent(ItemFactory.getItemList().get(_itemIndex).getFrontSide());
+                _currentCard.swipeDownEvent(ItemFactory.getItemList(_groupId).get(_itemIndex).getFrontSide());
             }
         }
     }
@@ -152,7 +156,7 @@ public class CarouselActivity extends ActionBarActivity {
         int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
         CardColor randomColor = CardColor.CardList.get(randomColorIndex);
 
-        Log.d(TAG, randomColor.getColorName());
+//        Log.d(TAG, randomColor.getColorName());
 //        Toast.makeText(this, randomColor.getColorName(), Toast.LENGTH_SHORT).show();
         return randomColor.getColorInt();
     }
@@ -163,7 +167,7 @@ public class CarouselActivity extends ActionBarActivity {
         _itemIndex++;
 
         // Return on invalid card index
-        if (_itemIndex >= ItemFactory.getItemList().size()) {
+        if (_itemIndex >= ItemFactory.getItemList(_groupId).size()) {
             _itemIndex--;
 
             Toast.makeText(this, "This is the last card ~", Toast.LENGTH_SHORT).show();
@@ -171,7 +175,7 @@ public class CarouselActivity extends ActionBarActivity {
         }
         ;
 
-        Item item = ItemFactory.getItemList().get(_itemIndex);
+        Item item = ItemFactory.getItemList(_groupId).get(_itemIndex);
 
         // Set up a new card with a new color
         CardFragment newCard = new CardFragment();

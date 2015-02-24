@@ -63,7 +63,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     public interface OnPageScrollListener {
-        void OnPageScrolled();
+        void OnPageScrolled(int position);
     }
 
     private OnPageScrollListener _pageScrollListener;
@@ -294,7 +294,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             }
 
             if (_pageScrollListener != null) {
-                _pageScrollListener.OnPageScrolled();
+                _pageScrollListener.OnPageScrolled(position);
             }
         }
 
