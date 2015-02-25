@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -16,7 +16,7 @@
         <ListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="2.0sp"
             android:divider="@android:color/transparent"
             android:dividerHeight="4.0sp"

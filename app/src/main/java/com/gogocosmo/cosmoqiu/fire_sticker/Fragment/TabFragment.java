@@ -53,6 +53,12 @@ public class TabFragment extends Fragment {
     }
 
     @Override
+    public void setArguments(Bundle args) {
+        super.setArguments(args);
+        _groupId = args.getInt("GROUP");
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         _context = activity;
@@ -68,6 +74,13 @@ public class TabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (savedInstanceState!=null) {
+
+            Bundle bundle = getArguments();
+            _groupId = bundle.getInt("GROUP");
+        }
+
         View v = inflater.inflate(R.layout.item_list, container, false);
 
         _listView = (ListView) v.findViewById(R.id.listview);
@@ -94,4 +107,13 @@ public class TabFragment extends Fragment {
         });
         return v;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        outState.putInt("GROUP", _groupId);
+        super.onSaveInstanceState(outState);
+    }
+
+
 }

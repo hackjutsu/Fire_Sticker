@@ -98,7 +98,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         for (int j = 0; j < ItemFactory.getItemGroupList().size(); ++j) {
 
-            for (int i = 0; i < 5; ++i) {
+            for (int i = 0; i < 10; ++i) {
                 String title = "";
                 Boolean light = false;
 

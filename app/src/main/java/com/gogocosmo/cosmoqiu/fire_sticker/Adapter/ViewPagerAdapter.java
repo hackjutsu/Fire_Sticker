@@ -1,5 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -50,7 +51,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 //        }
 
         tabFragment = new TabFragment();
-        tabFragment.setGrouId(position);
+
+        Bundle args = new Bundle();
+        args.putInt("GROUP", position);
+        tabFragment.setArguments(args);
+//        tabFragment.setGrouId(position);
 
         return tabFragment;
     }
