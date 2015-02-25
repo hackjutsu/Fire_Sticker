@@ -112,7 +112,6 @@ public class LaunchActivity extends ActionBarActivity implements
         }
     }
 
-
     final private int EDIT_GROUP_REQ = 1;
     final private int VIEW_DETAILS_REQ = 2;
     final private int NEW_ITEM_REQ = 3;
@@ -124,7 +123,6 @@ public class LaunchActivity extends ActionBarActivity implements
     private ViewPager _pager;
     private ViewPagerAdapter _viewPagerAdapter;
     private SlidingTabLayout _slidingTabsLayout;
-    private ArrayList<String> _titles;
 
     // Declaring Drawer Views and Variables
     private ActionBarDrawerToggle _drawerToggle;
@@ -141,12 +139,6 @@ public class LaunchActivity extends ActionBarActivity implements
     private int _activatedGroupId;
     private ItemArrayAdapter _activatedItemArrayAdapter;
 
-    // The _selectedView keeps track of the reference of the current selected view. It has to be
-    // static since the ItemArrayAdapter will update the selected view reference during the list
-    // view item recycling. It would be simpler if the view cycling is disabled, but this approach
-    // will sacrifice memory performance.
-//    static public View _selectedView = null;
-
     int PROFILE = R.drawable.lollipop;
 
     @Override
@@ -160,8 +152,6 @@ public class LaunchActivity extends ActionBarActivity implements
         _toolbar.setTitleTextColor(Color.WHITE);
 
         /*********************************  Tabs Configurations  **********************************/
-        _titles = ItemFactory.getItemGroupList();
-
         _pager = (ViewPager) findViewById(R.id.pager);
         _slidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
 
@@ -294,7 +284,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
         ItemFactory.setSelectedGroupItemIndex(groupId, position);
         _activatedItemArrayAdapter = adapter;
-//        _selectedView = view;
         _activatedItemListView = listView;
         _activatedGroupId = groupId;
 
@@ -309,7 +298,7 @@ public class LaunchActivity extends ActionBarActivity implements
                                   int position) {
         //TODO: (DONE) Add Support for item list long click
         if (_actionMode != null) {
-//            _selectedView = view;
+
             ItemFactory.setSelectedGroupItemIndex(groupId, position);
             return;
         }
