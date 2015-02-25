@@ -53,9 +53,9 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) rowView.getTag();
         }
 
-        if (position == ItemFactory.getSelectedItemIndex()) {
-            LaunchActivity._selectedView = rowView;
-        }
+//        if (position == ItemFactory.getSelectedItemIndex()) {
+//            LaunchActivity._selectedView = rowView;
+//        }
 
         viewHolder._groupName.setText(_values.get(position));
         viewHolder._groupSize.setText(String.valueOf(ItemFactory.getItemList(position).size()));

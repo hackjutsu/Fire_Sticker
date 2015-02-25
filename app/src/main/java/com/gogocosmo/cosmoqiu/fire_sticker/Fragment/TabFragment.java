@@ -46,12 +46,6 @@ public class TabFragment extends Fragment {
 
     }
 
-    //TODO:Learn and change it to setArgument() later
-    public void setGrouId(int groupId) {
-
-        _groupId = groupId;
-    }
-
     @Override
     public void setArguments(Bundle args) {
         super.setArguments(args);
@@ -114,6 +108,4 @@ public class TabFragment extends Fragment {
         outState.putInt("GROUP", _groupId);
         super.onSaveInstanceState(outState);
     }
-
-
 }

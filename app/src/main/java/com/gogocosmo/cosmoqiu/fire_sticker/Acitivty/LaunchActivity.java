@@ -145,7 +145,7 @@ public class LaunchActivity extends ActionBarActivity implements
     // static since the ItemArrayAdapter will update the selected view reference during the list
     // view item recycling. It would be simpler if the view cycling is disabled, but this approach
     // will sacrifice memory performance.
-    static public View _selectedView = null;
+//    static public View _selectedView = null;
 
     int PROFILE = R.drawable.lollipop;
 
@@ -294,7 +294,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         ItemFactory.setSelectedGroupItemIndex(groupId, position);
         _activatedItemArrayAdapter = adapter;
-        _selectedView = view;
+//        _selectedView = view;
         _activatedItemListView = listView;
         _activatedGroupId = groupId;
 
@@ -309,7 +309,7 @@ public class LaunchActivity extends ActionBarActivity implements
                                   int position) {
         //TODO: (DONE) Add Support for item list long click
         if (_actionMode != null) {
-            _selectedView = view;
+//            _selectedView = view;
             ItemFactory.setSelectedGroupItemIndex(groupId, position);
             return;
         }

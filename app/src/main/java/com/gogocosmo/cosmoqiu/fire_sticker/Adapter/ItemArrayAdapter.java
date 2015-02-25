@@ -62,9 +62,9 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             viewHolder = (ViewHolder) rowView.getTag();
         }
 
-        if (position == ItemFactory.getSelectedItemIndex()) {
-            LaunchActivity._selectedView = rowView;
-        }
+//        if (position == ItemFactory.getSelectedItemIndex()) {
+//            LaunchActivity._selectedView = rowView;
+//        }
 
         String frontStr = _values.get(position).getFrontSide();
         String backStr = _values.get(position).getBackSide();
