@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -558,7 +559,7 @@ public class LaunchActivity extends ActionBarActivity implements
     }//onActivityResult
 
     // Adapted from Google I/O 2013
-    public void animateRemoval(final ItemArrayAdapter adapter,
+    public void animateRemoval(final ArrayAdapter adapter,
                                final ListView listview,
                                int position) {
 

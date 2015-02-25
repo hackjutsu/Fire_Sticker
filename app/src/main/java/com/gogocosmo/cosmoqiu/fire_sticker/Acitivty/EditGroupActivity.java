@@ -134,7 +134,6 @@ public class EditGroupActivity extends ActionBarActivity implements
                 _adapter.notifyDataSetChanged();
                 updateTotalStickerNum();
                 dialog.dismiss();
-//                _listView.setItemChecked(ItemFactory.getItemGroupList().size() - 1, true);
             }
         });
 
@@ -309,8 +308,6 @@ public class EditGroupActivity extends ActionBarActivity implements
         itemSlash.setVisible(false);
 
         _actionMode = null;
-
-        Log.d(TAG, "_selectedIndex = " + String.valueOf(_selectedIndex));
 
         if ((_selectedIndex >= 0) && (_selectedIndex < ItemFactory.getItemGroupList().size())) {
 
