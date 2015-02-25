@@ -147,6 +147,15 @@ public class ItemFactory {
         return newItemList;
     }
 
+    public static ArrayList<ArrayList<Item>> getItemLists() {
+
+        return _itemLists;
+    }
+
+    public static ArrayList<Integer> getSelectedItemIndexesList() {
+        return _selectedItemIndexes;
+    }
+
     public static ArrayList<Item> getItemList(int groupId) {
 
         if (groupId < 0 || groupId >= _itemLists.size()) {

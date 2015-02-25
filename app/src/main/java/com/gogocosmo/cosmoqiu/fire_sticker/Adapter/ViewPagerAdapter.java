@@ -3,7 +3,6 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
 
@@ -54,16 +53,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         tabFragment.setGrouId(position);
 
         return tabFragment;
-
-
-//        if (position == 0) // if the position is 0 we are returning the First tab
-//        {
-//            TabFragment tabFragment = new TabFragment();
-//            return tabFragment;
-//        } else {
-//            TabFragment tabFragment = new TabFragment();
-//            return tabFragment;
-//        }
     }
 
     // This method return the titles for the Tabs in the Tab Strip
@@ -76,18 +65,5 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return NumbOfTabs;
-    }
-
-    public void addNewTab(String title) {
-
-        this.NumbOfTabs++;
-        this._titles.add(title);
-        this.Titles = _titles.toArray(new CharSequence[_titles.size()]);
-        notifyDataSetChanged();
-    }
-
-    public void notifyListViewDataChanged(int groupId) {
-        //TODO: UPDATE MODEL SYSTEM TO SUPPORT MULTIPLE GROUPS
-//        ((TabFragment)getItem(groupId)).notifyDataChanged();
     }
 }

@@ -35,7 +35,7 @@
     <item
         android:id="@+id/action_discard_view"
         android:orderInCategory="100"
-        android:icon="@drawable/delete_action"
+        android:icon="@drawable/cross_action"
         app:showAsAction="ifRoom"
         android:title="Discard" />
 </menu>

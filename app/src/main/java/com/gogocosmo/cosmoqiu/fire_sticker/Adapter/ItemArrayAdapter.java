@@ -14,12 +14,15 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private final Context _context;
     private final ArrayList<Item> _values;
     final private String TAG = "MEMORY-ACC";
+
+    HashMap<Item, Integer> mIdMap = new HashMap<>();
 
 
     public class ViewHolder {
@@ -33,6 +36,10 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         super(context, R.layout.item_list_rowlayout_improved, values);
         this._context = context;
         this._values = values;
+
+        for (int i = 0; i < values.size(); ++i) {
+            mIdMap.put(values.get(i), i);
+        }
     }
 
     @Override
@@ -84,4 +91,23 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         return rowView;
     }
+
+    @Override
+    public long getItemId(int position) {
+
+        if (position < 0 || position >= mIdMap.size()) {
+            return -1;
+        }
+
+        Item item = getItem(position);
+        return mIdMap.get(item);
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
 }
+
+
+

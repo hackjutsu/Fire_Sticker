@@ -16,20 +16,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
+import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
-import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LaunchActivity extends ActionBarActivity implements
         TabFragment.OnTabListItemClickListener,
@@ -96,7 +97,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         for (int j = 0; j < ItemFactory.getItemGroupList().size(); ++j) {
 
-            for (int i = 0; i < 20; ++i) {
+            for (int i = 0; i < 10; ++i) {
                 String title = "";
                 Boolean light = false;
 
@@ -137,6 +138,7 @@ public class LaunchActivity extends ActionBarActivity implements
     private android.view.ActionMode _actionMode;
     private ListView _activatedItemListView;
     private int _activatedGroupId;
+    private ItemArrayAdapter _activatedItemArrayAdapter;
 
     // The _selectedView keeps track of the reference of the current selected view. It has to be
     // static since the ItemArrayAdapter will update the selected view reference during the list
@@ -270,6 +272,87 @@ public class LaunchActivity extends ActionBarActivity implements
         _drawerLayout.setDrawerListener(_drawerToggle); // Drawer Listener set to the Drawer toggle
     }
 
+    private void deleteListItem() {
+
+        int toRemoveIndex = ItemFactory.getSelectedItemIndex(_activatedGroupId);
+
+        animateRemoval(
+                _activatedItemArrayAdapter,
+                _activatedItemListView,
+                toRemoveIndex);
+    }
+
+    @Override
+    public void OnListItemLongClicked(ItemArrayAdapter adapter,
+                                      ListView listView,
+                                      View view,
+                                      int groupId,
+                                      int position) {
+        //TODO: (DONE) Add Support for item list click
+        listView.setItemChecked(position, true);
+
+        ItemFactory.setSelectedGroupItemIndex(groupId, position);
+        _activatedItemArrayAdapter = adapter;
+        _selectedView = view;
+        _activatedItemListView = listView;
+        _activatedGroupId = groupId;
+
+        startActionMode(this);
+    }
+
+    @Override
+    public void OnListItemClicked(ItemArrayAdapter adapter,
+                                  ListView listView,
+                                  View view,
+                                  int groupId,
+                                  int position) {
+        //TODO: (DONE) Add Support for item list long click
+        if (_actionMode != null) {
+            _selectedView = view;
+            ItemFactory.setSelectedGroupItemIndex(groupId, position);
+            return;
+        }
+
+        Intent intent = new Intent(this, ViewActivity.class);
+        intent.putExtra("POSITION", position);
+        intent.putExtra("GROUP", groupId);
+        startActivityForResult(intent, VIEW_DETAILS_REQ);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public void onDrawerItemClicked(View v, int position, int viewType) {
+
+        switch (viewType) {
+            case DrawerRecyclerViewAdapter.TYPE_ITEM:
+                // Set the new Tab as the current Tab
+                _slidingTabsLayout.setCurrentTab(position);
+                _drawerLayout.closeDrawers();
+                break;
+            case DrawerRecyclerViewAdapter.TYPE_HEADER:
+
+                break;
+            case DrawerRecyclerViewAdapter.TYPE_END:
+
+                Intent intent = new Intent(this, EditGroupActivity.class);
+                startActivityForResult(intent, EDIT_GROUP_REQ);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                break;
+            default:
+        }
+    }
+
+    @Override
+    public void OnPageScrolled(int position) {
+        // Called when clients scroll the page tab
+        if (_actionMode != null) {
+            _actionMode.finish();
+        }
+
+        _activatedGroupId = position;
+//        Log.d(TAG, "_activatedGroupId = " + String.valueOf(_activatedGroupId));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -306,20 +389,21 @@ public class LaunchActivity extends ActionBarActivity implements
 
         switch (item.getItemId()) {
             case R.id.action_delete:
-                Toast.makeText(this,
-                        "DELETE",
-                        Toast.LENGTH_SHORT).show();
+
+                deleteListItem();
                 if (_actionMode != null) {
                     _actionMode.finish();
                 }
                 return true;
             case R.id.action_add:
+
                 Intent intent = new Intent(this, NewItemActivity.class);
                 intent.putExtra("CURRENT_TAB", _slidingTabsLayout.getCurrentTabPosition());
                 startActivityForResult(intent, NEW_ITEM_REQ);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.action_back:
+
                 if (_actionMode != null) {
                     _actionMode.finish();
                 }
@@ -342,35 +426,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
         super.onConfigurationChanged(newConfig);
         _drawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void OnListItemLongClicked(ListView listView, View view, int groupId, int position) {
-        //TODO: (DONE) Add Support for item list click
-        listView.setItemChecked(position, true);
-
-        ItemFactory.setSelectedGroupItemIndex(groupId, position);
-        _selectedView = view;
-        _activatedItemListView = listView;
-        _activatedGroupId = groupId;
-
-        startActionMode(this);
-    }
-
-    @Override
-    public void OnListItemClicked(ListView listView, View view, int groupId, int position) {
-        //TODO: (DONE) Add Support for item list long click
-        if (_actionMode != null) {
-            _selectedView = view;
-            ItemFactory.setSelectedGroupItemIndex(groupId, position);
-            return;
-        }
-
-        Intent intent = new Intent(this, ViewActivity.class);
-        intent.putExtra("POSITION", position);
-        intent.putExtra("GROUP", groupId);
-        startActivityForResult(intent, VIEW_DETAILS_REQ);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -456,17 +511,6 @@ public class LaunchActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void OnPageScrolled(int position) {
-        // Called when clients scroll the page tab
-        if (_actionMode != null) {
-            _actionMode.finish();
-        }
-
-        _activatedGroupId = position;
-//        Log.d(TAG, "_activatedGroupId = " + String.valueOf(_activatedGroupId));
-    }
-
-    @Override
     public void onBackPressed() {
 
         if (_actionMode != null) {
@@ -478,29 +522,6 @@ public class LaunchActivity extends ActionBarActivity implements
         }
 
         super.onBackPressed();
-    }
-
-    @Override
-    public void onDrawerItemClicked(View v, int position, int viewType) {
-
-        switch (viewType) {
-            case DrawerRecyclerViewAdapter.TYPE_ITEM:
-                // Set the new Tab as the current Tab
-                _slidingTabsLayout.setCurrentTab(position);
-                _drawerLayout.closeDrawers();
-                break;
-            case DrawerRecyclerViewAdapter.TYPE_HEADER:
-
-                break;
-            case DrawerRecyclerViewAdapter.TYPE_END:
-
-                Intent intent = new Intent(this, EditGroupActivity.class);
-                startActivityForResult(intent, EDIT_GROUP_REQ);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-                break;
-            default:
-        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -515,10 +536,8 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         } else if (requestCode == VIEW_DETAILS_REQ) {
             if (resultCode == RESULT_OK) {
-//                updateDrawerItems(); // We don't need to update Drawer list here
+
                 updateSlidingTabs();
-//                int groupId = data.getExtras().getInt("GROUP");
-//                Log.d(TAG, "VIEW_DETAILS_REQ!");
                 _slidingTabsLayout.setCurrentTab(_activatedGroupId);
 
             }
@@ -527,8 +546,8 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         } else if (requestCode == NEW_ITEM_REQ) {
             if (resultCode == RESULT_OK) {
+
                 int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
-//                updateDrawerItems();
                 updateSlidingTabs();
                 _slidingTabsLayout.setCurrentTab(updatedGroupId);
             }
@@ -537,5 +556,80 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         }
     }//onActivityResult
+
+    // Adapted from Google I/O 2013
+    public void animateRemoval(final ItemArrayAdapter adapter,
+                               final ListView listview,
+                               int position) {
+
+        final HashMap<Long, Integer> mItemIdTopMap = new HashMap<>();
+
+        int firstVisiblePosition = listview.getFirstVisiblePosition();
+
+        for (int i = 0; i < listview.getChildCount(); ++i) {
+
+            int tmpPosition = firstVisiblePosition + i;
+
+            if (tmpPosition != position) {
+                View child = listview.getChildAt(i);
+                long itemId = adapter.getItemId(tmpPosition);
+                mItemIdTopMap.put(itemId, child.getTop());
+            }
+        }
+        // Delete the item from the adapter
+        adapter.remove(adapter.getItem(position));
+
+        final ViewTreeObserver observer = listview.getViewTreeObserver();
+        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                observer.removeOnPreDrawListener(this);
+                boolean firstAnimation = true;
+                int firstVisiblePosition = listview.getFirstVisiblePosition();
+                for (int i = 0; i < listview.getChildCount(); ++i) {
+                    final View child = listview.getChildAt(i);
+                    int position = firstVisiblePosition + i;
+                    long itemId = adapter.getItemId(position);
+                    Integer startTop = mItemIdTopMap.get(itemId);
+                    int top = child.getTop();
+                    if (startTop != null) {
+                        if (startTop != top) {
+                            int delta = startTop - top;
+                            child.setTranslationY(delta);
+                            child.animate().setDuration(300).translationY(0);
+                            if (firstAnimation) {
+                                child.animate().withEndAction(new Runnable() {
+                                    public void run() {
+
+                                        listview.setEnabled(true);
+                                    }
+                                });
+                                firstAnimation = false;
+                            }
+                        }
+                    } else {
+                        // Animate new views along with the others. The catch is that they did not
+                        // exist in the start state, so we must calculate their starting position
+                        // based on neighboring views.
+                        int childHeight = child.getHeight() + listview.getDividerHeight();
+                        startTop = top + (i > 0 ? childHeight : -childHeight);
+                        int delta = startTop - top;
+                        child.setTranslationY(delta);
+                        child.animate().setDuration(300).translationY(0);
+                        if (firstAnimation) {
+                            child.animate().withEndAction(new Runnable() {
+                                public void run() {
+
+                                    listview.setEnabled(true);
+                                }
+                            });
+                            firstAnimation = false;
+                        }
+                    }
+                }
+                mItemIdTopMap.clear();
+                return true;
+            }
+        });
+    }
 }
 

@@ -18,17 +18,28 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 public class TabFragment extends Fragment {
 
+    final private String TAG = "MEMORY-ACC";
+
     private ListView _listView;
     private Context _context;
     private OnTabListItemClickListener _tabListItemClickListener;
     private ItemArrayAdapter _itemArrayAdapter;
     private int _groupId;
 
+
     public interface OnTabListItemClickListener {
 
-        void OnListItemLongClicked(ListView listView, View view, int groupId, int position);
+        void OnListItemLongClicked(ItemArrayAdapter adapter,
+                                   ListView listView,
+                                   View view,
+                                   int groupId,
+                                   int position);
 
-        void OnListItemClicked(ListView listView, View view, int groupId, int position);
+        void OnListItemClicked(ItemArrayAdapter adapter,
+                               ListView listView,
+                               View view,
+                               int groupId,
+                               int position);
     }
 
     public TabFragment() {
@@ -69,7 +80,7 @@ public class TabFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemLongClicked(_listView, view, _groupId ,position);
+                _tabListItemClickListener.OnListItemLongClicked(_itemArrayAdapter ,_listView, view, _groupId ,position);
                 return true;
             }
         });
@@ -78,15 +89,9 @@ public class TabFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemClicked(_listView, view, _groupId ,position);
+                _tabListItemClickListener.OnListItemClicked(_itemArrayAdapter, _listView, view, _groupId ,position);
             }
         });
         return v;
-    }
-
-    public void notifyDataChanged() {
-        if (_itemArrayAdapter != null) {
-            _itemArrayAdapter.notifyDataSetChanged();
-        }
     }
 }

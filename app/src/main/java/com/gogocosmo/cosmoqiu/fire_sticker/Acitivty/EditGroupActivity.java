@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,13 +78,13 @@ public class EditGroupActivity extends ActionBarActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _selectedIndex = position;
-//                _selectedView = view;
 
                 if (_actionMode != null) {
                     return;
                 }
 
                 startEditDialog();
+                _listView.setItemChecked(_selectedIndex, true);
             }
         });
 
@@ -133,7 +134,7 @@ public class EditGroupActivity extends ActionBarActivity implements
                 _adapter.notifyDataSetChanged();
                 updateTotalStickerNum();
                 dialog.dismiss();
-                _listView.setItemChecked(ItemFactory.getItemGroupList().size()-1 ,true);
+//                _listView.setItemChecked(ItemFactory.getItemGroupList().size() - 1, true);
             }
         });
 
@@ -173,11 +174,16 @@ public class EditGroupActivity extends ActionBarActivity implements
 
                 String newTitle = groupName.getText().toString();
 
+                if (newTitle.isEmpty()) {
+
+                    newTitle = "NEW GROUP";
+                }
+
                 ItemFactory.createGroup(newTitle);
                 _adapter.notifyDataSetChanged();
                 updateTotalStickerNum();
-                _selectedIndex = ItemFactory.getItemGroupList().size()-1;
-                _listView.setItemChecked(ItemFactory.getItemGroupList().size()-1 ,true);
+                _selectedIndex = ItemFactory.getItemGroupList().size() - 1;
+                _listView.setItemChecked(ItemFactory.getItemGroupList().size() - 1, true);
 
                 dialog.dismiss();
             }
@@ -190,6 +196,15 @@ public class EditGroupActivity extends ActionBarActivity implements
         paramsWindow.width = WindowManager.LayoutParams.MATCH_PARENT;
         paramsWindow.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(paramsWindow);
+    }
+
+    private void deleteGroup() {
+
+        ItemFactory.getItemLists().remove(_selectedIndex);
+        ItemFactory.getItemGroupList().remove(_selectedIndex);
+        ItemFactory.getSelectedItemIndexesList().remove(_selectedIndex);
+        _adapter.notifyDataSetChanged();
+        _actionMode.finish();
     }
 
     @Override
@@ -235,7 +250,11 @@ public class EditGroupActivity extends ActionBarActivity implements
             case R.id.action_add:
 
                 startNewItemDialog();
+                return true;
+            case R.id.action_delete:
 
+                deleteGroup();
+                _listView.setItemChecked(_selectedIndex, false);
                 return true;
             default:
         }
@@ -291,7 +310,9 @@ public class EditGroupActivity extends ActionBarActivity implements
 
         _actionMode = null;
 
-        if (_selectedIndex >= 0 && _selectedIndex < ItemFactory.getItemList().size()) {
+        Log.d(TAG, "_selectedIndex = " + String.valueOf(_selectedIndex));
+
+        if ((_selectedIndex >= 0) && (_selectedIndex < ItemFactory.getItemGroupList().size())) {
 
             _listView.setItemChecked(_selectedIndex, false);
         }
@@ -303,8 +324,10 @@ public class EditGroupActivity extends ActionBarActivity implements
     public void onBackPressed() {
 
         if (_actionMode != null) {
+
             _actionMode.finish();
         } else {
+
             Intent returnIntent = new Intent();
             setResult(RESULT_OK, returnIntent);
             finish();
