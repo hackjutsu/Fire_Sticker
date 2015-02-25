@@ -124,7 +124,7 @@ public class ItemFactory {
                 default:
             }
 
-            SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("MMM/dd/yyyy");
             String formattedDate = df.format(c.getTime());
 
             realTitle = weekDay + ", " + formattedDate;
