@@ -117,7 +117,6 @@ public class ViewActivity extends ActionBarActivity {
         _itemDelete = _menu.findItem(R.id.action_discard_view);
         _itemFlag = _menu.findItem(R.id.action_flag_view);
 
-
         _itemEdit.setVisible(true);
         _itemConfirm.setVisible(false);
         _itemBlank.setVisible(false);

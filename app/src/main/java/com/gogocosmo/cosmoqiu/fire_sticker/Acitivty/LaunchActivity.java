@@ -41,7 +41,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
     static final private String TAG = "MEMORY-ACC";
 
-
     // Load the inital data for testing purpose
     static {
 
@@ -139,7 +138,7 @@ public class LaunchActivity extends ActionBarActivity implements
     private int _activatedGroupId;
     private ItemArrayAdapter _activatedItemArrayAdapter;
 
-    int PROFILE = R.drawable.lollipop;
+    private int PROFILE = R.drawable.lollipop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -346,7 +345,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        Inflate the menu; this adds items to the action bar if it is present.
+//      Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_launch, menu);
         _menu = menu;
 
@@ -421,8 +420,8 @@ public class LaunchActivity extends ActionBarActivity implements
     @Override
     public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
 
-        MenuInflater inflater = mode.getMenuInflater();
-        inflater.inflate(R.menu.menu_launch, menu);
+//        MenuInflater inflater = mode.getMenuInflater();
+//        inflater.inflate(R.menu.menu_launch, menu);
         getSupportActionBar().setTitle("");
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
@@ -457,7 +456,6 @@ public class LaunchActivity extends ActionBarActivity implements
     @Override
     public void onDestroyActionMode(android.view.ActionMode mode) {
         // We are using a fake Action Mode with a toolbar
-        Log.d(TAG, "onDestroyActionMode");
 
         getSupportActionBar().setTitle(_activityTitle);
 
@@ -491,6 +489,7 @@ public class LaunchActivity extends ActionBarActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+
         _slidingTabsLayout.unregisterPageScrollListener(this);
 
         // End the Action Mode when this Activity is no longer visible

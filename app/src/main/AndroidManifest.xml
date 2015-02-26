@@ -9,13 +9,16 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.NewItemActivity"
-            android:label="Create a New Sticker" />
+            android:label="Create a New Sticker"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.CarouselActivity"
-            android:label="@string/title_activity_carousel" />
+            android:label="@string/title_activity_carousel"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity"
-            android:label="@string/title_activity_launch" >
+            android:label="@string/title_activity_launch"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,11 +27,13 @@
         </activity>
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.EditGroupActivity"
-            android:label="@string/title_activity_edit_group" >
+            android:label="@string/title_activity_edit_group"
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ViewActivity"
-            android:label="@string/title_activity_view" >
+            android:label="@string/title_activity_view"
+            android:configChanges="orientation|screenSize">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

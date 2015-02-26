@@ -62,7 +62,7 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
 
         int percentage = (int)((float)ItemFactory.getItemList(position).size()/50 * 100);
 //        int percentage = (int)((float)5/50 * 100);
-        Log.d(TAG, String.valueOf(percentage));
+//        Log.d(TAG, String.valueOf(percentage));
         viewHolder._progressBar.setProgress(percentage);
 
         return rowView;

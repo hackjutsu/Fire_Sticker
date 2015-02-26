@@ -34,8 +34,6 @@ public class EditGroupActivity extends ActionBarActivity implements
 
     private android.view.ActionMode _actionMode;
     private Menu _menu;
-
-    private View _selectedView;
     private int _selectedIndex;
 
     private TextView _totalStickerNum;
@@ -51,24 +49,16 @@ public class EditGroupActivity extends ActionBarActivity implements
         _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
         _listView = (ListView) findViewById(R.id.listview);
-
         _adapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupList());
         _listView.setAdapter(_adapter);
-
         _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                if (_selectedView != null) {
-//                    _selectedView.setActivated(false);
-//                }
-
                 // Important method: set the list item in this position activated.
                 // No matter whether this view is recycled or not.
                 _listView.setItemChecked(position, true);
-
                 _selectedIndex = position;
-                _selectedView = view;
                 startActionMode(EditGroupActivity.this);
                 return true;
             }
@@ -137,7 +127,6 @@ public class EditGroupActivity extends ActionBarActivity implements
             }
         });
 
-
         dialog.show();
 
         WindowManager.LayoutParams paramsWindow = dialog.getWindow().getAttributes();
@@ -188,7 +177,6 @@ public class EditGroupActivity extends ActionBarActivity implements
             }
         });
 
-
         dialog.show();
 
         WindowManager.LayoutParams paramsWindow = dialog.getWindow().getAttributes();
@@ -211,6 +199,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_group, menu);
         _menu = menu;
+
         _toolbar.setTitle("Group List");
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
@@ -258,14 +247,11 @@ public class EditGroupActivity extends ActionBarActivity implements
             default:
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
-        MenuInflater inflater = mode.getMenuInflater();
-        inflater.inflate(R.menu.menu_launch, menu);
         _toolbar.setTitle("Edit Mode");
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
@@ -332,5 +318,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         }
     }
 }
+
+
 
 
