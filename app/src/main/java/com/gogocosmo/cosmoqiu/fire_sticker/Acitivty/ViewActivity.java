@@ -160,7 +160,7 @@ public class ViewActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_flag_view:
-                if (_item.getBookMark()){
+                if (_item.getBookMark()) {
                     _item.setBookMark(false);
                     _bookMark.setVisibility(View.INVISIBLE);
                 } else {
