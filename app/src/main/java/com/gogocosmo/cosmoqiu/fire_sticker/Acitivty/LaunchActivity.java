@@ -11,9 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -26,11 +24,11 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LaunchActivity extends ActionBarActivity implements
@@ -281,7 +279,7 @@ public class LaunchActivity extends ActionBarActivity implements
         //TODO: (DONE) Add Support for item list click
         listView.setItemChecked(position, true);
 
-        ItemFactory.setSelectedGroupItemIndex(groupId, position);
+        ItemFactory.setSelectedItemIndex(groupId, position);
         _activatedItemArrayAdapter = adapter;
         _activatedItemListView = listView;
         _activatedGroupId = groupId;
@@ -298,7 +296,7 @@ public class LaunchActivity extends ActionBarActivity implements
         //TODO: (DONE) Add Support for item list long click
         if (_actionMode != null) {
 
-            ItemFactory.setSelectedGroupItemIndex(groupId, position);
+            ItemFactory.setSelectedItemIndex(groupId, position);
             return;
         }
 
@@ -566,7 +564,10 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         }
         // Delete the item from the adapter
-        adapter.remove(adapter.getItem(position));
+        Item toDelete = (Item) adapter.getItem(position);
+        adapter.remove(toDelete);
+        // Notify Database the Deletion
+        ItemFactory.notifyItemDeletion(_activatedGroupId, toDelete);
 
         final ViewTreeObserver observer = listview.getViewTreeObserver();
         observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

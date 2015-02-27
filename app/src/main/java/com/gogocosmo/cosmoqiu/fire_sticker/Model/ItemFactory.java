@@ -10,6 +10,7 @@ import java.util.Calendar;
  * Created by cosmoqiu on 1/29/15.
  */
 public class ItemFactory {
+    //TODO: Refactor ItemFactory to be a Proxy to SQLite Database
 
     static final private String TAG = "MEMORY-ACC";
 
@@ -67,6 +68,10 @@ public class ItemFactory {
 
         Item newItem = new Item(frontSide, backSide, realTitle, bookMark);
         itemList.add(0, newItem);
+
+        // Notify Database the item creation
+        notifyItemCreation(groupId, newItem);
+
         return newItem;
     }
 
@@ -77,6 +82,9 @@ public class ItemFactory {
         _itemLists.add(newItemList);
         _itemGroupList.add(groupName);
         _selectedItemIndexes.add(Integer.valueOf(-1));
+
+        // Notify Database the item creation
+        notifyGroupCreation(groupName);
 
         return newItemList;
     }
@@ -99,15 +107,6 @@ public class ItemFactory {
         return _itemLists.get(groupId);
     }
 
-    public static void setSelectedGroupItemIndex(int groupId, int selectedItemIndex) {
-
-        if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
-            Log.d(TAG, "Invalid group Id!");
-        }
-
-        _selectedItemIndexes.set(groupId, selectedItemIndex);
-    }
-
     public static int getSelectedItemIndex(int groupId) {
 
         if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
@@ -119,5 +118,30 @@ public class ItemFactory {
 
     public static ArrayList<String> getItemGroupList() {
         return _itemGroupList;
+    }
+
+    public static void setSelectedItemIndex(int groupId, int selectedItemIndex) {
+
+        if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
+            Log.d(TAG, "Invalid group Id!");
+        }
+
+        _selectedItemIndexes.set(groupId, selectedItemIndex);
+    }
+
+    public static void notifyItemCreation(int grouId, Item newItem) {
+
+    }
+
+    public static void notifyItemDeletion(int grouId, Item deletedItem) {
+
+    }
+
+    public static void notifyGroupCreation(String newGroupName) {
+    //TODO: Optimization with groupName and groupId is expected here
+    }
+
+    public static void notifyGroupDeletion(int grouId) {
+    //TODO: Optimization with groupName and groupId is expected here
     }
 }

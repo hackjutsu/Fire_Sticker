@@ -191,6 +191,10 @@ public class EditGroupActivity extends ActionBarActivity implements
         ItemFactory.getItemGroupList().remove(_selectedIndex);
         ItemFactory.getSelectedItemIndexesList().remove(_selectedIndex);
         _adapter.notifyDataSetChanged();
+
+        // Notify Database the Group Deletion
+        ItemFactory.notifyGroupDeletion(_selectedIndex);
+
         _actionMode.finish();
     }
 
