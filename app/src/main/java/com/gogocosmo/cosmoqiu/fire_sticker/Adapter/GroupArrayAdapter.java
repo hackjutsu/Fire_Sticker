@@ -10,15 +10,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.ArrayList;
 
 
-public class GroupArrayAdapter extends ArrayAdapter<String> {
+public class GroupArrayAdapter extends ArrayAdapter<Group> {
     private final Context _context;
-    private final ArrayList<String> _values;
+    private final ArrayList<Group> _values;
     final private String TAG = "MEMORY-ACC";
 
 
@@ -28,7 +29,7 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
         public ProgressBar _progressBar;
     }
 
-    public GroupArrayAdapter(Context context, ArrayList<String> values) {
+    public GroupArrayAdapter(Context context, ArrayList<Group> values) {
         super(context, R.layout.group_list_rowlayout_improved, values);
         this._context = context;
         this._values = values;
@@ -57,7 +58,7 @@ public class GroupArrayAdapter extends ArrayAdapter<String> {
 //            LaunchActivity._selectedView = rowView;
 //        }
 
-        viewHolder._groupName.setText(_values.get(position));
+        viewHolder._groupName.setText(_values.get(position).getGroupName());
         viewHolder._groupSize.setText(String.valueOf(ItemFactory.getItemList(position).size()));
 
         int percentage = (int)((float)ItemFactory.getItemList(position).size()/50 * 100);

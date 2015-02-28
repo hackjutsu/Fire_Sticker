@@ -173,7 +173,6 @@ public class CarouselActivity extends ActionBarActivity {
             Toast.makeText(this, "This is the last card ~", Toast.LENGTH_SHORT).show();
             return;
         }
-        ;
 
         Item item = ItemFactory.getItemList(_groupId).get(_itemIndex);
 

@@ -16,6 +16,7 @@ public class ItemFactory {
 
     private static ArrayList<ArrayList<Item>> _itemLists = new ArrayList<>();
     private static ArrayList<String> _itemGroupList = new ArrayList<>();
+    private static ArrayList<Group> _itemGroupObjectList = new ArrayList<>();
     private static ArrayList<Integer> _selectedItemIndexes = new ArrayList<>();
 
     public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark) {
@@ -81,6 +82,7 @@ public class ItemFactory {
 
         _itemLists.add(newItemList);
         _itemGroupList.add(groupName);
+        _itemGroupObjectList.add(new Group(groupName));
         _selectedItemIndexes.add(Integer.valueOf(-1));
 
         // Notify Database the item creation
@@ -101,7 +103,9 @@ public class ItemFactory {
     public static ArrayList<Item> getItemList(int groupId) {
 
         if (groupId < 0 || groupId >= _itemLists.size()) {
-            Log.d(TAG, "Invalid group Id!");
+            Log.d(TAG, "Invalid group Id! " + String.valueOf(groupId));
+            Log.d(TAG, "_itemLists.size() " + String.valueOf(_itemLists.size()));
+
         }
 
         return _itemLists.get(groupId);
@@ -119,6 +123,23 @@ public class ItemFactory {
     public static ArrayList<String> getItemGroupList() {
         return _itemGroupList;
     }
+
+    public static ArrayList<Group> getItemGroupObjectList() {
+        return _itemGroupObjectList;
+    }
+
+    public static ArrayList<String> getItemGroupObjectNameList() {
+
+        ArrayList<String> groupNameArray = new ArrayList<>();
+
+        for(int i=0;i<_itemGroupObjectList.size();++i) {
+            groupNameArray.add(_itemGroupObjectList.get(i).getGroupName());
+        }
+
+        return groupNameArray;
+    }
+
+
 
     public static void setSelectedItemIndex(int groupId, int selectedItemIndex) {
 

@@ -93,7 +93,7 @@ public class LaunchActivity extends ActionBarActivity implements
         ItemFactory.createGroup("Elon Musk");
         ItemFactory.createGroup("Bill Gates");
 
-        for (int j = 0; j < ItemFactory.getItemGroupList().size(); ++j) {
+        for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
 
             for (int i = 0; i < 10; ++i) {
                 String title = "";
@@ -199,11 +199,11 @@ public class LaunchActivity extends ActionBarActivity implements
         // TODO: Maybe add support for method notifyDataChanged() here
         _viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
-                ItemFactory.getItemGroupList(),
-                ItemFactory.getItemGroupList().size());
+                ItemFactory.getItemGroupObjectNameList(),
+                ItemFactory.getItemGroupObjectList().size());
         _pager.setAdapter(_viewPagerAdapter);
 
-        if (ItemFactory.getItemGroupList().size() <= 4) {
+        if (ItemFactory.getItemGroupObjectList().size() <= 4) {
             // To make the Tabs Fixed set this true, This makes the _slidingTabsLayout Space Evenly
             // in Available width
             _slidingTabsLayout.setDistributeEvenly(true);
@@ -216,7 +216,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void updateDrawerItems() {
 
-        String[] osArray = ItemFactory.getItemGroupList().toArray(new String[ItemFactory.getItemGroupList().size()]);
+        String[] osArray = ItemFactory.getItemGroupObjectNameList().toArray(new String[ItemFactory.getItemGroupObjectNameList().size()]);
         _drawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, "", "", PROFILE, this);
 
         // Setting the adapter to RecyclerView

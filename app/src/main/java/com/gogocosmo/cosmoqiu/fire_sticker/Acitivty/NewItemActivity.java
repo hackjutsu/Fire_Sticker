@@ -68,7 +68,7 @@ public class NewItemActivity extends ActionBarActivity {
 
         _spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                R.layout.new_item_spinner_rowlayout, ItemFactory.getItemGroupList());
+                R.layout.new_item_spinner_rowlayout, ItemFactory.getItemGroupObjectNameList());
         dataAdapter.setDropDownViewResource(R.layout.new_item_spinner_rowlayout);
         _spinner.setAdapter(dataAdapter);
         _spinner.setSelection(getIntent().getExtras().getInt("CURRENT_TAB"));

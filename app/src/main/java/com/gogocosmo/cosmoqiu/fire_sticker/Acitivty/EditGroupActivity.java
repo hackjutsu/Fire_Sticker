@@ -49,7 +49,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
         _listView = (ListView) findViewById(R.id.listview);
-        _adapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupList());
+        _adapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupObjectList());
         _listView.setAdapter(_adapter);
         _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -84,7 +84,7 @@ public class EditGroupActivity extends ActionBarActivity implements
 
     private void updateTotalStickerNum() {
 
-        int totalGroupNum = ItemFactory.getItemGroupList().size();
+        int totalGroupNum = ItemFactory.getItemGroupObjectList().size();
         int totalStickers = 0;
 
         for (int i = 0; i < totalGroupNum; ++i) {
@@ -106,7 +106,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         ImageView confirmImage = (ImageView) dialog.findViewById(R.id.confirm_dialog);
         final EditText groupName = (EditText) dialog.findViewById(R.id.editText_groupName);
 
-        String originalTitle = ItemFactory.getItemGroupList().get(_selectedIndex);
+        String originalTitle = ItemFactory.getItemGroupObjectList().get(_selectedIndex).getGroupName();
         groupName.setText(originalTitle);
 
         cancelImage.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +120,8 @@ public class EditGroupActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 String newTitle = groupName.getText().toString();
-                ItemFactory.getItemGroupList().set(_selectedIndex, newTitle);
+//                ItemFactory.getItemGroupList().set(_selectedIndex, newTitle);
+                ItemFactory.getItemGroupObjectList().get(_selectedIndex).setGroupName(newTitle);
                 _adapter.notifyDataSetChanged();
                 updateTotalStickerNum();
                 dialog.dismiss();
@@ -170,8 +171,8 @@ public class EditGroupActivity extends ActionBarActivity implements
                 ItemFactory.createGroup(newTitle);
                 _adapter.notifyDataSetChanged();
                 updateTotalStickerNum();
-                _selectedIndex = ItemFactory.getItemGroupList().size() - 1;
-                _listView.setItemChecked(ItemFactory.getItemGroupList().size() - 1, true);
+                _selectedIndex = ItemFactory.getItemGroupObjectList().size() - 1;
+                _listView.setItemChecked(ItemFactory.getItemGroupObjectList().size() - 1, true);
 
                 dialog.dismiss();
             }
@@ -188,7 +189,7 @@ public class EditGroupActivity extends ActionBarActivity implements
     private void deleteGroup() {
 
         ItemFactory.getItemLists().remove(_selectedIndex);
-        ItemFactory.getItemGroupList().remove(_selectedIndex);
+        ItemFactory.getItemGroupObjectList().remove(_selectedIndex);
         ItemFactory.getSelectedItemIndexesList().remove(_selectedIndex);
         _adapter.notifyDataSetChanged();
 
@@ -299,7 +300,7 @@ public class EditGroupActivity extends ActionBarActivity implements
 
         _actionMode = null;
 
-        if ((_selectedIndex >= 0) && (_selectedIndex < ItemFactory.getItemGroupList().size())) {
+        if ((_selectedIndex >= 0) && (_selectedIndex < ItemFactory.getItemGroupObjectList().size())) {
 
             _listView.setItemChecked(_selectedIndex, false);
         }
