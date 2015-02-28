@@ -18,7 +18,7 @@ public class ItemFactory {
     private static ArrayList<String> _itemGroupList = new ArrayList<>();
     private static ArrayList<Integer> _selectedItemIndexes = new ArrayList<>();
 
-    public static Item createItem(int groupId, String frontSide, String backSide, String title, Boolean bookMark) {
+    public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark) {
 
         if (groupId < 0 || groupId >= _itemLists.size()) {
             Log.d(TAG, "Invalid group Id!");

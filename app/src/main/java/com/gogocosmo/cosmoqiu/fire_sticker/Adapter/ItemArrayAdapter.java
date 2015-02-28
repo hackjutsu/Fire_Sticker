@@ -8,9 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
-import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         public TextView _frontSide;
         public TextView _backSide;
         public TextView _title;
-        public ImageView _light;
+        public ImageView _bookMark;
     }
 
     public ItemArrayAdapter(Context context, ArrayList<Item> values) {
@@ -56,7 +54,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             viewHolder._frontSide = (TextView) rowView.findViewById(R.id.item_question);
             viewHolder._backSide = (TextView) rowView.findViewById(R.id.item_answer);
             viewHolder._title = (TextView) rowView.findViewById(R.id.item_title);
-            viewHolder._light = (ImageView) rowView.findViewById(R.id.item_light);
+            viewHolder._bookMark = (ImageView) rowView.findViewById(R.id.item_bookmark);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
@@ -68,7 +66,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         String frontStr = _values.get(position).getFrontSide();
         String backStr = _values.get(position).getBackSide();
-        boolean light = _values.get(position).getBookMark();
+        int bookMark = _values.get(position).getBookMark();
 
         if (frontStr.isEmpty()) {
             frontStr = "Blank Front Side";
@@ -78,10 +76,10 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             backStr = "Blank Back Side";
         }
 
-        if (light == true) {
-            viewHolder._light.setVisibility(View.VISIBLE);
+        if (bookMark == 1) {
+            viewHolder._bookMark.setVisibility(View.VISIBLE);
         } else {
-            viewHolder._light.setVisibility(View.INVISIBLE);
+            viewHolder._bookMark.setVisibility(View.INVISIBLE);
         }
 
         viewHolder._frontSide.setText(frontStr);

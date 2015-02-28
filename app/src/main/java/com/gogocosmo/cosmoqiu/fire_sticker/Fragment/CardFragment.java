@@ -16,7 +16,7 @@ public class CardFragment extends Fragment {
 
     private final String TAG = "MEMORY-ACC";
     private TextView _card;
-    private boolean _marked = false;
+    private int _marked = 0;
     private int _color;
     private String _text;
 
@@ -46,7 +46,7 @@ public class CardFragment extends Fragment {
         _card.setText(_text);
 
         ImageView bookMark = (ImageView) view.findViewById(R.id.item_card_bookmark);
-        if (!_marked) {
+        if (_marked == 0) {
             bookMark.setVisibility(View.INVISIBLE);
         }
 
@@ -98,7 +98,7 @@ public class CardFragment extends Fragment {
         _text = text;
     }
 
-    public void setMarked(boolean marked) {
+    public void setMarked(int marked) {
         _marked = marked;
     }
 

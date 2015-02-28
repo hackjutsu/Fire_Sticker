@@ -75,7 +75,7 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setMinHeight(cardMinHeight);
 
         _bookMark = (ImageView) findViewById(R.id.item_display_bookmark);
-        if (!_item.getBookMark()) {
+        if (_item.getBookMark() == 0) {
             _bookMark.setVisibility(View.INVISIBLE);
         }
 
@@ -160,11 +160,11 @@ public class ViewActivity extends ActionBarActivity {
                 return true;
 
             case R.id.action_flag_view:
-                if (_item.getBookMark()) {
-                    _item.setBookMark(false);
+                if (_item.getBookMark() == 1) {
+                    _item.setBookMark(0);
                     _bookMark.setVisibility(View.INVISIBLE);
                 } else {
-                    _item.setBookMark(true);
+                    _item.setBookMark(0);
                     _bookMark.setVisibility(View.VISIBLE);
                 }
                 return true;

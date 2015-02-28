@@ -5,10 +5,15 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Model;
  */
 public class Item {
 
+    private int id;
     private String _frontSide = null;
     private String _backSide = null;
     private String _title = null;
-    private boolean _bookMark = false;
+    private int _bookMark = 0;
+
+    public Item() {
+
+    }
 
     public Item(String frontSide, String backSide, String title) {
         _frontSide = frontSide;
@@ -16,11 +21,19 @@ public class Item {
         _title = title;
     }
 
-    public Item(String frontSide, String backSide, String title, boolean bookMark) {
+    public Item(String frontSide, String backSide, String title, int bookMark) {
         _frontSide = frontSide;
         _backSide = backSide;
         _title = title;
         _bookMark = bookMark;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setFrontSide(String frontSide) {
@@ -35,7 +48,7 @@ public class Item {
         this._title = _title;
     }
 
-    public void setBookMark(boolean bookMark) {
+    public void setBookMark(int bookMark) {
         _bookMark = bookMark;
     }
 
@@ -51,7 +64,7 @@ public class Item {
         return _title;
     }
 
-    public boolean getBookMark() {
+    public int getBookMark() {
         return _bookMark;
     }
 

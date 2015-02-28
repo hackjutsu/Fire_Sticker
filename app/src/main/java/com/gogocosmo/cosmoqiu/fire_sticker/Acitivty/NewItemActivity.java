@@ -135,6 +135,6 @@ public class NewItemActivity extends ActionBarActivity {
             newBackSide = "";
         }
 
-        ItemFactory.createItem(_spinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, false);
+        ItemFactory.createItem(_spinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, 0);
     }
 }

@@ -97,14 +97,14 @@ public class LaunchActivity extends ActionBarActivity implements
 
             for (int i = 0; i < 10; ++i) {
                 String title = "";
-                Boolean light = false;
+                int bookMark = 0;
 
                 if (i % (j + 1) == 0) {
                     title = "Awesome Title";
-                    light = true;
+                    bookMark = 1;
                 }
 
-                ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, light);
+                ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
             }
         }
     }
