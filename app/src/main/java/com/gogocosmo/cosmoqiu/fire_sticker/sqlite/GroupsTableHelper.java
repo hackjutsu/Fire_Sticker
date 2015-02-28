@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
     // Items Table Columns names
     public static final String KEY_ROW_ID = "_id";
     public static final String KEY_GROUP = "groupId";
+    public static final String KEY_ITEMGROUP_UUID = "groupUUID";
     public static final String KEY_TITLE = "title";
     public static final String KEY_FRONT = "front";
     public static final String KEY_BACK = "back";
@@ -42,10 +44,25 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
 
     // Groups Table Columns names
     public static final String KEY_GROUP_ROW_ID = "_id";
+    public static final String KEY_GROUP_UUID = "uuid";
     public static final String KEY_GROUP_NAME = "groupName";
 
     private static final String[] COLUMNS_OF_TABLE_GROUPS = {
-            KEY_GROUP_ROW_ID, KEY_GROUP_NAME};
+            KEY_GROUP_ROW_ID, KEY_GROUP_UUID, KEY_GROUP_NAME};
+
+    private static GroupsTableHelper sInstance;
+
+    public static GroupsTableHelper getInstance(Context context) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new GroupsTableHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -53,6 +70,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         String CREATE_ITEM_TABLE = "create table " + TABLE_ITEMS + " ( "
                 + KEY_ROW_ID + " integer primary key autoincrement , "
                 + KEY_GROUP + " text  , "
+                + KEY_ITEMGROUP_UUID + " text  , "
                 + KEY_TITLE + "  text  , "
                 + KEY_FRONT + "  text  , "
                 + KEY_BACK + "  text  , "
@@ -64,6 +82,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         Log.d(TAG, "CREATE_GROUP_TABLE");
         String CREATE_GROUP_TABLE = "create table " + TABLE_GROUPS + " ( "
                 + KEY_GROUP_ROW_ID + " integer primary key autoincrement , "
+                + KEY_GROUP_UUID + " text , "
                 + KEY_GROUP_NAME + " text  ) ";
 
         // create groups table
@@ -90,6 +109,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
+        values.put(KEY_GROUP_UUID, group.getUuid()); // get groupName
         values.put(KEY_GROUP_NAME, group.getGroupName()); // get groupName
 
         // 3. insert
@@ -98,7 +118,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
                 values); // key/value -> keys = column names/ values = column values
 
         // 4. close
-        db.close();
+//        db.close();
     }
 
     public Group getGroup(int groupId) {
@@ -131,8 +151,8 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
     }
 
     // Get All Groups
-    public List<String> getAllGroups() {
-        List<String> groups = new ArrayList<>();
+    public ArrayList<Group> getAllGroups() {
+        ArrayList<Group> groups = new ArrayList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_GROUPS;
@@ -147,10 +167,11 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
             do {
                 group = new Group();
                 group.setGroupId(Integer.parseInt(cursor.getString(0)));
-                group.setGroupName(cursor.getString(1));
+                group.setUuid(cursor.getString(1));
+                group.setGroupName(cursor.getString(2));
 
                 // Add group to groups
-                groups.add(group.getGroupName());
+                groups.add(group);
 
             } while (cursor.moveToNext());
         }
@@ -181,30 +202,28 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         // 3. updating row
         int i = db.update(TABLE_GROUPS, //table
                 values, // column/value
-                KEY_GROUP_ROW_ID + " = ?", // selections
-                new String[]{String.valueOf(group.getGroupId())}); //selection args
+                KEY_GROUP_UUID + " = ?", // selections
+                new String[]{String.valueOf(group.getUuid())}); //selection args
 
         // 4. close
-        db.close();
+//        db.close();
 
         return i;
     }
 
     // Deleting single group
-    public void deleteGroup(int groupId) {
+    public void deleteGroup(String uuid) {
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. delete
         db.delete(TABLE_GROUPS,
-                KEY_GROUP_ROW_ID + " = ?",
-                new String[]{String.valueOf(groupId)});
+                KEY_GROUP_UUID + " = ?",
+                new String[]{uuid});
 
         // 3. close
-        db.close();
-
-        Log.d(TAG, "deleteGroup: " + String.valueOf(groupId));
+//        db.close();
     }
 }
 

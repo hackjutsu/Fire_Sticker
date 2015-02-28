@@ -2,6 +2,9 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 
 import android.util.Log;
 
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,10 +17,21 @@ public class ItemFactory {
 
     static final private String TAG = "MEMORY-ACC";
 
-    private static ArrayList<ArrayList<Item>> _itemLists = new ArrayList<>();
+    private static ArrayList<ArrayList<Item>> _itemLists = null;
     private static ArrayList<String> _itemGroupList = new ArrayList<>();
-    private static ArrayList<Group> _itemGroupObjectList = new ArrayList<>();
-    private static ArrayList<Integer> _selectedItemIndexes = new ArrayList<>();
+    private static ArrayList<Group> _itemGroupObjectList = null;
+    private static ArrayList<Integer> _selectedItemIndexes = null;
+
+    private static ItemsTableHelper _itemsTableHelper;
+    private static GroupsTableHelper _groupsTableHelper;
+
+    public static void setItemsTableHelper(ItemsTableHelper itemsTableHelper) {
+        _itemsTableHelper = itemsTableHelper;
+    }
+
+    public static void setGroupsTableHelper(GroupsTableHelper groupsTableHelper) {
+        _groupsTableHelper = groupsTableHelper;
+    }
 
     public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark) {
 
@@ -71,36 +85,72 @@ public class ItemFactory {
         itemList.add(0, newItem);
 
         // Notify Database the item creation
-        notifyItemCreation(groupId, newItem);
+        notifyItemCreation(getItemGroupObjectList().get(groupId), newItem);
 
         return newItem;
+    }
+
+    public static ArrayList<ArrayList<Item>> getItemLists() {
+
+        if (_itemLists == null) {
+            Log.d(TAG, "_itemLists retrieve data from dataBase");
+            _itemLists = new ArrayList<ArrayList<Item>>();
+            _itemGroupObjectList = getItemGroupObjectList();
+
+            for (int i = 0; i < _itemGroupObjectList.size(); ++i) {
+
+                String groupUUID = _itemGroupObjectList.get(i).getUuid();
+                ArrayList<Item> newItemList = _itemsTableHelper.getItemList(groupUUID);
+                _itemLists.add(newItemList);
+                Log.d(TAG, _itemGroupObjectList.get(i).getGroupName() + ": " + newItemList.size());
+
+            }
+        }
+
+        return _itemLists;
     }
 
     public static ArrayList<Item> createGroup(String groupName) {
 
         ArrayList<Item> newItemList = new ArrayList<>();
 
+        _itemLists = getItemLists();
+        _selectedItemIndexes = getSelectedItemIndexesList();
+
         _itemLists.add(newItemList);
         _itemGroupList.add(groupName);
-        _itemGroupObjectList.add(new Group(groupName));
+
+        Group newGroup = new Group(groupName);
+        _itemGroupObjectList.add(newGroup);
         _selectedItemIndexes.add(Integer.valueOf(-1));
 
         // Notify Database the item creation
-        notifyGroupCreation(groupName);
+        notifyGroupCreation(newGroup);
 
         return newItemList;
     }
 
-    public static ArrayList<ArrayList<Item>> getItemLists() {
-
-        return _itemLists;
-    }
-
     public static ArrayList<Integer> getSelectedItemIndexesList() {
+
+        if (_selectedItemIndexes==null) {
+            _selectedItemIndexes = new ArrayList<>();
+
+            _itemGroupObjectList = getItemGroupObjectList();
+
+            for (int i = 0; i < _itemGroupObjectList.size(); ++i) {
+                _selectedItemIndexes.add(-1);
+                Log.d(TAG, String.valueOf(i));
+            }
+
+        }
+
+        Log.d(TAG, "_selectedItemIndexes.size() = " + String.valueOf(_selectedItemIndexes.size()));
         return _selectedItemIndexes;
     }
 
     public static ArrayList<Item> getItemList(int groupId) {
+
+        _itemLists = getItemLists();
 
         if (groupId < 0 || groupId >= _itemLists.size()) {
             Log.d(TAG, "Invalid group Id! " + String.valueOf(groupId));
@@ -112,6 +162,8 @@ public class ItemFactory {
     }
 
     public static int getSelectedItemIndex(int groupId) {
+
+        getSelectedItemIndexesList();
 
         if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
             Log.d(TAG, "Invalid group Id!");
@@ -125,6 +177,14 @@ public class ItemFactory {
     }
 
     public static ArrayList<Group> getItemGroupObjectList() {
+
+        Log.d(TAG, "getItemGroupObjectList called");
+
+        if (_itemGroupObjectList == null) {
+            _itemGroupObjectList = _groupsTableHelper.getAllGroups();
+            Log.d(TAG, "Retrieve Group List from DataBase: " + _itemGroupObjectList.size());
+        }
+
         return _itemGroupObjectList;
     }
 
@@ -132,7 +192,9 @@ public class ItemFactory {
 
         ArrayList<String> groupNameArray = new ArrayList<>();
 
-        for(int i=0;i<_itemGroupObjectList.size();++i) {
+        _itemGroupObjectList = getItemGroupObjectList();
+
+        for (int i = 0; i < _itemGroupObjectList.size(); ++i) {
             groupNameArray.add(_itemGroupObjectList.get(i).getGroupName());
         }
 
@@ -140,8 +202,9 @@ public class ItemFactory {
     }
 
 
-
     public static void setSelectedItemIndex(int groupId, int selectedItemIndex) {
+
+        getSelectedItemIndexesList();
 
         if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
             Log.d(TAG, "Invalid group Id!");
@@ -150,19 +213,79 @@ public class ItemFactory {
         _selectedItemIndexes.set(groupId, selectedItemIndex);
     }
 
-    public static void notifyItemCreation(int grouId, Item newItem) {
+    public static void notifyItemCreation(final Group group, final Item newItem) {
+        //TODO: notifyItemCreation
+
+        Log.d(TAG, "notifyItemCreation");
+        Runnable runnable = new Runnable() {
+            public void run() {
+                _itemsTableHelper.addItem(group, newItem);
+            }
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
+
+    }
+
+    public static void notifyItemUpdate() {
+        //TODO: notifyItemUpdate
+
+        Log.d(TAG, "notifyItemUpdate");
 
     }
 
     public static void notifyItemDeletion(int grouId, Item deletedItem) {
+        //TODO: notifyItemDeletion
+
+        Log.d(TAG, "notifyItemDeletion");
 
     }
 
-    public static void notifyGroupCreation(String newGroupName) {
-    //TODO: Optimization with groupName and groupId is expected here
+    public static void notifyGroupCreation(final Group newGroup) {
+        //TODO: (DONE) notifyGroupCreation
+
+//        _groupsTableHelper.addGroup(new Group(newGroupName));
+        Log.d(TAG, "notifyGroupCreation: " + newGroup.getUuid() + ", " + newGroup.getGroupName());
+
+        Runnable runnable = new Runnable() {
+            public void run() {
+                _groupsTableHelper.addGroup(newGroup);
+            }
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
     }
 
-    public static void notifyGroupDeletion(int grouId) {
-    //TODO: Optimization with groupName and groupId is expected here
+    public static void notifyGroupUpdate(final Group updatedGroup) {
+        //TODO: (DONE) notifyGroupUpdate
+        Log.d(TAG, "notifyGroupUpdate: " + updatedGroup.getUuid() + ", " + updatedGroup.getGroupName());
+
+        Runnable runnable = new Runnable() {
+            public void run() {
+                _groupsTableHelper.updateGroup(updatedGroup);
+            }
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
+
+    }
+
+    public static void notifyGroupDeletion(final String uuid) {
+        //TODO: notifyGroupDeletion
+        Log.d(TAG, "notifyGroupDeletion: " + uuid);
+
+        Runnable runnable = new Runnable() {
+            public void run() {
+                _groupsTableHelper.deleteGroup(uuid);
+            }
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
+    }
+
+    public static void closeAllDatabase() {
+        Log.d(TAG, "XX--closeAllDatabase--XX");
+        _groupsTableHelper.close();
+        _itemsTableHelper.close();
     }
 }

@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.GroupArrayAdapter;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
@@ -121,9 +122,11 @@ public class EditGroupActivity extends ActionBarActivity implements
             public void onClick(View v) {
                 String newTitle = groupName.getText().toString();
 //                ItemFactory.getItemGroupList().set(_selectedIndex, newTitle);
-                ItemFactory.getItemGroupObjectList().get(_selectedIndex).setGroupName(newTitle);
+                Group updatedGroup =  ItemFactory.getItemGroupObjectList().get(_selectedIndex);
+                updatedGroup.setGroupName(newTitle);
                 _adapter.notifyDataSetChanged();
                 updateTotalStickerNum();
+                ItemFactory.notifyGroupUpdate(updatedGroup);
                 dialog.dismiss();
             }
         });
@@ -188,13 +191,16 @@ public class EditGroupActivity extends ActionBarActivity implements
 
     private void deleteGroup() {
 
+        String uuid = ItemFactory.getItemGroupObjectList().get(_selectedIndex).getUuid();
+        ItemFactory.getSelectedItemIndexesList().remove(_selectedIndex);
         ItemFactory.getItemLists().remove(_selectedIndex);
         ItemFactory.getItemGroupObjectList().remove(_selectedIndex);
-        ItemFactory.getSelectedItemIndexesList().remove(_selectedIndex);
         _adapter.notifyDataSetChanged();
 
         // Notify Database the Group Deletion
-        ItemFactory.notifyGroupDeletion(_selectedIndex);
+        ItemFactory.notifyGroupDeletion(uuid);
+
+        updateTotalStickerNum();
 
         _actionMode.finish();
     }

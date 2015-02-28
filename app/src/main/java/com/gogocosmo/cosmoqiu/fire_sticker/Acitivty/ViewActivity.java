@@ -244,6 +244,8 @@ public class ViewActivity extends ActionBarActivity {
         _item.setFront(_frontSideEditText.getText().toString());
         _item.setBack(_backSideEditText.getText().toString());
         _item.setTitle(_titleEditText.getText().toString());
+
+        ItemFactory.notifyItemUpdate();
     }
 
     @Override

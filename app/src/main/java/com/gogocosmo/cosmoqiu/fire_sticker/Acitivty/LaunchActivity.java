@@ -27,6 +27,8 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
 import java.util.HashMap;
@@ -42,71 +44,71 @@ public class LaunchActivity extends ActionBarActivity implements
     // Load the inital data for testing purpose
     static {
 
-        String[] questionSamples = new String[]{
-                "How many rings on the Olympic flag?",
-                "What is the currency of Austria?",
-                "How did Alfred Nobel make his money?",
-                "Which car company makes the Celica?",
-                "What is a baby rabbit called?",
-                "What is a Winston Churchill?",
-                "What plant does the Colorado beetle attack?",
-                "Who wrote the Opera Madam Butterfly?",
-                "Which country do Sinologists study?",
-                "What was the first James Bond film?",
-                "How many rings on the Olympic flag?",
-                "What is the currency of Austria?",
-                "How did Alfred Nobel make his money?",
-                "Which car company makes the Celica?",
-                "What is a baby rabbit called?",
-                "What is a Winston Churchill?",
-                "What plant does the Colorado beetle attack?",
-                "Who wrote the Opera Madam Butterfly?",
-                "Which country do Sinologists study?",
-                "What was the first James Bond film?"
-        };
-
-        String[] answerSamples = new String[]{
-                "Five",
-                "Schilling",
-                "He invented Dynamite",
-                "Toyota",
-                "Kit or Kitten",
-                "Cigar",
-                "Potato",
-                "Puccini",
-                "China",
-                "Dr No",
-                "Five",
-                "Schilling",
-                "He invented Dynamite",
-                "Toyota",
-                "Kit or Kitten",
-                "Cigar",
-                "Potato",
-                "Puccini",
-                "China",
-                "Dr No"
-        };
-
-        ItemFactory.createGroup("Job Steve");
-        ItemFactory.createGroup("Larry Page");
-        ItemFactory.createGroup("Elon Musk");
-        ItemFactory.createGroup("Bill Gates");
-
-        for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
-
-            for (int i = 0; i < 10; ++i) {
-                String title = "";
-                int bookMark = 0;
-
-                if (i % (j + 1) == 0) {
-                    title = "Awesome Title";
-                    bookMark = 1;
-                }
-
-                ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
-            }
-        }
+//        String[] questionSamples = new String[]{
+//                "How many rings on the Olympic flag?",
+//                "What is the currency of Austria?",
+//                "How did Alfred Nobel make his money?",
+//                "Which car company makes the Celica?",
+//                "What is a baby rabbit called?",
+//                "What is a Winston Churchill?",
+//                "What plant does the Colorado beetle attack?",
+//                "Who wrote the Opera Madam Butterfly?",
+//                "Which country do Sinologists study?",
+//                "What was the first James Bond film?",
+//                "How many rings on the Olympic flag?",
+//                "What is the currency of Austria?",
+//                "How did Alfred Nobel make his money?",
+//                "Which car company makes the Celica?",
+//                "What is a baby rabbit called?",
+//                "What is a Winston Churchill?",
+//                "What plant does the Colorado beetle attack?",
+//                "Who wrote the Opera Madam Butterfly?",
+//                "Which country do Sinologists study?",
+//                "What was the first James Bond film?"
+//        };
+//
+//        String[] answerSamples = new String[]{
+//                "Five",
+//                "Schilling",
+//                "He invented Dynamite",
+//                "Toyota",
+//                "Kit or Kitten",
+//                "Cigar",
+//                "Potato",
+//                "Puccini",
+//                "China",
+//                "Dr No",
+//                "Five",
+//                "Schilling",
+//                "He invented Dynamite",
+//                "Toyota",
+//                "Kit or Kitten",
+//                "Cigar",
+//                "Potato",
+//                "Puccini",
+//                "China",
+//                "Dr No"
+//        };
+//
+//        ItemFactory.createGroup("Job Steve");
+//        ItemFactory.createGroup("Larry Page");
+//        ItemFactory.createGroup("Elon Musk");
+//        ItemFactory.createGroup("Bill Gates");
+//
+//        for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
+//
+//            for (int i = 0; i < 10; ++i) {
+//                String title = "";
+//                int bookMark = 0;
+//
+//                if (i % (j + 1) == 0) {
+//                    title = "Awesome Title";
+//                    bookMark = 1;
+//                }
+//
+//                ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
+//            }
+//        }
     }
 
     final private int EDIT_GROUP_REQ = 1;
@@ -147,6 +149,78 @@ public class LaunchActivity extends ActionBarActivity implements
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
         _toolbar.setTitleTextColor(Color.WHITE);
+
+        /*********************************  DataBase Configurations  **********************************/
+        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
+        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+
+//        {
+//            String[] questionSamples = new String[]{
+//                    "How many rings on the Olympic flag?",
+//                    "What is the currency of Austria?",
+//                    "How did Alfred Nobel make his money?",
+//                    "Which car company makes the Celica?",
+//                    "What is a baby rabbit called?",
+//                    "What is a Winston Churchill?",
+//                    "What plant does the Colorado beetle attack?",
+//                    "Who wrote the Opera Madam Butterfly?",
+//                    "Which country do Sinologists study?",
+//                    "What was the first James Bond film?",
+//                    "How many rings on the Olympic flag?",
+//                    "What is the currency of Austria?",
+//                    "How did Alfred Nobel make his money?",
+//                    "Which car company makes the Celica?",
+//                    "What is a baby rabbit called?",
+//                    "What is a Winston Churchill?",
+//                    "What plant does the Colorado beetle attack?",
+//                    "Who wrote the Opera Madam Butterfly?",
+//                    "Which country do Sinologists study?",
+//                    "What was the first James Bond film?"
+//            };
+//
+//            String[] answerSamples = new String[]{
+//                    "Five",
+//                    "Schilling",
+//                    "He invented Dynamite",
+//                    "Toyota",
+//                    "Kit or Kitten",
+//                    "Cigar",
+//                    "Potato",
+//                    "Puccini",
+//                    "China",
+//                    "Dr No",
+//                    "Five",
+//                    "Schilling",
+//                    "He invented Dynamite",
+//                    "Toyota",
+//                    "Kit or Kitten",
+//                    "Cigar",
+//                    "Potato",
+//                    "Puccini",
+//                    "China",
+//                    "Dr No"
+//            };
+//
+//            ItemFactory.createGroup("Job Steve");
+//            ItemFactory.createGroup("Larry Page");
+//            ItemFactory.createGroup("Elon Musk");
+//            ItemFactory.createGroup("Bill Gates");
+//
+//            for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
+//
+//                for (int i = 0; i < 10; ++i) {
+//                    String title = "";
+//                    int bookMark = 0;
+//
+//                    if (i % (j + 1) == 0) {
+//                        title = "Awesome Title";
+//                        bookMark = 1;
+//                    }
+//
+//                    ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
+//                }
+//            }
+//        }
 
         /*********************************  Tabs Configurations  **********************************/
         _pager = (ViewPager) findViewById(R.id.pager);
@@ -620,6 +694,12 @@ public class LaunchActivity extends ActionBarActivity implements
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        ItemFactory.closeAllDatabase();
+        super.onDestroy();
     }
 }
 
