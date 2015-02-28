@@ -19,11 +19,13 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "ItemDB";
 
-    // Items table name
-    public static final String TABLE_ITEMS = "items";
-
     // Database Version
     private static final int DATABASE_VERSION = 1;
+
+    // Items table name
+    public static final String TABLE_ITEMS = "items";
+    // Groups table name
+    public static final String TABLE_GROUPS = "Groups";
 
     // Items Table Columns names
     public static final String KEY_ROW_ID = "_id";
@@ -33,7 +35,11 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_BACK = "back";
     public static final String KEY_BOOKMARK = "bookMark";
 
-    private static final String[] COLUMNS = {
+    // Groups Table Columns names
+    public static final String KEY_GROUP_ROW_ID = "_id";
+    public static final String KEY_GROUP_NAME = "groupName";
+
+    private static final String[] COLUMNS_OF_TABLE_ITEMS = {
             KEY_ROW_ID, KEY_GROUP, KEY_TITLE, KEY_FRONT, KEY_BACK, KEY_BOOKMARK};
 
     public ItemsTableHelper(Context context) {
@@ -53,6 +59,14 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
 
         // create items table
         db.execSQL(CREATE_ITEM_TABLE);
+
+        Log.d(TAG, "CREATE_GROUP_TABLE");
+        String CREATE_GROUP_TABLE = "create table " + TABLE_GROUPS + " ( "
+                + KEY_GROUP_ROW_ID + " integer primary key autoincrement , "
+                + KEY_GROUP_NAME + " text  ) ";
+
+        // create groups table
+        db.execSQL(CREATE_GROUP_TABLE);
     }
 
     @Override
@@ -98,7 +112,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         // 2. build query
         Cursor cursor =
                 db.query(TABLE_ITEMS, // a. table
-                        COLUMNS, // b. column names
+                        COLUMNS_OF_TABLE_ITEMS, // b. column names
                         " id = ?", // c. selections
                         new String[]{String.valueOf(id)}, // d. selections args
                         null, // e. group by
