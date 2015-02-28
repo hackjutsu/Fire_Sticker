@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.NewItemActivity"
-            android:label="Create a New Sticker"
+            android:label="Create New Sticker"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.CarouselActivity"

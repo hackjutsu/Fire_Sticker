@@ -6,8 +6,8 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 public class Item {
 
     private int id;
-    private String _frontSide = null;
-    private String _backSide = null;
+    private String _front = null;
+    private String _back = null;
     private String _title = null;
     private int _bookMark = 0;
 
@@ -15,15 +15,15 @@ public class Item {
 
     }
 
-    public Item(String frontSide, String backSide, String title) {
-        _frontSide = frontSide;
-        _backSide = backSide;
+    public Item(String front, String back, String title) {
+        _front = front;
+        _back = back;
         _title = title;
     }
 
-    public Item(String frontSide, String backSide, String title, int bookMark) {
-        _frontSide = frontSide;
-        _backSide = backSide;
+    public Item(String front, String back, String title, int bookMark) {
+        _front = front;
+        _back = back;
         _title = title;
         _bookMark = bookMark;
     }
@@ -36,12 +36,12 @@ public class Item {
         this.id = id;
     }
 
-    public void setFrontSide(String frontSide) {
-        this._frontSide = frontSide;
+    public void setFront(String front) {
+        this._front = front;
     }
 
-    public void setBackSide(String backSide) {
-        this._backSide = backSide;
+    public void setBack(String back) {
+        this._back = back;
     }
 
     public void setTitle(String _title) {
@@ -52,12 +52,12 @@ public class Item {
         _bookMark = bookMark;
     }
 
-    public String getFrontSide() {
-        return _frontSide;
+    public String getFront() {
+        return _front;
     }
 
-    public String getBackSide() {
-        return _backSide;
+    public String getBack() {
+        return _back;
     }
 
     public String getTitle() {
@@ -69,6 +69,6 @@ public class Item {
     }
 
     public String toString() {
-        return "Title: " + _title + "," + "Front: " + _frontSide + ", " + "Back: " + _backSide;
+        return "Title: " + _title + "," + "Front: " + _front + ", " + "Back: " + _back;
     }
 }

@@ -77,8 +77,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_GROUP, groupId); // get groupId
         values.put(KEY_TITLE, item.getTitle()); // get title
-        values.put(KEY_FRONT, item.getFrontSide()); // get front
-        values.put(KEY_BACK, item.getBackSide()); // get back
+        values.put(KEY_FRONT, item.getFront()); // get front
+        values.put(KEY_BACK, item.getBack()); // get back
         values.put(KEY_BOOKMARK, item.getBookMark()); // get back
 
         // 3. insert
@@ -114,8 +114,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         Item item = new Item();
         item.setId(Integer.parseInt(cursor.getString(0)));
         item.setTitle(cursor.getString(2));
-        item.setFrontSide(cursor.getString(3));
-        item.setBackSide(cursor.getString(4));
+        item.setFront(cursor.getString(3));
+        item.setBack(cursor.getString(4));
         item.setBookMark(cursor.getInt(5));
 
 //        Log.d(TAG, "getItem(" + id + ")" + item.toString());
@@ -143,8 +143,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 item = new Item();
                 item.setId(Integer.parseInt(cursor.getString(0)));
                 item.setTitle(cursor.getString(2));
-                item.setFrontSide(cursor.getString(3));
-                item.setBackSide(cursor.getString(4));
+                item.setFront(cursor.getString(3));
+                item.setBack(cursor.getString(4));
                 item.setBookMark(cursor.getInt(5));
 
                 // Add item to items
@@ -176,8 +176,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("groupId", groupId); // get groupId
         values.put("title", item.getTitle()); // get title
-        values.put("front", item.getFrontSide()); // get front
-        values.put("back", item.getBackSide()); // get back
+        values.put("front", item.getFront()); // get front
+        values.put("back", item.getBack()); // get back
         values.put("bookMark", item.getBookMark()); // get back
 
         // 3. updating row

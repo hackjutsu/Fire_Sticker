@@ -87,8 +87,8 @@ public class ViewActivity extends ActionBarActivity {
         _titleEditText = (EditText) findViewById(R.id.title_display_editText);
         _titleEditText.setFocusable(false);
 
-        _frontSideEditText.setText(_item.getFrontSide());
-        _backSideEditText.setText(_item.getBackSide());
+        _frontSideEditText.setText(_item.getFront());
+        _backSideEditText.setText(_item.getBack());
         _titleEditText.setText(_item.getTitle());
 
         _onEditMode = false;
@@ -164,7 +164,7 @@ public class ViewActivity extends ActionBarActivity {
                     _item.setBookMark(0);
                     _bookMark.setVisibility(View.INVISIBLE);
                 } else {
-                    _item.setBookMark(0);
+                    _item.setBookMark(1);
                     _bookMark.setVisibility(View.VISIBLE);
                 }
                 return true;
@@ -188,8 +188,8 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("Edit Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        _originFrontSide = _item.getFrontSide();
-        _originBackSide = _item.getBackSide();
+        _originFrontSide = _item.getFront();
+        _originBackSide = _item.getBack();
         _originTitle = _item.getTitle();
     }
 
@@ -241,8 +241,8 @@ public class ViewActivity extends ActionBarActivity {
         imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
 
-        _item.setFrontSide(_frontSideEditText.getText().toString());
-        _item.setBackSide(_backSideEditText.getText().toString());
+        _item.setFront(_frontSideEditText.getText().toString());
+        _item.setBack(_backSideEditText.getText().toString());
         _item.setTitle(_titleEditText.getText().toString());
     }
 

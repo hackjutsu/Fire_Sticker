@@ -64,8 +64,8 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 //            LaunchActivity._selectedView = rowView;
 //        }
 
-        String frontStr = _values.get(position).getFrontSide();
-        String backStr = _values.get(position).getBackSide();
+        String frontStr = _values.get(position).getFront();
+        String backStr = _values.get(position).getBack();
         int bookMark = _values.get(position).getBookMark();
 
         if (frontStr.isEmpty()) {

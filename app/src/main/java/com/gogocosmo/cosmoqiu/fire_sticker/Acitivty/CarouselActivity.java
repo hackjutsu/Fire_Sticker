@@ -128,7 +128,7 @@ public class CarouselActivity extends ActionBarActivity {
                         .commit();
 
                 _currentCard.swipeUpEvent(
-                        ItemFactory.getItemList(_groupId).get(_itemIndex).getBackSide());
+                        ItemFactory.getItemList(_groupId).get(_itemIndex).getBack());
             }
         }
     }
@@ -145,7 +145,7 @@ public class CarouselActivity extends ActionBarActivity {
 //                        )
                         .hide(_topFragment)
                         .commit();
-                _currentCard.swipeDownEvent(ItemFactory.getItemList(_groupId).get(_itemIndex).getFrontSide());
+                _currentCard.swipeDownEvent(ItemFactory.getItemList(_groupId).get(_itemIndex).getFront());
             }
         }
     }
@@ -180,7 +180,7 @@ public class CarouselActivity extends ActionBarActivity {
         CardFragment newCard = new CardFragment();
         int cardColor = randomColor();
         newCard.setCardColor(cardColor);
-        newCard.setCardText(item.getFrontSide());
+        newCard.setCardText(item.getFront());
         newCard.setMarked(item.getBookMark());
 
         // Add this new card info to card trace
@@ -229,7 +229,7 @@ public class CarouselActivity extends ActionBarActivity {
         // Create a new card fragment that restores the previous card info
         CardFragment preCard = new CardFragment();
         preCard.setCardColor(currentHolder.getColor());
-        preCard.setCardText(currentHolder.getItem().getFrontSide());
+        preCard.setCardText(currentHolder.getItem().getFront());
         preCard.setMarked(currentHolder.getItem().getBookMark());
 
         _currentCard = preCard;
