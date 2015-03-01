@@ -13,6 +13,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ItemsTableHelper extends SQLiteOpenHelper {
@@ -197,6 +198,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         }
 
         // return items
+        Collections.reverse(items);
         return items;
     }
 
