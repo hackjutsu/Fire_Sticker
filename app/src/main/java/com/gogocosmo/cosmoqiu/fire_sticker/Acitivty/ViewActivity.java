@@ -100,7 +100,7 @@ public class ViewActivity extends ActionBarActivity {
         int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
         CardColor randomColor = CardColor.CardList.get(randomColorIndex);
 
-        Log.d(TAG, randomColor.getColorName());
+//        Log.d(TAG, randomColor.getColorName());
         return randomColor.getColorInt();
     }
 

@@ -1,7 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;

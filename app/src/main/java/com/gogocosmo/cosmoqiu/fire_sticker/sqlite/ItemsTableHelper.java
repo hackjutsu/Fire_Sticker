@@ -250,4 +250,20 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
 
         Log.d(TAG, "deleteItem: " + String.valueOf(itemId));
     }
+
+    public void deleteGroupItems(String uuid) {
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. delete
+        db.delete(TABLE_ITEMS,
+                KEY_ITEMGROUP_UUID + " = ?",
+                new String[]{uuid});
+
+        // 3. close
+//        db.close();
+    }
+
 }
+

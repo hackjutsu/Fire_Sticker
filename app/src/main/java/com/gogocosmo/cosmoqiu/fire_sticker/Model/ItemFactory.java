@@ -102,7 +102,7 @@ public class ItemFactory {
                 String groupUUID = _itemGroupObjectList.get(i).getUuid();
                 ArrayList<Item> newItemList = _itemsTableHelper.getItemList(groupUUID);
                 _itemLists.add(newItemList);
-                Log.d(TAG, _itemGroupObjectList.get(i).getGroupName() + ": " + newItemList.size());
+//                Log.d(TAG, _itemGroupObjectList.get(i).getGroupName() + ": " + newItemList.size());
 
             }
         }
@@ -277,6 +277,7 @@ public class ItemFactory {
         Runnable runnable = new Runnable() {
             public void run() {
                 _groupsTableHelper.deleteGroup(uuid);
+                _itemsTableHelper.deleteGroupItems(uuid);
             }
         };
         Thread mythread = new Thread(runnable);
