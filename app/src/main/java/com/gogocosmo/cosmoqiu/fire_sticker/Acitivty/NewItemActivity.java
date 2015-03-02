@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 
 import java.util.Random;
 
@@ -40,6 +42,10 @@ public class NewItemActivity extends ActionBarActivity {
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
+
+        /*********************************  DataBase Configurations  **********************************/
+        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
+        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
         // Get the width of the Windows and set it as the minHeight of the card
         DisplayMetrics displaymetrics = new DisplayMetrics();

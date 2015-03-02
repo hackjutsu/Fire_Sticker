@@ -23,6 +23,8 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.GroupArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 
 public class EditGroupActivity extends ActionBarActivity implements
         android.view.ActionMode.Callback {
@@ -48,6 +50,10 @@ public class EditGroupActivity extends ActionBarActivity implements
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
+
+        /*********************************  DataBase Configurations  **********************************/
+        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
+        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
         _listView = (ListView) findViewById(R.id.listview);
         _adapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupObjectList());

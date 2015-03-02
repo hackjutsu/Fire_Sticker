@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,8 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -58,6 +59,10 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
+        /*********************************  DataBase Configurations  **********************************/
+        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
+        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+
         _groupId = getIntent().getExtras().getInt("GROUP");
         ArrayList<Item> itemList = ItemFactory.getItemList(_groupId);
 
@@ -90,6 +95,59 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setText(_item.getFront());
         _backSideEditText.setText(_item.getBack());
         _titleEditText.setText(_item.getTitle());
+
+
+        _frontSideEditText.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                if (_onEditMode == false) {
+
+                    _onEditMode = true;
+                    startEdits();
+                    _frontSideEditText.requestFocus();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+//        _frontSideEditText.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (_onEditMode == false) {
+//                    startEdits();
+//                    _frontSideEditText.requestFocus();
+//                }
+//            }
+//        });
+
+        _backSideEditText.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
+        _titleEditText.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                if (_onEditMode == false) {
+
+                    _onEditMode = true;
+                    startEdits();
+                    _titleEditText.requestFocus();
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         _onEditMode = false;
     }
@@ -209,11 +267,11 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        _frontSideEditText.setText(_originFrontSide);
         _backSideEditText.setText(_originBackSide);
         _titleEditText.setText(_originTitle);
+        _frontSideEditText.setText(_originFrontSide);
 
-        // hide the soft keyboard
+//        // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
@@ -236,7 +294,7 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        // hide the soft keyboard
+//        // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
