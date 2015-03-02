@@ -30,12 +30,14 @@
         android:icon="@drawable/slash_action"
         android:enabled="false"
         app:showAsAction="ifRoom"
-        android:title="Slash" />
+        android:title="Slash"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_discard_view"
         android:orderInCategory="100"
         android:icon="@drawable/cross_action"
         app:showAsAction="ifRoom"
-        android:title="Discard" />
+        android:title="Discard"
+        android:visible="false"/>
 </menu>
