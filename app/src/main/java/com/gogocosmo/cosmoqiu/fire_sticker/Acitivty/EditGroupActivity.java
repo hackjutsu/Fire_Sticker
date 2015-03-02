@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.Selection;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -114,6 +116,11 @@ public class EditGroupActivity extends ActionBarActivity implements
 
         String originalTitle = ItemFactory.getItemGroupObjectList().get(_selectedIndex).getGroupName();
         groupName.setText(originalTitle);
+
+        // Set cursor at the end of the content
+        int position = groupName.length();
+        Editable etext = groupName.getText();
+        Selection.setSelection(etext, position);
 
         cancelImage.setOnClickListener(new View.OnClickListener() {
             @Override
