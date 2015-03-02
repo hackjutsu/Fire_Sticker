@@ -1,6 +1,5 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -47,19 +46,17 @@ public class CarouselActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carousel);
 
-        // Creating The Toolbar and setting it as the Toolbar for the activity
+        // DataBase Configurations
+        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
+        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
+        _groupId = getIntent().getExtras().getInt("GROUP");
+
+        // Toolbar Configurations
         _toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _title = (TextView) findViewById(R.id.toolbar_title);
-
-        /*********************************  DataBase Configurations  **********************************/
-        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
-        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
-
-
-        _groupId = getIntent().getExtras().getInt("GROUP");
 
         _topFragment = new TopFragment();
         getSupportFragmentManager()

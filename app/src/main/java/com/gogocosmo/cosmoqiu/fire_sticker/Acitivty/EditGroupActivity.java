@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -46,14 +44,15 @@ public class EditGroupActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
+        // DataBase Configurations
+        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
+        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+
+        // Toolbar Configurations
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
-
-        /*********************************  DataBase Configurations  **********************************/
-        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
-        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
         _listView = (ListView) findViewById(R.id.listview);
         _adapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupObjectList());

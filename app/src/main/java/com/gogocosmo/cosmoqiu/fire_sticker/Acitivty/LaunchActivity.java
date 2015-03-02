@@ -146,13 +146,14 @@ public class LaunchActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(_toolbar);
-        _toolbar.setTitleTextColor(Color.WHITE);
-
         /*********************************  DataBase Configurations  **********************************/
         ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
         ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+
+        // Toolbar Configurations
+        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(_toolbar);
+        _toolbar.setTitleTextColor(Color.WHITE);
 
 //        {
 //            String[] questionSamples = new String[]{
@@ -290,7 +291,8 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void updateDrawerItems() {
 
-        String[] osArray = ItemFactory.getItemGroupObjectNameList().toArray(new String[ItemFactory.getItemGroupObjectNameList().size()]);
+        String[] osArray = ItemFactory.getItemGroupObjectNameList().toArray(
+                new String[ItemFactory.getItemGroupObjectNameList().size()]);
         _drawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, "", "", PROFILE, this);
 
         // Setting the adapter to RecyclerView

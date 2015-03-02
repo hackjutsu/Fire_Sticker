@@ -38,12 +38,13 @@ public class NewItemActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
+        // Toolbar Configurations
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
-        /*********************************  DataBase Configurations  **********************************/
+        // DataBase Configurations
         ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
         ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 

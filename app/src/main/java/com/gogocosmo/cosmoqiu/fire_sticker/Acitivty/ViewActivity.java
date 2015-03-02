@@ -53,15 +53,16 @@ public class ViewActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
+        // DataBase Configurations
+        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
+        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+
+        // Toolbar Configurations
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
-
-        /*********************************  DataBase Configurations  **********************************/
-        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
-        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
         _groupId = getIntent().getExtras().getInt("GROUP");
         ArrayList<Item> itemList = ItemFactory.getItemList(_groupId);
@@ -96,7 +97,6 @@ public class ViewActivity extends ActionBarActivity {
         _backSideEditText.setText(_item.getBack());
         _titleEditText.setText(_item.getTitle());
 
-
         _frontSideEditText.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -112,18 +112,6 @@ public class ViewActivity extends ActionBarActivity {
                 return false;
             }
         });
-
-//        _frontSideEditText.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (_onEditMode == false) {
-//                    startEdits();
-//                    _frontSideEditText.requestFocus();
-//                }
-//            }
-//        });
 
         _backSideEditText.setOnLongClickListener(new View.OnLongClickListener() {
 
