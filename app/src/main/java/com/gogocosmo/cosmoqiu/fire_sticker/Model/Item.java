@@ -1,11 +1,14 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 
+import java.util.UUID;
+
 /**
  * Created by cosmoqiu on 1/29/15.
  */
 public class Item {
 
     private int id;
+    private String _uuid;
     private String _front = null;
     private String _back = null;
     private String _title = null;
@@ -19,6 +22,7 @@ public class Item {
         _front = front;
         _back = back;
         _title = title;
+        _uuid = UUID.randomUUID().toString();
     }
 
     public Item(String front, String back, String title, int bookMark) {
@@ -26,6 +30,7 @@ public class Item {
         _back = back;
         _title = title;
         _bookMark = bookMark;
+        _uuid = UUID.randomUUID().toString();
     }
 
     public int getId() {
@@ -34,6 +39,14 @@ public class Item {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return _uuid;
+    }
+
+    public void setUuid(String uuid) {
+        _uuid = uuid;
     }
 
     public void setFront(String front) {

@@ -35,6 +35,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_ROW_ID = "_id";
     public static final String KEY_GROUP = "groupId";
     public static final String KEY_ITEMGROUP_UUID = "groupUUID";
+    public static final String KEY_ITEM_UUID = "itemUUID";
     public static final String KEY_TITLE = "title";
     public static final String KEY_FRONT = "front";
     public static final String KEY_BACK = "back";
@@ -46,7 +47,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_GROUP_NAME = "groupName";
 
     private static final String[] COLUMNS_OF_TABLE_ITEMS = {
-            KEY_ROW_ID, KEY_GROUP, KEY_ITEMGROUP_UUID, KEY_TITLE, KEY_FRONT, KEY_BACK, KEY_BOOKMARK};
+            KEY_ROW_ID, KEY_GROUP, KEY_ITEMGROUP_UUID, KEY_ITEM_UUID, KEY_TITLE, KEY_FRONT, KEY_BACK, KEY_BOOKMARK};
 
     private static ItemsTableHelper sInstance;
 
@@ -73,6 +74,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 + KEY_ROW_ID + " integer primary key autoincrement , "
                 + KEY_GROUP + " text  , "
                 + KEY_ITEMGROUP_UUID + " text  , "
+                + KEY_ITEM_UUID + " text  , "
                 + KEY_TITLE + "  text  , "
                 + KEY_FRONT + "  text  , "
                 + KEY_BACK + "  text  , "
@@ -112,7 +114,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put(KEY_GROUP, group.getGroupName()); // get groupId
-        values.put(KEY_ITEMGROUP_UUID, group.getUuid()); // get groupId
+        values.put(KEY_ITEMGROUP_UUID, group.getUuid()); // get groupUUID
+        values.put(KEY_ITEM_UUID, item.getUuid()); // get itemUUID
         values.put(KEY_TITLE, item.getTitle()); // get title
         values.put(KEY_FRONT, item.getFront()); // get front
         values.put(KEY_BACK, item.getBack()); // get back
@@ -150,10 +153,11 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         // 4. build item object
         Item item = new Item();
         item.setId(Integer.parseInt(cursor.getString(0)));
-        item.setTitle(cursor.getString(2));
-        item.setFront(cursor.getString(3));
-        item.setBack(cursor.getString(4));
-        item.setBookMark(cursor.getInt(5));
+        item.setUuid(cursor.getString(3));
+        item.setTitle(cursor.getString(4));
+        item.setFront(cursor.getString(5));
+        item.setBack(cursor.getString(6));
+        item.setBookMark(cursor.getInt(7));
 
 //        Log.d(TAG, "getItem(" + id + ")" + item.toString());
 
@@ -185,10 +189,11 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
             do {
                 item = new Item();
                 item.setId(Integer.parseInt(cursor.getString(0)));
-                item.setTitle(cursor.getString(3));
-                item.setFront(cursor.getString(4));
-                item.setBack(cursor.getString(5));
-                item.setBookMark(cursor.getInt(6));
+                item.setUuid(cursor.getString(3));
+                item.setTitle(cursor.getString(4));
+                item.setFront(cursor.getString(5));
+                item.setBack(cursor.getString(6));
+                item.setBookMark(cursor.getInt(7));
 
                 // Add item to items
                 items.add(item);
@@ -211,14 +216,16 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     }
 
     // Updating single item
-    public int updateItem(String groupId, Item item) {
+    public int updateItem(Group group, Item item) {
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put("groupId", groupId); // get groupId
+        values.put("groupId", group.getGroupName()); // get groupName
+        values.put("groupUUID", group.getUuid()); // get groupUUID
+        values.put("itemUUID", item.getUuid()); // get itemUUID
         values.put("title", item.getTitle()); // get title
         values.put("front", item.getFront()); // get front
         values.put("back", item.getBack()); // get back
@@ -237,20 +244,20 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     }
 
     // Deleting single item
-    public void deleteItem(int itemId) {
+    public void deleteItem(Item item) {
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. delete
         db.delete(TABLE_ITEMS,
-                KEY_ROW_ID + " = ?",
-                new String[]{String.valueOf(itemId)});
+                KEY_ITEM_UUID + " = ?",
+                new String[]{item.getUuid()});
 
         // 3. close
 //        db.close();
 
-        Log.d(TAG, "deleteItem: " + String.valueOf(itemId));
+        Log.d(TAG, "deleteItem: " + item.getUuid());
     }
 
     public void deleteGroupItems(String uuid) {

@@ -638,10 +638,10 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         }
         // Delete the item from the adapter
-        Item toDelete = (Item) adapter.getItem(position);
-        adapter.remove(toDelete);
+        Item toDeleteItem = (Item) adapter.getItem(position);
+        adapter.remove(toDeleteItem);
         // Notify Database the Deletion
-        ItemFactory.notifyItemDeletion(_activatedGroupId, toDelete);
+        ItemFactory.notifyItemDeletion(toDeleteItem);
 
         final ViewTreeObserver observer = listview.getViewTreeObserver();
         observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

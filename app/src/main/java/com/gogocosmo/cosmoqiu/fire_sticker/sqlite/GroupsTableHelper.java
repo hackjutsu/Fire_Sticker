@@ -28,6 +28,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_ROW_ID = "_id";
     public static final String KEY_GROUP = "groupId";
     public static final String KEY_ITEMGROUP_UUID = "groupUUID";
+    public static final String KEY_ITEM_UUID = "itemUUID";
     public static final String KEY_TITLE = "title";
     public static final String KEY_FRONT = "front";
     public static final String KEY_BACK = "back";
@@ -71,6 +72,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
                 + KEY_ROW_ID + " integer primary key autoincrement , "
                 + KEY_GROUP + " text  , "
                 + KEY_ITEMGROUP_UUID + " text  , "
+                + KEY_ITEM_UUID + " text  , "
                 + KEY_TITLE + "  text  , "
                 + KEY_FRONT + "  text  , "
                 + KEY_BACK + "  text  , "

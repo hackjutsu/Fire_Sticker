@@ -13,7 +13,7 @@ import java.util.Calendar;
  * Created by cosmoqiu on 1/29/15.
  */
 public class ItemFactory {
-    //TODO: Refactor ItemFactory to be a Proxy to SQLite Database
+    //TODO: (DONE) Refactor ItemFactory to be a Proxy to SQLite Database
 
     static final private String TAG = "MEMORY-ACC";
 
@@ -214,7 +214,7 @@ public class ItemFactory {
     }
 
     public static void notifyItemCreation(final Group group, final Item newItem) {
-        //TODO: notifyItemCreation
+        //TODO:(DONE) notifyItemCreation
 
         Log.d(TAG, "notifyItemCreation");
         Runnable runnable = new Runnable() {
@@ -227,17 +227,31 @@ public class ItemFactory {
 
     }
 
-    public static void notifyItemUpdate() {
-        //TODO: notifyItemUpdate
+    public static void notifyItemUpdate(final Group group, final Item item) {
+        //TODO:(DONE) notifyItemUpdate
 
         Log.d(TAG, "notifyItemUpdate");
+        Runnable runnable = new Runnable() {
+            public void run() {
+                _itemsTableHelper.updateItem(group, item);
+            }
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
 
     }
 
-    public static void notifyItemDeletion(int grouId, Item deletedItem) {
-        //TODO: notifyItemDeletion
+    public static void notifyItemDeletion(final Item item) {
+        //TODO: (DONE) notifyItemDeletion
 
         Log.d(TAG, "notifyItemDeletion");
+        Runnable runnable = new Runnable() {
+            public void run() {
+                _itemsTableHelper.deleteItem(item);
+            }
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
 
     }
 
@@ -271,7 +285,7 @@ public class ItemFactory {
     }
 
     public static void notifyGroupDeletion(final String uuid) {
-        //TODO: notifyGroupDeletion
+        //TODO: (DONE) notifyGroupDeletion
         Log.d(TAG, "notifyGroupDeletion: " + uuid);
 
         Runnable runnable = new Runnable() {

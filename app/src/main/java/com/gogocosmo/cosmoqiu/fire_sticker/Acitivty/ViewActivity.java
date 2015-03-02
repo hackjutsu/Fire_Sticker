@@ -167,6 +167,8 @@ public class ViewActivity extends ActionBarActivity {
                     _item.setBookMark(1);
                     _bookMark.setVisibility(View.VISIBLE);
                 }
+
+                ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
                 return true;
 
             default:
@@ -245,7 +247,7 @@ public class ViewActivity extends ActionBarActivity {
         _item.setBack(_backSideEditText.getText().toString());
         _item.setTitle(_titleEditText.getText().toString());
 
-        ItemFactory.notifyItemUpdate();
+        ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
     }
 
     @Override

@@ -80,7 +80,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="25dp"
-                android:text="Amazing Title"
+                android:hint="Enter Title Here"
+                android:gravity="center"
                 android:textSize="18sp"
                 android:textStyle="italic"/>
         </LinearLayout>
