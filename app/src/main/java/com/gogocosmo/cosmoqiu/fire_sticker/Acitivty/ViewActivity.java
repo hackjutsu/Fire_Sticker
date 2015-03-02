@@ -117,6 +117,14 @@ public class ViewActivity extends ActionBarActivity {
 
             @Override
             public boolean onLongClick(View v) {
+                if (_onEditMode == false) {
+
+                    _onEditMode = true;
+                    startEdits();
+                    _backSideEditText.requestFocus();
+                    return true;
+                }
+
                 return false;
             }
         });
