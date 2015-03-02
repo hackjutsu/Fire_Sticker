@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
@@ -36,7 +39,7 @@ public class ViewActivity extends ActionBarActivity {
     private Menu _menu;
     private MenuItem _itemEdit;
     private MenuItem _itemConfirm;
-//    private MenuItem _itemBlank;
+    //    private MenuItem _itemBlank;
 //    private MenuItem _itemDelete;
     private MenuItem _itemFlag;
 
@@ -47,6 +50,8 @@ public class ViewActivity extends ActionBarActivity {
     private int _groupId;
 
     private boolean _onEditMode;
+
+    private ScrollView _scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,8 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
+        _scrollView = (ScrollView) findViewById(R.id.scrollView_display);
+
         _groupId = getIntent().getExtras().getInt("GROUP");
         ArrayList<Item> itemList = ItemFactory.getItemList(_groupId);
 
@@ -75,10 +82,13 @@ public class ViewActivity extends ActionBarActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
 
+        int cardPadding  = 50;
+
         _frontSideEditText = (EditText) findViewById(R.id.frontSide_display_EditText);
         _frontSideEditText.setBackgroundColor(randomColor());
         _frontSideEditText.setFocusable(false);
         _frontSideEditText.setMinHeight(cardMinHeight);
+        _frontSideEditText.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
 
         _bookMark = (ImageView) findViewById(R.id.item_display_bookmark);
         if (_item.getBookMark() == 0) {
@@ -89,6 +99,8 @@ public class ViewActivity extends ActionBarActivity {
         _backSideEditText.setBackgroundColor(randomColor());
         _backSideEditText.setFocusable(false);
         _backSideEditText.setMinHeight(cardMinHeight);
+        _backSideEditText.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
+
 
         _titleEditText = (EditText) findViewById(R.id.title_display_editText);
         _titleEditText.setFocusable(false);
@@ -146,6 +158,7 @@ public class ViewActivity extends ActionBarActivity {
         });
 
         _onEditMode = false;
+        adjustCardTextFormat();
     }
 
     private int randomColor() {
@@ -156,6 +169,37 @@ public class ViewActivity extends ActionBarActivity {
 
 //        Log.d(TAG, randomColor.getColorName());
         return randomColor.getColorInt();
+    }
+
+    private void adjustCardTextFormat() {
+    // If the line count in an EditText more than two, the texts should start from left;
+    // else we put it in the center.
+
+        _frontSideEditText.post(new Runnable() {
+            @Override
+            public void run() {
+                int lineCountFront = _frontSideEditText.getLineCount();
+
+                if (lineCountFront <= 1) {
+                    _frontSideEditText.setGravity(Gravity.CENTER);
+                } else {
+                    _frontSideEditText.setGravity(Gravity.CENTER_VERTICAL);
+                }
+            }
+        });
+
+        _backSideEditText.post(new Runnable() {
+            @Override
+            public void run() {
+                int lineCountFront = _backSideEditText.getLineCount();
+
+                if (lineCountFront <= 1) {
+                    _backSideEditText.setGravity(Gravity.CENTER);
+                } else {
+                    _backSideEditText.setGravity(Gravity.CENTER_VERTICAL);
+                }
+            }
+        });
     }
 
     @Override
@@ -203,7 +247,7 @@ public class ViewActivity extends ActionBarActivity {
                 returnIntent.putExtra("GROUP", _groupId);
                 setResult(RESULT_OK, returnIntent);
                 finish();
-//                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
 
             case R.id.action_edit_view:
@@ -259,6 +303,8 @@ public class ViewActivity extends ActionBarActivity {
 
     private void discardEdits() {
 
+//        _scrollView.fullScroll(ScrollView.FOCUS_UP);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _frontSideEditText.setFocusable(false);
         _backSideEditText.setFocusable(false);
@@ -278,10 +324,11 @@ public class ViewActivity extends ActionBarActivity {
 //        // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
 
+        adjustCardTextFormat();
     }
 
     private void confirmEdits() {
@@ -310,6 +357,9 @@ public class ViewActivity extends ActionBarActivity {
         _item.setTitle(_titleEditText.getText().toString());
 
         ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
+//        _scrollView.fullScroll(ScrollView.FOCUS_UP);
+
+        adjustCardTextFormat();
     }
 
     @Override
@@ -325,6 +375,6 @@ public class ViewActivity extends ActionBarActivity {
         returnIntent.putExtra("GROUP", _groupId);
         setResult(RESULT_OK, returnIntent);
         finish();
-//        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

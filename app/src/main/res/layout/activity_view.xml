@@ -12,6 +12,7 @@
         android:layout_width="match_parent" />
 
     <ScrollView
+        android:id="@+id/scrollView_display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_shadow"
@@ -38,7 +39,7 @@
                     android:layout_height="match_parent"
                     android:scrollbars = "none"
                     android:maxLines="1000"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:textSize="20sp"
                     android:padding="10dp"/>
 
@@ -67,7 +68,7 @@
                     android:layout_height="match_parent"
                     android:scrollbars = "none"
                     android:maxLines="1000"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:textSize="20sp"
                     android:padding="10dp"/>
             </FrameLayout>
