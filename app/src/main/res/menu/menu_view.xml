@@ -22,7 +22,8 @@
         android:orderInCategory="200"
         android:title="  Confirm  "
         android:icon="@drawable/confirm_action"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_blank_view"

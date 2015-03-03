@@ -57,7 +57,7 @@
                 android:id="@+id/backSide_display_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@android:drawable/dialog_holo_light_frame">
@@ -70,7 +70,10 @@
                     android:maxLines="1000"
                     android:gravity="center_vertical"
                     android:textSize="20sp"
-                    android:padding="10dp"/>
+                    android:paddingTop="10dp"
+                    android:paddingBottom="0dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"/>
             </FrameLayout>
 
             <EditText
@@ -78,12 +81,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="25dp"
                 android:hint="Enter Title Here"
                 android:gravity="center"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="italic"/>
         </LinearLayout>
     </ScrollView>
