@@ -81,7 +81,10 @@ public class TabFragment extends Fragment {
 
         _itemArrayAdapter = new ItemArrayAdapter(_context,
                 ItemFactory.getItemList(_groupId));
+        _listView.setEmptyView(v.findViewById(R.id.emptyElement));
         _listView.setAdapter(_itemArrayAdapter);
+
+
 
         _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

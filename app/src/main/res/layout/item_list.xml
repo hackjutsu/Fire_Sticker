@@ -25,6 +25,16 @@
             android:requiresFadingEdge="vertical"
             android:scrollbars="none" />
 
+        <ImageView
+            android:id="@+id/emptyElement"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="50dp"
+            android:gravity="center"
+            android:src="@drawable/pencil"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,8 +94,10 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
     @Override
     public long getItemId(int position) {
 
-        if (position < 0 || position >= mIdMap.size()) {
-            return -1;
+        // Special condition for ListView's EmptyView. In this case, _values is empty and we cannot
+        // get item by calling getItem(id), which will return null pointer
+        if (position == 0 && mIdMap.size() != 0 && _values.size() ==0) {
+            return 0;
         }
 
         Item item = getItem(position);
