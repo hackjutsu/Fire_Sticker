@@ -4,6 +4,13 @@
     tools:context="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ViewActivity">
 
     <item
+        android:id="@+id/action_stamp_view"
+        android:orderInCategory="200"
+        android:title="BookMark"
+        android:icon="@drawable/stamp_action"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_flag_view"
         android:orderInCategory="250"
         android:title="BookMark"
@@ -15,7 +22,8 @@
         android:orderInCategory="300"
         android:title="Edit"
         android:icon="@drawable/editview_action"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_confirm_view"

@@ -51,6 +51,16 @@
                     android:layout_marginRight="5dp"
                     android:id="@+id/item_display_bookmark"
                     android:src="@drawable/bookmark_action_improved" />
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/item_card_front_done"
+                    android:src="@drawable/done"
+                    android:scaleType="centerInside"/>
             </FrameLayout>
 
             <FrameLayout
@@ -74,6 +84,16 @@
                     android:paddingBottom="0dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"/>
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/item_card_back_done"
+                    android:src="@drawable/done"
+                    android:scaleType="centerInside"/>
             </FrameLayout>
 
             <EditText
@@ -87,6 +107,7 @@
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textStyle="italic"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

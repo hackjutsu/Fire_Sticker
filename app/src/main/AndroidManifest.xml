@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gogocosmo.cosmoqiu.fire_sticker">
+    package="com.gogocosmo.cosmoqiu.fire_sticker" >
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.NewItemActivity"
-            android:label="Create New Sticker"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.CarouselActivity"
-            android:label="@string/title_activity_carousel"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity"
-            android:label="@string/title_activity_launch"
-            android:configChanges="orientation|screenSize">
+            android:name=".Acitivty.LaunchActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_launch" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,17 +18,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.EditGroupActivity"
-            android:label="@string/title_activity_edit_group"
-            android:configChanges="orientation|screenSize"></activity>
+            android:name=".Acitivty.NewItemActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Create New Sticker" />
         <activity
-            android:name="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ViewActivity"
-            android:label="@string/title_activity_view"
-            android:configChanges="orientation|screenSize">
+            android:name=".Acitivty.CarouselActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_carousel" />
+        <activity
+            android:name=".Acitivty.EditGroupActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_edit_group" />
+        <activity
+            android:name=".Acitivty.ViewActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_view" >
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.LaunchActivity" />
+        </activity>
+        <activity
+            android:name=".Acitivty.SplashScreenActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

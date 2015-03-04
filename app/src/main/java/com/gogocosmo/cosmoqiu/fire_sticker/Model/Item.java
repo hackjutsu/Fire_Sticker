@@ -13,6 +13,7 @@ public class Item {
     private String _back = null;
     private String _title = null;
     private int _bookMark = 0;
+    private int _stamp = 0;
 
     public Item() {
 
@@ -65,6 +66,10 @@ public class Item {
         _bookMark = bookMark;
     }
 
+    public void setStamp(int _stamp) {
+        this._stamp = _stamp;
+    }
+
     public String getFront() {
         return _front;
     }
@@ -79,6 +84,10 @@ public class Item {
 
     public int getBookMark() {
         return _bookMark;
+    }
+
+    public int getStamp() {
+        return _stamp;
     }
 
     public String toString() {

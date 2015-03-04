@@ -33,7 +33,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_FRONT = "front";
     public static final String KEY_BACK = "back";
     public static final String KEY_BOOKMARK = "bookMark";
-
+    public static final String KEY_STAMP = "stamp";
 
     // Items table name
     public static final String TABLE_ITEMS = "items";
@@ -76,7 +76,9 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
                 + KEY_TITLE + "  text  , "
                 + KEY_FRONT + "  text  , "
                 + KEY_BACK + "  text  , "
-                + KEY_BOOKMARK + "  integer  ) ";
+                + KEY_BOOKMARK + "  integer  , "
+                + KEY_STAMP + "  integer  ) ";
+
 
         // create items table
         db.execSQL(CREATE_ITEM_TABLE);

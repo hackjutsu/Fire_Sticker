@@ -12,5 +12,7 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_edit_group"></string>
     <string name="title_activity_view">View Mode</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

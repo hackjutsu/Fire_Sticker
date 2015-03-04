@@ -29,6 +29,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         public TextView _backSide;
         public TextView _title;
         public ImageView _bookMark;
+        public ImageView _stamp;
     }
 
     public ItemArrayAdapter(Context context, ArrayList<Item> values) {
@@ -56,6 +57,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             viewHolder._backSide = (TextView) rowView.findViewById(R.id.item_answer);
             viewHolder._title = (TextView) rowView.findViewById(R.id.item_title);
             viewHolder._bookMark = (ImageView) rowView.findViewById(R.id.item_bookmark);
+            viewHolder._stamp = (ImageView) rowView.findViewById(R.id.item_done);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
@@ -68,6 +70,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         String frontStr = _values.get(position).getFront();
         String backStr = _values.get(position).getBack();
         int bookMark = _values.get(position).getBookMark();
+        int stamp = _values.get(position).getStamp();
 
         if (frontStr.isEmpty()) {
             frontStr = "Blank Front Side";
@@ -83,8 +86,15 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             viewHolder._bookMark.setVisibility(View.INVISIBLE);
         }
 
-        viewHolder._frontSide.setText(frontStr);
-        viewHolder._backSide.setText(backStr);
+        if (stamp == 1) {
+            viewHolder._stamp.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder._stamp.setVisibility(View.INVISIBLE);
+        }
+
+        // Replace multiple spaces to single space while displaying in item cell.
+        viewHolder._frontSide.setText(frontStr.trim().replaceAll(" +", " "));
+        viewHolder._backSide.setText(backStr.trim().replaceAll(" +", " "));
         viewHolder._title.setText(_values.get(position).getTitle());
 
 

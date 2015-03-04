@@ -278,7 +278,7 @@ public class LaunchActivity extends ActionBarActivity implements
                 ItemFactory.getItemGroupObjectList().size());
         _pager.setAdapter(_viewPagerAdapter);
 
-        if (ItemFactory.getItemGroupObjectList().size() <= 4) {
+        if (ItemFactory.getItemGroupObjectList().size() <= 3) {
             // To make the Tabs Fixed set this true, This makes the _slidingTabsLayout Space Evenly
             // in Available width
             _slidingTabsLayout.setDistributeEvenly(true);

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
@@ -109,6 +110,7 @@ public class NewItemActivity extends ActionBarActivity {
 
         switch (id) {
             case android.R.id.home:
+                Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
                 finish();
                 return true;
             case R.id.confirm_new_item:
@@ -117,6 +119,7 @@ public class NewItemActivity extends ActionBarActivity {
                 returnIntent.putExtra("UPDATED_GROUP", _spinner.getSelectedItemPosition());
                 setResult(RESULT_OK, returnIntent);
                 finish();
+                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
             default:
@@ -143,5 +146,12 @@ public class NewItemActivity extends ActionBarActivity {
         }
 
         ItemFactory.createItem(_spinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

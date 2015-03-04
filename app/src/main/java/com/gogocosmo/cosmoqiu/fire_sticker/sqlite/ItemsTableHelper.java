@@ -40,6 +40,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_FRONT = "front";
     public static final String KEY_BACK = "back";
     public static final String KEY_BOOKMARK = "bookMark";
+    public static final String KEY_STAMP = "stamp";
 
     // Groups Table Columns names
     public static final String KEY_GROUP_ROW_ID = "_id";
@@ -47,7 +48,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_GROUP_NAME = "groupName";
 
     private static final String[] COLUMNS_OF_TABLE_ITEMS = {
-            KEY_ROW_ID, KEY_GROUP, KEY_ITEMGROUP_UUID, KEY_ITEM_UUID, KEY_TITLE, KEY_FRONT, KEY_BACK, KEY_BOOKMARK};
+            KEY_ROW_ID, KEY_GROUP, KEY_ITEMGROUP_UUID, KEY_ITEM_UUID, KEY_TITLE, KEY_FRONT, KEY_BACK, KEY_BOOKMARK, KEY_STAMP};
 
     private static ItemsTableHelper sInstance;
 
@@ -78,7 +79,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 + KEY_TITLE + "  text  , "
                 + KEY_FRONT + "  text  , "
                 + KEY_BACK + "  text  , "
-                + KEY_BOOKMARK + "  integer  ) ";
+                + KEY_BOOKMARK + "  integer  , "
+                + KEY_STAMP + "  integer  ) ";
 
         // create items table
         db.execSQL(CREATE_ITEM_TABLE);
@@ -119,7 +121,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         values.put(KEY_TITLE, item.getTitle()); // get title
         values.put(KEY_FRONT, item.getFront()); // get front
         values.put(KEY_BACK, item.getBack()); // get back
-        values.put(KEY_BOOKMARK, item.getBookMark()); // get back
+        values.put(KEY_BOOKMARK, item.getBookMark()); // get bookMark
+        values.put(KEY_STAMP, item.getStamp()); // get Stamp
 
         // 3. insert
         db.insert(TABLE_ITEMS, // table
@@ -158,6 +161,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         item.setFront(cursor.getString(5));
         item.setBack(cursor.getString(6));
         item.setBookMark(cursor.getInt(7));
+        item.setStamp(cursor.getInt(8));
 
 //        Log.d(TAG, "getItem(" + id + ")" + item.toString());
 
@@ -194,6 +198,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 item.setFront(cursor.getString(5));
                 item.setBack(cursor.getString(6));
                 item.setBookMark(cursor.getInt(7));
+                item.setStamp(cursor.getInt(8));
 
                 // Add item to items
                 items.add(item);
@@ -230,6 +235,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         values.put("front", item.getFront()); // get front
         values.put("back", item.getBack()); // get back
         values.put("bookMark", item.getBookMark()); // get back
+        values.put("stamp", item.getStamp()); // get back
 
         // 3. updating row
         int i = db.update(TABLE_ITEMS, //table

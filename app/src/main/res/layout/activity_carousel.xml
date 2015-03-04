@@ -29,13 +29,13 @@
             android:background="@drawable/bottom_shadow">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/good_luck" />
+                android:id="@+id/emptyElement"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="50dp"
+                android:gravity="center"
+                android:src="@drawable/pencil2"
+                android:scaleType="centerInside" />
         </FrameLayout>
 
     </LinearLayout>

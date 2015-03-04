@@ -20,7 +20,7 @@
             android:fontFamily="serif"
             android:textColor="@color/PURE_BLACK"
             android:textSize="18sp"
-            android:paddingTop="2dp"
+            android:paddingTop="3dp"
             android:paddingBottom="7dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
@@ -51,7 +51,7 @@
             android:textSize="13sp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:paddingBottom="4dp"
+            android:paddingBottom="5dp"
             android:singleLine="true"
             android:ellipsize="marquee" />
     </LinearLayout>
@@ -64,5 +64,15 @@
         android:layout_marginRight="5dp"
         android:id="@+id/item_bookmark"
         android:src="@drawable/bookmark_action_improved" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="70dp"
+        android:id="@+id/item_done"
+        android:src="@drawable/done"
+        android:scaleType="centerInside"/>
 
 </FrameLayout>

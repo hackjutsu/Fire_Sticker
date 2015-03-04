@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
@@ -36,12 +35,15 @@ public class ViewActivity extends ActionBarActivity {
     private EditText _backSideEditText;
     private EditText _titleEditText;
     private ImageView _bookMark;
+    private ImageView _stampFront;
+    private ImageView _stampBack;
     private Menu _menu;
-    private MenuItem _itemEdit;
+//    private MenuItem _itemEdit;
 //    private MenuItem _itemConfirm;
 //    private MenuItem _itemBlank;
 //    private MenuItem _itemDelete;
     private MenuItem _itemFlag;
+    private MenuItem _itemStamp;
 
     private String _originFrontSide;
     private String _originBackSide;
@@ -50,8 +52,6 @@ public class ViewActivity extends ActionBarActivity {
     private int _groupId;
 
     private boolean _onEditMode;
-
-    private ScrollView _scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +68,6 @@ public class ViewActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
-
-        _scrollView = (ScrollView) findViewById(R.id.scrollView_display);
 
         _groupId = getIntent().getExtras().getInt("GROUP");
         ArrayList<Item> itemList = ItemFactory.getItemList(_groupId);
@@ -91,8 +89,16 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
 
         _bookMark = (ImageView) findViewById(R.id.item_display_bookmark);
+        _stampFront = (ImageView) findViewById(R.id.item_card_front_done);
+        _stampBack = (ImageView) findViewById(R.id.item_card_back_done);
+
         if (_item.getBookMark() == 0) {
             _bookMark.setVisibility(View.INVISIBLE);
+        }
+
+        if (_item.getStamp() == 0) {
+            _stampFront.setVisibility(View.INVISIBLE);
+            _stampBack.setVisibility(View.INVISIBLE);
         }
 
         _backSideEditText = (EditText) findViewById(R.id.backSide_display_editText);
@@ -209,17 +215,19 @@ public class ViewActivity extends ActionBarActivity {
 
         _menu = menu;
 
-        _itemEdit = _menu.findItem(R.id.action_edit_view);
+//        _itemEdit = _menu.findItem(R.id.action_edit_view);
 //        _itemConfirm = _menu.findItem(R.id.action_confirm_view);
 //        _itemBlank = _menu.findItem(R.id.action_blank_view);
 //        _itemDelete = _menu.findItem(R.id.action_discard_view);
         _itemFlag = _menu.findItem(R.id.action_flag_view);
+        _itemStamp = _menu.findItem(R.id.action_stamp_view);
 
-        _itemEdit.setVisible(true);
+//        _itemEdit.setVisible(true);
 //        _itemConfirm.setVisible(false);
 //        _itemBlank.setVisible(false);
 //        _itemDelete.setVisible(false);
         _itemFlag.setVisible(true);
+        _itemStamp.setVisible(true);
 
         return true;
     }
@@ -239,6 +247,7 @@ public class ViewActivity extends ActionBarActivity {
 
                     _onEditMode = false;
                     confirmEdits();
+                    Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
                     return true;
                 }
 
@@ -277,6 +286,20 @@ public class ViewActivity extends ActionBarActivity {
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
                 return true;
 
+            case R.id.action_stamp_view:
+                if (_item.getStamp()== 1) {
+                    _item.setStamp(0);
+                    _stampFront.setVisibility(View.INVISIBLE);
+                    _stampBack.setVisibility(View.INVISIBLE);
+                } else {
+                    _item.setStamp(1);
+                    _stampFront.setVisibility(View.VISIBLE);
+                    _stampBack.setVisibility(View.VISIBLE);
+                }
+
+                ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
+                return true;
+
             default:
         }
         return super.onOptionsItemSelected(item);
@@ -289,10 +312,11 @@ public class ViewActivity extends ActionBarActivity {
         _backSideEditText.setFocusableInTouchMode(true);
         _titleEditText.setFocusableInTouchMode(true);
 //        _itemConfirm.setVisible(true);
-        _itemEdit.setVisible(false);
+//        _itemEdit.setVisible(false);
 //        _itemBlank.setVisible(false);
 //        _itemDelete.setVisible(false);
         _itemFlag.setVisible(false);
+        _itemStamp.setVisible(false);
         _toolbar.setTitle("Edit Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
@@ -310,10 +334,11 @@ public class ViewActivity extends ActionBarActivity {
         _backSideEditText.setFocusable(false);
         _titleEditText.setFocusable(false);
 //        _itemConfirm.setVisible(false);
-        _itemEdit.setVisible(true);
+//        _itemEdit.setVisible(true);
 //        _itemBlank.setVisible(false);
 //        _itemDelete.setVisible(false);
         _itemFlag.setVisible(true);
+        _itemStamp.setVisible(true);
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
@@ -338,10 +363,11 @@ public class ViewActivity extends ActionBarActivity {
         _backSideEditText.setFocusable(false);
         _titleEditText.setFocusable(false);
 //        _itemConfirm.setVisible(false);
-        _itemEdit.setVisible(true);
+//        _itemEdit.setVisible(true);
 //        _itemBlank.setVisible(false);
 //        _itemDelete.setVisible(false);
         _itemFlag.setVisible(true);
+        _itemStamp.setVisible(true);
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
@@ -366,8 +392,9 @@ public class ViewActivity extends ActionBarActivity {
     public void onBackPressed() {
 
         if (_onEditMode == true) {
-            discardEdits();
+            confirmEdits();
             _onEditMode = false;
+            Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
             return;
         }
 

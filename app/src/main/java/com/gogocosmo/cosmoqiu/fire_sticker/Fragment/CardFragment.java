@@ -45,6 +45,10 @@ public class CardFragment extends Fragment {
         _card.setBackgroundColor(_color);
         _card.setText(_text);
 
+        int cardPadding = 50;
+        _card.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
+
+
         ImageView bookMark = (ImageView) view.findViewById(R.id.item_card_bookmark);
         if (_marked == 0) {
             bookMark.setVisibility(View.INVISIBLE);
