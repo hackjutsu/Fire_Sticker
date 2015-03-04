@@ -138,7 +138,7 @@ public class LaunchActivity extends ActionBarActivity implements
     private int _activatedGroupId;
     private ItemArrayAdapter _activatedItemArrayAdapter;
 
-    private int PROFILE = R.drawable.lollipop;
+    private int PROFILE = R.drawable.owl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

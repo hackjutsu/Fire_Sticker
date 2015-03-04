@@ -19,7 +19,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     final static public int TYPE_END = 2;
 
     private String _navTitles[];
-    private String _name;
+    private String _name = "designed by Freepik.com";
     private int _profile;
     private String _email;
 
@@ -161,7 +161,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
 
             holder._profile.setImageResource(_profile);
             holder._position = position;
-            //holder.Name.setText(_name);
+            holder._name.setText(_name);
             //holder._email.setText(_email);
         } else if (holder._viewType == TYPE_END) {
 
