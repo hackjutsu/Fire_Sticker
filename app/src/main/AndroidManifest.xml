@@ -20,7 +20,7 @@
         <activity
             android:name=".Acitivty.NewItemActivity"
             android:configChanges="orientation|screenSize"
-            android:label="Create New Sticker" />
+            android:label="@string/title_activity_new_item"/>
         <activity
             android:name=".Acitivty.CarouselActivity"
             android:configChanges="orientation|screenSize"

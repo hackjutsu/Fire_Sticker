@@ -48,7 +48,15 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_GROUP_NAME = "groupName";
 
     private static final String[] COLUMNS_OF_TABLE_ITEMS = {
-            KEY_ROW_ID, KEY_GROUP, KEY_ITEMGROUP_UUID, KEY_ITEM_UUID, KEY_TITLE, KEY_FRONT, KEY_BACK, KEY_BOOKMARK, KEY_STAMP};
+            KEY_ROW_ID,
+            KEY_GROUP,
+            KEY_ITEMGROUP_UUID,
+            KEY_ITEM_UUID,
+            KEY_TITLE,
+            KEY_FRONT,
+            KEY_BACK,
+            KEY_BOOKMARK,
+            KEY_STAMP};
 
     private static ItemsTableHelper sInstance;
 
@@ -234,8 +242,8 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         values.put("title", item.getTitle()); // get title
         values.put("front", item.getFront()); // get front
         values.put("back", item.getBack()); // get back
-        values.put("bookMark", item.getBookMark()); // get back
-        values.put("stamp", item.getStamp()); // get back
+        values.put("bookMark", item.getBookMark()); // get bookMark
+        values.put("stamp", item.getStamp()); // get Stamp
 
         // 3. updating row
         int i = db.update(TABLE_ITEMS, //table

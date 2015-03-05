@@ -49,7 +49,9 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_GROUP_NAME = "groupName";
 
     private static final String[] COLUMNS_OF_TABLE_GROUPS = {
-            KEY_GROUP_ROW_ID, KEY_GROUP_UUID, KEY_GROUP_NAME};
+            KEY_GROUP_ROW_ID,
+            KEY_GROUP_UUID,
+            KEY_GROUP_NAME};
 
     private static GroupsTableHelper sInstance;
 

@@ -19,9 +19,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     final static public int TYPE_END = 2;
 
     private String _navTitles[];
-    private String _name = "designed by Freepik.com";
     private int _profile;
-    private String _email;
 
     private IDrawerListItemClickListener _drawerItemClickListener;
 
@@ -45,33 +43,28 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
         private int _position;
 
         private TextView _textView;
-        private ImageView _imageView;
         private ImageView _profile;
-        private TextView _name;
-        private TextView _email;
         private IViewHolderClickListener _viewHolderClickListener;
 
         public ViewHolder(View itemView, int ViewType, IViewHolderClickListener listener) {
             super(itemView);
 
+            _viewType = ViewType;
+            _viewHolderClickListener = listener;
+
             if (ViewType == TYPE_ITEM) {
 
                 _textView = (TextView) itemView.findViewById(R.id.rowText);
-                _imageView = (ImageView) itemView.findViewById(R.id.rowIcon);
+                itemView.setOnClickListener(this);
             } else if (ViewType == TYPE_HEADER) {
 
-                _name = (TextView) itemView.findViewById(R.id.name);
-                _email = (TextView) itemView.findViewById(R.id.email);
                 _profile = (ImageView) itemView.findViewById(R.id.circleView);
+                // Header doesn't need a ClickedListener
             } else if (ViewType == TYPE_END) {
 
                 _textView = (TextView) itemView.findViewById(R.id.rowText);
-                _imageView = (ImageView) itemView.findViewById(R.id.rowIcon);
+                itemView.setOnClickListener(this);
             }
-
-            _viewType = ViewType;
-            _viewHolderClickListener = listener;
-            itemView.setOnClickListener(this);
         }
 
 
@@ -94,8 +87,6 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             IDrawerListItemClickListener drawerItemClickListener) {
 
         _navTitles = Titles;
-        _name = name;
-        _email = email;
         _profile = profile;
         _drawerItemClickListener = drawerItemClickListener;
     }
@@ -126,7 +117,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_HEADER);
+//                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_HEADER);
                 }
             });
             return vhHeader;
@@ -161,7 +152,6 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
 
             holder._profile.setImageResource(_profile);
             holder._position = position;
-            holder._name.setText(_name);
             //holder._email.setText(_email);
         } else if (holder._viewType == TYPE_END) {
 

@@ -91,6 +91,8 @@ public class Item {
     }
 
     public String toString() {
-        return "Title: " + _title + "," + "Front: " + _front + ", " + "Back: " + _back;
+        return "Title: " + _title + "," +
+                "Front: " + _front + ", " +
+                "Back: " + _back;
     }
 }
