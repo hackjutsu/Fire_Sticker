@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -325,7 +326,7 @@ public class LaunchActivity extends ActionBarActivity implements
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 // Code here will execute once drawer is closed
-                getSupportActionBar().setTitle(_activityTitle);
+                getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle +"</b>"));
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -542,7 +543,7 @@ public class LaunchActivity extends ActionBarActivity implements
     public void onDestroyActionMode(android.view.ActionMode mode) {
         // We are using a fake Action Mode with a toolbar
 
-        getSupportActionBar().setTitle(_activityTitle);
+        getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle +"</b>"));
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
