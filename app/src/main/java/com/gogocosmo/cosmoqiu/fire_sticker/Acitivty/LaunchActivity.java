@@ -19,6 +19,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
@@ -459,6 +460,11 @@ public class LaunchActivity extends ActionBarActivity implements
                 }
                 return true;
             case R.id.action_add:
+
+                if (ItemFactory.getItemGroupObjectList().size() == 0) {
+                    Toast.makeText(this, "Please create a group first.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
 
                 Intent intent = new Intent(this, NewItemActivity.class);
                 intent.putExtra("CURRENT_TAB", _slidingTabsLayout.getCurrentTabPosition());

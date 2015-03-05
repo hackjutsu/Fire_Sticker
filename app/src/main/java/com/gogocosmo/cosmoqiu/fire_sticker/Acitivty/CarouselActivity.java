@@ -97,7 +97,7 @@ public class CarouselActivity extends ActionBarActivity {
 
             @Override
             public void onDoubleTapped() {
-                Toast.makeText(CarouselActivity.this, "Double Tapped ~", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CarouselActivity.this, "Double Tapped ~", Toast.LENGTH_SHORT).show();
             }
         });
 
