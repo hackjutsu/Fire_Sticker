@@ -247,6 +247,11 @@ public class LaunchActivity extends ActionBarActivity implements
                 AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
                 v.startAnimation(buttonClick);
 
+                if (ItemFactory.getItemGroupObjectList().size() == 0) {
+                    Toast.makeText(LaunchActivity.this, "Please create a group first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // TODO: (DONE) add groupId support for carousel activity
                 Intent intent = new Intent(LaunchActivity.this, CarouselActivity.class);
                 intent.putExtra("GROUP", _activatedGroupId);
