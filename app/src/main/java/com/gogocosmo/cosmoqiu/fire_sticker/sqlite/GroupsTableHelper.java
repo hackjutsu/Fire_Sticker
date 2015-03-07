@@ -96,8 +96,6 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_GROUP_TABLE);
 
         Log.d(TAG, "GroupsTableHelper onCreate Called");
-
-//        setDefualtValue(db);
     }
 
     @Override
@@ -109,44 +107,6 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
     //---------------------------------------------------------------------
-
-
-    private void setDefualtValue(SQLiteDatabase db) {
-
-        // Add initial Groups
-        String[] InitalgroupNames = {"Los Angeles", "Santa Barbara", "San Diego"};
-        ArrayList<Group> InitalGroupList = new ArrayList<>();
-
-        for (int i=0; i<InitalgroupNames.length; ++i) {
-
-            Group group = new Group(InitalgroupNames[i]);
-            InitalGroupList.add(group);
-            ContentValues values = new ContentValues();
-            values.put(KEY_GROUP_UUID, group.getUuid()); // get groupName
-            values.put(KEY_GROUP_NAME, group.getGroupName()); // get groupName
-
-            db.insert(TABLE_GROUPS, null, values);
-        }
-
-        // Add initial items
-        for (int i=0; i<5; ++i) {
-
-            Group group = InitalGroupList.get(0);
-            Item item = new Item("Front", "Back", "Title", 0);
-            ContentValues values = new ContentValues();
-            values.put(KEY_GROUP, group.getGroupName()); // get groupId
-            values.put(KEY_ITEMGROUP_UUID, group.getUuid()); // get groupUUID
-            values.put(KEY_ITEM_UUID, item.getUuid()); // get itemUUID
-            values.put(KEY_TITLE, item.getTitle()); // get title
-            values.put(KEY_FRONT, item.getFront()); // get front
-            values.put(KEY_BACK, item.getBack()); // get back
-            values.put(KEY_BOOKMARK, item.getBookMark()); // get bookMark
-            values.put(KEY_STAMP, item.getStamp()); // get Stamp
-
-            db.insert(TABLE_ITEMS, null, values);
-        }
-    }
-
     /**
      * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
      */

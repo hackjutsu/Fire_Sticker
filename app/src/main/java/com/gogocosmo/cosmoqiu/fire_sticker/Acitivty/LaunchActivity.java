@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -30,6 +29,7 @@ import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
@@ -97,7 +97,7 @@ public class LaunchActivity extends ActionBarActivity implements
         setSupportActionBar(_toolbar);
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        displayShowcaseViewOne();
+        showCase();
 
         // Setting up Database and tips/tutorials for the first run
         SharedPreferences mPreference = PreferenceManager.getDefaultSharedPreferences(this);
@@ -668,11 +668,57 @@ public class LaunchActivity extends ActionBarActivity implements
         super.onDestroy();
     }
 
+    private void showCase(){
+        displayShowcaseViewZero();
+    }
+
+    private void displayShowcaseViewZero() {
+
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.CENTER_IN_PARENT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin*8);
+
+        ShowcaseView sv;
+        sv = new ShowcaseView.Builder(this)
+                .setContentTitle(Html.fromHtml("<b>" + "Note it!" + "</b>"))
+                .setContentText("A quick guide within 15 seconds.")
+                .setTarget(Target.NONE)
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+
+                    @Override
+                    public void onShowcaseViewShow(final ShowcaseView scv) {
+                    }
+
+                    @Override
+                    public void onShowcaseViewHide(final ShowcaseView scv) {
+                        displayShowcaseViewOne();
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
+                    }
+
+                }).build();
+        sv.setButtonPosition(lps);
+    }
+
     private void displayShowcaseViewOne() {
 
-        new ShowcaseView.Builder(this)
-                .setContentTitle("title of first showcase view")
-                .setContentText("text of first showcase view")
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
+
+        ShowcaseView sv;
+        sv = new ShowcaseView.Builder(this)
+                .setContentTitle("New Note")
+                .setContentText("Click here to create your note.")
                 .setTarget(new ViewTarget(R.id.showCasePoint_Add, this))
                 .setStyle(R.style.CustomShowcaseTheme)
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
@@ -684,7 +730,6 @@ public class LaunchActivity extends ActionBarActivity implements
                     @Override
                     public void onShowcaseViewHide(final ShowcaseView scv) {
                         showOverlayTutorialTwo();
-//                        scv.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -692,14 +737,24 @@ public class LaunchActivity extends ActionBarActivity implements
                     }
 
                 }).build();
+        sv.setButtonPosition(lps);
     }
 
     public void showOverlayTutorialTwo() {
-        new ShowcaseView.Builder(this)
-                .setContentTitle("title of second showcase view")
-                .setContentText("text of second showcase view")
+
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
+
+        ShowcaseView sv;
+        sv = new ShowcaseView.Builder(this)
+                .setContentTitle("Group Navigation")
+                .setContentText("Tap on the group name for navigation or ... Just swipe!")
                 .setStyle(R.style.CustomShowcaseTheme)
-                .setTarget(new ViewTarget(R.id.showCasePoint_Home, this))
+                .setTarget(new ViewTarget(R.id.showCasePoint_Tab, this))
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
 
                     @Override
@@ -717,34 +772,10 @@ public class LaunchActivity extends ActionBarActivity implements
 
                 })
                 .build();
+        sv.setButtonPosition(lps);
     }
 
     public void showOverlayTutorialThree() {
-        new ShowcaseView.Builder(this)
-                .setContentTitle("title of Three showcase view")
-                .setContentText("text of three showcase view")
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setTarget(new ViewTarget(R.id.showCasePoint_Tab, this))
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-
-                    @Override
-                    public void onShowcaseViewShow(final ShowcaseView scv) {
-                    }
-
-                    @Override
-                    public void onShowcaseViewHide(final ShowcaseView scv) {
-                        showOverlayTutorialFour();
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
-                    }
-
-                })
-                .build();
-    }
-
-    public void showOverlayTutorialFour() {
 
         RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -755,8 +786,8 @@ public class LaunchActivity extends ActionBarActivity implements
 
         ShowcaseView sv;
         sv = new ShowcaseView.Builder(this)
-                .setContentTitle("title of Four showcase view")
-                .setContentText("text of four showcase view")
+                .setContentTitle("Quick Overview")
+                .setContentText("Take a quick look through the notes in the selected group.")
                 .setStyle(R.style.CustomShowcaseThemeEnd)
                 .setTarget(new ViewTarget(R.id.FireButton, this))
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
