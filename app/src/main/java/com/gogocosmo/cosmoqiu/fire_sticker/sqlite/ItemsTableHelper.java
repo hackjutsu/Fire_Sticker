@@ -101,6 +101,13 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
 
         // create groups table
         db.execSQL(CREATE_GROUP_TABLE);
+
+        Log.d(TAG, "ItemsTableHelper onCreate Called");
+
+        ItemFactory.createGroup("Los Angeles");
+        ItemFactory.createGroup("San Francisco");
+        ItemFactory.createGroup("Santa Barbara");
+        ItemFactory.createGroup("San Diego");
     }
 
     @Override

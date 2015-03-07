@@ -1,9 +1,11 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -12,16 +14,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
@@ -38,80 +47,10 @@ import java.util.HashMap;
 public class LaunchActivity extends ActionBarActivity implements
         TabFragment.OnTabListItemClickListener,
         DrawerRecyclerViewAdapter.IDrawerListItemClickListener,
-        android.view.ActionMode.Callback,
+        ActionMode.Callback,
         SlidingTabLayout.OnPageScrollListener {
 
     static final private String TAG = "MEMORY-ACC";
-
-    // Load the inital data for testing purpose
-    static {
-
-//        String[] questionSamples = new String[]{
-//                "How many rings on the Olympic flag?",
-//                "What is the currency of Austria?",
-//                "How did Alfred Nobel make his money?",
-//                "Which car company makes the Celica?",
-//                "What is a baby rabbit called?",
-//                "What is a Winston Churchill?",
-//                "What plant does the Colorado beetle attack?",
-//                "Who wrote the Opera Madam Butterfly?",
-//                "Which country do Sinologists study?",
-//                "What was the first James Bond film?",
-//                "How many rings on the Olympic flag?",
-//                "What is the currency of Austria?",
-//                "How did Alfred Nobel make his money?",
-//                "Which car company makes the Celica?",
-//                "What is a baby rabbit called?",
-//                "What is a Winston Churchill?",
-//                "What plant does the Colorado beetle attack?",
-//                "Who wrote the Opera Madam Butterfly?",
-//                "Which country do Sinologists study?",
-//                "What was the first James Bond film?"
-//        };
-//
-//        String[] answerSamples = new String[]{
-//                "Five",
-//                "Schilling",
-//                "He invented Dynamite",
-//                "Toyota",
-//                "Kit or Kitten",
-//                "Cigar",
-//                "Potato",
-//                "Puccini",
-//                "China",
-//                "Dr No",
-//                "Five",
-//                "Schilling",
-//                "He invented Dynamite",
-//                "Toyota",
-//                "Kit or Kitten",
-//                "Cigar",
-//                "Potato",
-//                "Puccini",
-//                "China",
-//                "Dr No"
-//        };
-//
-//        ItemFactory.createGroup("Job Steve");
-//        ItemFactory.createGroup("Larry Page");
-//        ItemFactory.createGroup("Elon Musk");
-//        ItemFactory.createGroup("Bill Gates");
-//
-//        for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
-//
-//            for (int i = 0; i < 10; ++i) {
-//                String title = "";
-//                int bookMark = 0;
-//
-//                if (i % (j + 1) == 0) {
-//                    title = "Awesome Title";
-//                    bookMark = 1;
-//                }
-//
-//                ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
-//            }
-//        }
-    }
 
     final private int EDIT_GROUP_REQ = 1;
     final private int VIEW_DETAILS_REQ = 2;
@@ -154,76 +93,89 @@ public class LaunchActivity extends ActionBarActivity implements
 
         // Toolbar Configurations
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        _toolbar.inflateMenu(R.menu.menu_launch);
         setSupportActionBar(_toolbar);
         _toolbar.setTitleTextColor(Color.WHITE);
 
-//        {
-//            String[] questionSamples = new String[]{
-//                    "How many rings on the Olympic flag?",
-//                    "What is the currency of Austria?",
-//                    "How did Alfred Nobel make his money?",
-//                    "Which car company makes the Celica?",
-//                    "What is a baby rabbit called?",
-//                    "What is a Winston Churchill?",
-//                    "What plant does the Colorado beetle attack?",
-//                    "Who wrote the Opera Madam Butterfly?",
-//                    "Which country do Sinologists study?",
-//                    "What was the first James Bond film?",
-//                    "How many rings on the Olympic flag?",
-//                    "What is the currency of Austria?",
-//                    "How did Alfred Nobel make his money?",
-//                    "Which car company makes the Celica?",
-//                    "What is a baby rabbit called?",
-//                    "What is a Winston Churchill?",
-//                    "What plant does the Colorado beetle attack?",
-//                    "Who wrote the Opera Madam Butterfly?",
-//                    "Which country do Sinologists study?",
-//                    "What was the first James Bond film?"
-//            };
-//
-//            String[] answerSamples = new String[]{
-//                    "Five",
-//                    "Schilling",
-//                    "He invented Dynamite",
-//                    "Toyota",
-//                    "Kit or Kitten",
-//                    "Cigar",
-//                    "Potato",
-//                    "Puccini",
-//                    "China",
-//                    "Dr No",
-//                    "Five",
-//                    "Schilling",
-//                    "He invented Dynamite",
-//                    "Toyota",
-//                    "Kit or Kitten",
-//                    "Cigar",
-//                    "Potato",
-//                    "Puccini",
-//                    "China",
-//                    "Dr No"
-//            };
-//
-//            ItemFactory.createGroup("Job Steve");
-//            ItemFactory.createGroup("Larry Page");
-//            ItemFactory.createGroup("Elon Musk");
-//            ItemFactory.createGroup("Bill Gates");
-//
-//            for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
-//
-//                for (int i = 0; i < 10; ++i) {
-//                    String title = "";
-//                    int bookMark = 0;
-//
-//                    if (i % (j + 1) == 0) {
-//                        title = "Awesome Title";
-//                        bookMark = 1;
-//                    }
-//
-//                    ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
-//                }
-//            }
-//        }
+        displayShowcaseViewOne();
+
+        // Setting up Database and tips/tutorials for the first run
+        SharedPreferences mPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isFirstRun = mPreference.getBoolean("NOTEIT_FIRST_RUN", true);
+        if (isFirstRun == true) {
+            // Code to run once
+            Toast.makeText(this, "This is the first run!!", Toast.LENGTH_SHORT).show();
+
+            String[] questionSamples = new String[]{
+                    "How many rings on the Olympic flag?",
+                    "What is the currency of Austria?",
+                    "How did Alfred Nobel make his money?",
+                    "Which car company makes the Celica?",
+                    "What is a baby rabbit called?",
+                    "What is a Winston Churchill?",
+                    "What plant does the Colorado beetle attack?",
+                    "Who wrote the Opera Madam Butterfly?",
+                    "Which country do Sinologists study?",
+                    "What was the first James Bond film?",
+                    "How many rings on the Olympic flag?",
+                    "What is the currency of Austria?",
+                    "How did Alfred Nobel make his money?",
+                    "Which car company makes the Celica?",
+                    "What is a baby rabbit called?",
+                    "What is a Winston Churchill?",
+                    "What plant does the Colorado beetle attack?",
+                    "Who wrote the Opera Madam Butterfly?",
+                    "Which country do Sinologists study?",
+                    "What was the first James Bond film?"
+            };
+
+            String[] answerSamples = new String[]{
+                    "Five",
+                    "Schilling",
+                    "He invented Dynamite",
+                    "Toyota",
+                    "Kit or Kitten",
+                    "Cigar",
+                    "Potato",
+                    "Puccini",
+                    "China",
+                    "Dr No",
+                    "Five",
+                    "Schilling",
+                    "He invented Dynamite",
+                    "Toyota",
+                    "Kit or Kitten",
+                    "Cigar",
+                    "Potato",
+                    "Puccini",
+                    "China",
+                    "Dr No"
+            };
+
+            ItemFactory.createGroup("Job Steve");
+            ItemFactory.createGroup("Larry Page");
+            ItemFactory.createGroup("Elon Musk");
+            ItemFactory.createGroup("Bill Gates");
+
+            for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
+
+                for (int i = 0; i < 10; ++i) {
+                    String title = "";
+                    int bookMark = 0;
+
+                    if (i % (j + 1) == 0) {
+                        title = "Awesome Title";
+                        bookMark = 1;
+                    }
+
+                    ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
+                }
+            }
+
+            SharedPreferences.Editor editor = mPreference.edit();
+            editor.putBoolean("NOTEIT_FIRST_RUN", false);
+            editor.commit();
+        }
 
         /*********************************  Tabs Configurations  **********************************/
         _pager = (ViewPager) findViewById(R.id.pager);
@@ -326,7 +278,7 @@ public class LaunchActivity extends ActionBarActivity implements
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 // Code here will execute once drawer is closed
-                getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle +"</b>"));
+                getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle + "</b>"));
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -543,7 +495,7 @@ public class LaunchActivity extends ActionBarActivity implements
     public void onDestroyActionMode(android.view.ActionMode mode) {
         // We are using a fake Action Mode with a toolbar
 
-        getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle +"</b>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle + "</b>"));
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
@@ -714,6 +666,118 @@ public class LaunchActivity extends ActionBarActivity implements
     protected void onDestroy() {
         ItemFactory.closeAllDatabase();
         super.onDestroy();
+    }
+
+    private void displayShowcaseViewOne() {
+
+        new ShowcaseView.Builder(this)
+                .setContentTitle("title of first showcase view")
+                .setContentText("text of first showcase view")
+                .setTarget(new ViewTarget(R.id.showCasePoint_Add, this))
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+
+                    @Override
+                    public void onShowcaseViewShow(final ShowcaseView scv) {
+                    }
+
+                    @Override
+                    public void onShowcaseViewHide(final ShowcaseView scv) {
+                        showOverlayTutorialTwo();
+//                        scv.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
+                    }
+
+                }).build();
+    }
+
+    public void showOverlayTutorialTwo() {
+        new ShowcaseView.Builder(this)
+                .setContentTitle("title of second showcase view")
+                .setContentText("text of second showcase view")
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setTarget(new ViewTarget(R.id.showCasePoint_Home, this))
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+
+                    @Override
+                    public void onShowcaseViewShow(final ShowcaseView scv) {
+                    }
+
+                    @Override
+                    public void onShowcaseViewHide(final ShowcaseView scv) {
+                        showOverlayTutorialThree();
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
+                    }
+
+                })
+                .build();
+    }
+
+    public void showOverlayTutorialThree() {
+        new ShowcaseView.Builder(this)
+                .setContentTitle("title of Three showcase view")
+                .setContentText("text of three showcase view")
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setTarget(new ViewTarget(R.id.showCasePoint_Tab, this))
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+
+                    @Override
+                    public void onShowcaseViewShow(final ShowcaseView scv) {
+                    }
+
+                    @Override
+                    public void onShowcaseViewHide(final ShowcaseView scv) {
+                        showOverlayTutorialFour();
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
+                    }
+
+                })
+                .build();
+    }
+
+    public void showOverlayTutorialFour() {
+
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
+
+        ShowcaseView sv;
+        sv = new ShowcaseView.Builder(this)
+                .setContentTitle("title of Four showcase view")
+                .setContentText("text of four showcase view")
+                .setStyle(R.style.CustomShowcaseThemeEnd)
+                .setTarget(new ViewTarget(R.id.FireButton, this))
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+
+                    @Override
+                    public void onShowcaseViewShow(final ShowcaseView scv) {
+                    }
+
+                    @Override
+                    public void onShowcaseViewHide(final ShowcaseView scv) {
+                        scv.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
+                    }
+
+                })
+                .build();
+
+        sv.setButtonPosition(lps);
     }
 }
 

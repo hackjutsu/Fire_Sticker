@@ -19,4 +19,8 @@
     <!-- Edit Group List -->
     <dimen name="EDIT_GROUP_LIST_ITEM_HEIGHT">60dp</dimen>
 
+    <dimen name="showcase_radius">70dp</dimen>
+    <dimen name="showcase_radius_inner">71dp</dimen>
+    <dimen name="showcase_radius_outer">89dp</dimen>
+
 </resources>

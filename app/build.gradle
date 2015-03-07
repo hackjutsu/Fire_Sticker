@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Note it!'
+            keyPassword 'noteit2015'
+            storeFile file('/Users/Citrixer/Swords/Key_Store/Android_Key_Store.jks')
+            storePassword 'qinwangsaoliuhe'
+        }
+    }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
         applicationId "com.gogocosmo.cosmoqiu.fire_sticker"
         minSdkVersion 16
@@ -15,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
@@ -25,4 +33,5 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile project(':slidingtablibrary')
+    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
 }

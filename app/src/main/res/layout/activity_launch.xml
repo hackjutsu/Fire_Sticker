@@ -8,6 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Special point for ShowCase Displaying -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/showCasePoint_Add"
+            android:layout_gravity="top|right"
+            android:visibility="invisible" />
+
+        <!-- Special point for ShowCase Displaying -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/showCasePoint_Home"
+            android:layout_gravity="top|left"
+            android:visibility="invisible" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,6 +41,17 @@
                 android:layout_height="@dimen/TAB_HEIGHT"
                 android:elevation="2dp"
                 android:background="@color/WHITE" />
+
+            <!-- Special point for ShowCase Displaying -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="-19dp"
+                android:layout_marginBottom="19dp"
+                android:layout_marginLeft="60dp"
+                android:id="@+id/showCasePoint_Tab"
+                android:layout_gravity="top|left"
+                android:visibility="invisible" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
@@ -49,6 +76,7 @@
             android:layout_gravity="right|bottom"
             android:layout_marginBottom="30dp"
             android:layout_marginRight="20dp" />
+
     </FrameLayout>
 
     <!-- Side navigation drawer UI -->
@@ -65,11 +93,11 @@
     </android.support.v7.widget.RecyclerView>
 
     <!--<ListView-->
-        <!--android:id="@+id/navList"-->
-        <!--android:layout_width="@dimen/DRAWER_WIDTH"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:background="@color/DRAWERLIST_BACKGROUND" />-->
+    <!--android:id="@+id/navList"-->
+    <!--android:layout_width="@dimen/DRAWER_WIDTH"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="start"-->
+    <!--android:background="@color/DRAWERLIST_BACKGROUND" />-->
 
 
 </android.support.v4.widget.DrawerLayout>
