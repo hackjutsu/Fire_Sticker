@@ -35,6 +35,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
@@ -97,81 +98,12 @@ public class LaunchActivity extends ActionBarActivity implements
         setSupportActionBar(_toolbar);
         _toolbar.setTitleTextColor(Color.WHITE);
 
-        showCase();
-
         // Setting up Database and tips/tutorials for the first run
         SharedPreferences mPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = mPreference.getBoolean("NOTEIT_FIRST_RUN", true);
         if (isFirstRun == true) {
             // Code to run once
-            Toast.makeText(this, "This is the first run!!", Toast.LENGTH_SHORT).show();
-
-            String[] questionSamples = new String[]{
-                    "How many rings on the Olympic flag?",
-                    "What is the currency of Austria?",
-                    "How did Alfred Nobel make his money?",
-                    "Which car company makes the Celica?",
-                    "What is a baby rabbit called?",
-                    "What is a Winston Churchill?",
-                    "What plant does the Colorado beetle attack?",
-                    "Who wrote the Opera Madam Butterfly?",
-                    "Which country do Sinologists study?",
-                    "What was the first James Bond film?",
-                    "How many rings on the Olympic flag?",
-                    "What is the currency of Austria?",
-                    "How did Alfred Nobel make his money?",
-                    "Which car company makes the Celica?",
-                    "What is a baby rabbit called?",
-                    "What is a Winston Churchill?",
-                    "What plant does the Colorado beetle attack?",
-                    "Who wrote the Opera Madam Butterfly?",
-                    "Which country do Sinologists study?",
-                    "What was the first James Bond film?"
-            };
-
-            String[] answerSamples = new String[]{
-                    "Five",
-                    "Schilling",
-                    "He invented Dynamite",
-                    "Toyota",
-                    "Kit or Kitten",
-                    "Cigar",
-                    "Potato",
-                    "Puccini",
-                    "China",
-                    "Dr No",
-                    "Five",
-                    "Schilling",
-                    "He invented Dynamite",
-                    "Toyota",
-                    "Kit or Kitten",
-                    "Cigar",
-                    "Potato",
-                    "Puccini",
-                    "China",
-                    "Dr No"
-            };
-
-            ItemFactory.createGroup("Job Steve");
-            ItemFactory.createGroup("Larry Page");
-            ItemFactory.createGroup("Elon Musk");
-            ItemFactory.createGroup("Bill Gates");
-
-            for (int j = 0; j < ItemFactory.getItemGroupObjectList().size(); ++j) {
-
-                for (int i = 0; i < 10; ++i) {
-                    String title = "";
-                    int bookMark = 0;
-
-                    if (i % (j + 1) == 0) {
-                        title = "Awesome Title";
-                        bookMark = 1;
-                    }
-
-                    ItemFactory.createItem(j, questionSamples[i], answerSamples[i], title, bookMark);
-                }
-            }
-
+            LoadDefaultData();
             SharedPreferences.Editor editor = mPreference.edit();
             editor.putBoolean("NOTEIT_FIRST_RUN", false);
             editor.commit();
@@ -668,7 +600,87 @@ public class LaunchActivity extends ActionBarActivity implements
         super.onDestroy();
     }
 
-    private void showCase(){
+    private void LoadDefaultData() {
+
+
+        String[] questionSamples = new String[]{
+                "How many rings on the Olympic flag?",
+                "What is the currency of Austria?",
+                "How did Alfred Nobel make his money?",
+                "Which car company makes the Celica?",
+                "What is a baby rabbit called?",
+                "What is a Winston Churchill?",
+                "What plant does the Colorado beetle attack?",
+                "Who wrote the Opera Madam Butterfly?",
+                "Which country do Sinologists study?",
+                "What was the first James Bond film?",
+                "How many rings on the Olympic flag?",
+                "What is the currency of Austria?",
+                "How did Alfred Nobel make his money?",
+                "Which car company makes the Celica?",
+                "What is a baby rabbit called?",
+                "What is a Winston Churchill?",
+                "What plant does the Colorado beetle attack?",
+                "Who wrote the Opera Madam Butterfly?",
+                "Which country do Sinologists study?",
+                "What was the first James Bond film?"
+        };
+
+        String[] answerSamples = new String[]{
+                "Five",
+                "Schilling",
+                "He invented Dynamite",
+                "Toyota",
+                "Kit or Kitten",
+                "Cigar",
+                "Potato",
+                "Puccini",
+                "China",
+                "Dr No",
+                "Five",
+                "Schilling",
+                "He invented Dynamite",
+                "Toyota",
+                "Kit or Kitten",
+                "Cigar",
+                "Potato",
+                "Puccini",
+                "China",
+                "Dr No"
+        };
+
+        ItemFactory.createGroup("Welcome!");
+        ItemFactory.createGroup("Great Ideas");
+        ItemFactory.createGroup("To-Do List");
+
+        Group groupWelcome = ItemFactory.getItemGroupObjectList().get(0);
+        ItemFactory.createItem(0, "Bookmark the important notes", "", "BooKMark", 1, 0);
+        ItemFactory.createItem(0, "Long Press to edit.", "Stamp it when the task is finished", "Edit Notes", 0, 1);
+        ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to delete", 1, 1);
+        ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two sides.",
+                " You can write down the notes on the front and add hint on the back. " +
+                        "Or just write the question on the front, and solutions on the back",
+                "Welcome to Note it!", 1 ,0);
+
+        Group groupGreatIdeas = ItemFactory.getItemGroupObjectList().get(1);
+        ItemFactory.createItem(1, "Change the world!", "Less pollution.", "Awesome Idea", 1, 0);
+        ItemFactory.createItem(1, "Do meditate. Don't stay up all night. ",
+                "Studies show that those who meditate daily for at least 30 minutes" +
+                        "have better focus", "Ready, Meditate", 0, 1);
+        ItemFactory.createItem(1, "Do trust yourself. Don't go it alone.",
+                "When people believe they can grow their brainpower," +
+                        "they become more curious and more open-minded.", "Ready, Trust", 1, 1);
+        ItemFactory.createItem(1, "Do model the great. Don't be a sheep.",
+                "Think, what are smart people doing, and what can that teach me?", "Ready, Model", 0, 0);
+        ItemFactory.createItem(1, "Do pay attention. Don't just pass judgement.",
+                "Listen closely. Be observant and informed. Be patient and in the moment", "Ready, Attentions", 0, 0);
+
+        Group groupToDo = ItemFactory.getItemGroupObjectList().get(2);
+        ItemFactory.createItem(2, "Read the Wiki about Scotland History in 19 century.", "Watch the documentary.", "Investigate Scotland History", 0, 1);
+        ItemFactory.createItem(2, "Everyone is talking about it. It must be interesting.", "Order it online!", "Order The Lean Startup", 0, 1);
+        ItemFactory.createItem(2, "Egg, Milk, Onions, Cheese", "Maybe some pens.", "Target Shopping", 0, 1);
+        ItemFactory.createItem(2, "Just do it!", "Keep running!", "30 minutes' Running", 1, 0);
+
         displayShowcaseViewZero();
     }
 
@@ -679,7 +691,7 @@ public class LaunchActivity extends ActionBarActivity implements
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.CENTER_IN_PARENT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin*8);
+        lps.setMargins(margin, margin, margin, margin * 8);
 
         ShowcaseView sv;
         sv = new ShowcaseView.Builder(this)

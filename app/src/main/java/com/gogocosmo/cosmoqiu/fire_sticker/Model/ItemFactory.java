@@ -9,9 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * Created by cosmoqiu on 1/29/15.
- */
 public class ItemFactory {
     //TODO: (DONE) Refactor ItemFactory to be a Proxy to SQLite Database
 
@@ -33,7 +30,7 @@ public class ItemFactory {
         _groupsTableHelper = groupsTableHelper;
     }
 
-    public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark) {
+    public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark, int stamp) {
 
         if (groupId < 0 || groupId >= _itemLists.size()) {
             Log.d(TAG, "Invalid group Id!");
@@ -81,7 +78,7 @@ public class ItemFactory {
         }
 
 
-        Item newItem = new Item(frontSide, backSide, realTitle, bookMark);
+        Item newItem = new Item(frontSide, backSide, realTitle, bookMark, stamp);
         itemList.add(0, newItem);
 
         // Notify Database the item creation
@@ -231,13 +228,16 @@ public class ItemFactory {
         //TODO:(DONE) notifyItemUpdate
 
         Log.d(TAG, "notifyItemUpdate");
-        Runnable runnable = new Runnable() {
-            public void run() {
-                _itemsTableHelper.updateItem(group, item);
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
+        _itemsTableHelper.updateItem(group, item);
+
+
+//        Runnable runnable = new Runnable() {
+//            public void run() {
+//                _itemsTableHelper.updateItem(group, item);
+//            }
+//        };
+//        Thread mythread = new Thread(runnable);
+//        mythread.start();
 
     }
 

@@ -26,11 +26,12 @@ public class Item {
         _uuid = UUID.randomUUID().toString();
     }
 
-    public Item(String front, String back, String title, int bookMark) {
+    public Item(String front, String back, String title, int bookMark, int stamp) {
         _front = front;
         _back = back;
         _title = title;
         _bookMark = bookMark;
+        _stamp = stamp;
         _uuid = UUID.randomUUID().toString();
     }
 
