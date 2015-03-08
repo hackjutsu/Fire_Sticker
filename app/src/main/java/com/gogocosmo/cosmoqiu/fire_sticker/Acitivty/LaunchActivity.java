@@ -35,7 +35,6 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
-import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
@@ -162,7 +161,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void updateSlidingTabs() {
 
-        // TODO: Maybe add support for method notifyDataChanged() here
         _viewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
                 ItemFactory.getItemGroupObjectNameList(),
@@ -434,7 +432,6 @@ public class LaunchActivity extends ActionBarActivity implements
         MenuItem itemBack = _menu.findItem(R.id.action_back);
         MenuItem itemSlash = _menu.findItem(R.id.action_blank);
 
-
         itemAdd.setVisible(true);
         itemBack.setVisible(false);
         itemDelete.setVisible(false);
@@ -602,58 +599,11 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void LoadDefaultData() {
 
-
-        String[] questionSamples = new String[]{
-                "How many rings on the Olympic flag?",
-                "What is the currency of Austria?",
-                "How did Alfred Nobel make his money?",
-                "Which car company makes the Celica?",
-                "What is a baby rabbit called?",
-                "What is a Winston Churchill?",
-                "What plant does the Colorado beetle attack?",
-                "Who wrote the Opera Madam Butterfly?",
-                "Which country do Sinologists study?",
-                "What was the first James Bond film?",
-                "How many rings on the Olympic flag?",
-                "What is the currency of Austria?",
-                "How did Alfred Nobel make his money?",
-                "Which car company makes the Celica?",
-                "What is a baby rabbit called?",
-                "What is a Winston Churchill?",
-                "What plant does the Colorado beetle attack?",
-                "Who wrote the Opera Madam Butterfly?",
-                "Which country do Sinologists study?",
-                "What was the first James Bond film?"
-        };
-
-        String[] answerSamples = new String[]{
-                "Five",
-                "Schilling",
-                "He invented Dynamite",
-                "Toyota",
-                "Kit or Kitten",
-                "Cigar",
-                "Potato",
-                "Puccini",
-                "China",
-                "Dr No",
-                "Five",
-                "Schilling",
-                "He invented Dynamite",
-                "Toyota",
-                "Kit or Kitten",
-                "Cigar",
-                "Potato",
-                "Puccini",
-                "China",
-                "Dr No"
-        };
-
         ItemFactory.createGroup("Welcome!");
         ItemFactory.createGroup("Great Ideas");
         ItemFactory.createGroup("To-Do List");
 
-        Group groupWelcome = ItemFactory.getItemGroupObjectList().get(0);
+        // Add default items to group "Welcome!"
         ItemFactory.createItem(0, "Bookmark the important notes", "", "BooKMark", 1, 0);
         ItemFactory.createItem(0, "Long Press to edit.", "Stamp it when the task is finished", "Edit Notes", 0, 1);
         ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to delete", 1, 1);
@@ -662,7 +612,7 @@ public class LaunchActivity extends ActionBarActivity implements
                         "Or just write the question on the front, and solutions on the back",
                 "Welcome to Note it!", 1 ,0);
 
-        Group groupGreatIdeas = ItemFactory.getItemGroupObjectList().get(1);
+        // Add default items to group "Great ideas"
         ItemFactory.createItem(1, "Change the world!", "Less pollution.", "Awesome Idea", 1, 0);
         ItemFactory.createItem(1, "Do meditate. Don't stay up all night. ",
                 "Studies show that those who meditate daily for at least 30 minutes" +
@@ -675,7 +625,7 @@ public class LaunchActivity extends ActionBarActivity implements
         ItemFactory.createItem(1, "Do pay attention. Don't just pass judgement.",
                 "Listen closely. Be observant and informed. Be patient and in the moment", "Ready, Attentions", 0, 0);
 
-        Group groupToDo = ItemFactory.getItemGroupObjectList().get(2);
+        // Add default items to group "To-Do List"
         ItemFactory.createItem(2, "Read the Wiki about Scotland History in 19 century.", "Watch the documentary.", "Investigate Scotland History", 0, 1);
         ItemFactory.createItem(2, "Everyone is talking about it. It must be interesting.", "Order it online!", "Order The Lean Startup", 0, 1);
         ItemFactory.createItem(2, "Egg, Milk, Onions, Cheese", "Maybe some pens.", "Target Shopping", 0, 1);
