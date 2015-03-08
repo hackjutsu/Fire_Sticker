@@ -136,7 +136,6 @@ public class LaunchActivity extends ActionBarActivity implements
                     return;
                 }
 
-                // TODO: (DONE) add groupId support for carousel activity
                 Intent intent = new Intent(LaunchActivity.this, CarouselActivity.class);
                 intent.putExtra("GROUP", _activatedGroupId);
                 startActivity(intent);
@@ -241,7 +240,7 @@ public class LaunchActivity extends ActionBarActivity implements
                                       View view,
                                       int groupId,
                                       int position) {
-        //TODO: (DONE) Add Support for item list click
+
         listView.setItemChecked(position, true);
 
         ItemFactory.setSelectedItemIndex(groupId, position);
@@ -258,7 +257,7 @@ public class LaunchActivity extends ActionBarActivity implements
                                   View view,
                                   int groupId,
                                   int position) {
-        //TODO: (DONE) Add Support for item list long click
+
         if (_actionMode != null) {
 
             ItemFactory.setSelectedItemIndex(groupId, position);
@@ -303,12 +302,11 @@ public class LaunchActivity extends ActionBarActivity implements
         }
 
         _activatedGroupId = position;
-//        Log.d(TAG, "_activatedGroupId = " + String.valueOf(_activatedGroupId));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//      Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_launch, menu);
         _menu = menu;
 
@@ -331,7 +329,7 @@ public class LaunchActivity extends ActionBarActivity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-//        Activate the navigation drawer toggle
+        // Activate the navigation drawer toggle
         if (_drawerToggle.onOptionsItemSelected(item)) {
             if (_actionMode != null) {
                 _actionMode.finish();
@@ -442,7 +440,6 @@ public class LaunchActivity extends ActionBarActivity implements
         _actionMode = null;
 
         if (_activatedItemListView != null) {
-            //TODO: (DONE) Add Support for Group ID
             _activatedItemListView.setItemChecked(ItemFactory.getSelectedItemIndex(_activatedGroupId), false);
         }
     }
@@ -610,7 +607,7 @@ public class LaunchActivity extends ActionBarActivity implements
         ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two sides.",
                 " You can write down the notes on the front and add hint on the back. " +
                         "Or just write the question on the front, and solutions on the back",
-                "Welcome to Note it!", 1 ,0);
+                "Welcome to Note it!", 1, 0);
 
         // Add default items to group "Great ideas"
         ItemFactory.createItem(1, "Change the world!", "Less pollution.", "Awesome Idea", 1, 0);

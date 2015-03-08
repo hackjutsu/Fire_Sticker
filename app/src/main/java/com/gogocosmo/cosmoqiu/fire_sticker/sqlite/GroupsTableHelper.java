@@ -86,7 +86,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         // create items table
         db.execSQL(CREATE_ITEM_TABLE);
 
-        Log.d(TAG, "CREATE_GROUP_TABLE");
+//        Log.d(TAG, "CREATE_GROUP_TABLE");
         String CREATE_GROUP_TABLE = "create table " + TABLE_GROUPS + " ( "
                 + KEY_GROUP_ROW_ID + " integer primary key autoincrement , "
                 + KEY_GROUP_UUID + " text , "
@@ -95,7 +95,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         // create groups table
         db.execSQL(CREATE_GROUP_TABLE);
 
-        Log.d(TAG, "GroupsTableHelper onCreate Called");
+//        Log.d(TAG, "GroupsTableHelper onCreate Called");
     }
 
     @Override

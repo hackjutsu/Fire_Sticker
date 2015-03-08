@@ -86,7 +86,7 @@ public abstract class OnMultiGesturesListener implements View.OnTouchListener {
             float y = e.getY();
 
             onDoubleTapped();
-            Log.d(TAG, "Tapped at: (" + x + "," + y + ")");
+//            Log.d(TAG, "Tapped at: (" + x + "," + y + ")");
 
             return true;
         }

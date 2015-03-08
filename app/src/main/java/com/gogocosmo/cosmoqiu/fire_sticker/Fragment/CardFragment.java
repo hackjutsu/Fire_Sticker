@@ -20,9 +20,6 @@ public class CardFragment extends Fragment {
     private int _color;
     private String _text;
 
-
-
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

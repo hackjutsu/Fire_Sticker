@@ -33,7 +33,7 @@ public class ItemFactory {
     public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark, int stamp) {
 
         if (groupId < 0 || groupId >= _itemLists.size()) {
-            Log.d(TAG, "Invalid group Id!");
+//            Log.d(TAG, "Invalid group Id!");
             return null;
         }
 
@@ -90,7 +90,7 @@ public class ItemFactory {
     public static ArrayList<ArrayList<Item>> getItemLists() {
 
         if (_itemLists == null) {
-            Log.d(TAG, "_itemLists retrieve data from dataBase");
+//            Log.d(TAG, "_itemLists retrieve data from dataBase");
             _itemLists = new ArrayList<ArrayList<Item>>();
             _itemGroupObjectList = getItemGroupObjectList();
 
@@ -136,12 +136,12 @@ public class ItemFactory {
 
             for (int i = 0; i < _itemGroupObjectList.size(); ++i) {
                 _selectedItemIndexes.add(-1);
-                Log.d(TAG, String.valueOf(i));
+//                Log.d(TAG, String.valueOf(i));
             }
 
         }
 
-        Log.d(TAG, "_selectedItemIndexes.size() = " + String.valueOf(_selectedItemIndexes.size()));
+//        Log.d(TAG, "_selectedItemIndexes.size() = " + String.valueOf(_selectedItemIndexes.size()));
         return _selectedItemIndexes;
     }
 
@@ -150,8 +150,8 @@ public class ItemFactory {
         _itemLists = getItemLists();
 
         if (groupId < 0 || groupId >= _itemLists.size()) {
-            Log.d(TAG, "Invalid group Id! " + String.valueOf(groupId));
-            Log.d(TAG, "_itemLists.size() " + String.valueOf(_itemLists.size()));
+//            Log.d(TAG, "Invalid group Id! " + String.valueOf(groupId));
+//            Log.d(TAG, "_itemLists.size() " + String.valueOf(_itemLists.size()));
 
         }
 
@@ -163,7 +163,7 @@ public class ItemFactory {
         getSelectedItemIndexesList();
 
         if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
-            Log.d(TAG, "Invalid group Id!");
+//            Log.d(TAG, "Invalid group Id!");
         }
 
         return _selectedItemIndexes.get(groupId);
@@ -175,11 +175,9 @@ public class ItemFactory {
 
     public static ArrayList<Group> getItemGroupObjectList() {
 
-        Log.d(TAG, "getItemGroupObjectList called");
-
         if (_itemGroupObjectList == null) {
             _itemGroupObjectList = _groupsTableHelper.getAllGroups();
-            Log.d(TAG, "Retrieve Group List from DataBase: " + _itemGroupObjectList.size());
+//            Log.d(TAG, "Retrieve Group List from DataBase: " + _itemGroupObjectList.size());
         }
 
         return _itemGroupObjectList;
@@ -204,16 +202,15 @@ public class ItemFactory {
         getSelectedItemIndexesList();
 
         if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
-            Log.d(TAG, "Invalid group Id!");
+//            Log.d(TAG, "Invalid group Id!");
         }
 
         _selectedItemIndexes.set(groupId, selectedItemIndex);
     }
 
     public static void notifyItemCreation(final Group group, final Item newItem) {
-        //TODO:(DONE) notifyItemCreation
 
-        Log.d(TAG, "notifyItemCreation");
+//        Log.d(TAG, "notifyItemCreation");
         Runnable runnable = new Runnable() {
             public void run() {
                 _itemsTableHelper.addItem(group, newItem);
@@ -225,9 +222,8 @@ public class ItemFactory {
     }
 
     public static void notifyItemUpdate(final Group group, final Item item) {
-        //TODO:(DONE) notifyItemUpdate
 
-        Log.d(TAG, "notifyItemUpdate");
+//        Log.d(TAG, "notifyItemUpdate");
         _itemsTableHelper.updateItem(group, item);
 
 
@@ -242,9 +238,8 @@ public class ItemFactory {
     }
 
     public static void notifyItemDeletion(final Item item) {
-        //TODO: (DONE) notifyItemDeletion
 
-        Log.d(TAG, "notifyItemDeletion");
+//        Log.d(TAG, "notifyItemDeletion");
         Runnable runnable = new Runnable() {
             public void run() {
                 _itemsTableHelper.deleteItem(item);
@@ -256,10 +251,9 @@ public class ItemFactory {
     }
 
     public static void notifyGroupCreation(final Group newGroup) {
-        //TODO: (DONE) notifyGroupCreation
 
 //        _groupsTableHelper.addGroup(new Group(newGroupName));
-        Log.d(TAG, "notifyGroupCreation: " + newGroup.getUuid() + ", " + newGroup.getGroupName());
+//        Log.d(TAG, "notifyGroupCreation: " + newGroup.getUuid() + ", " + newGroup.getGroupName());
 
         Runnable runnable = new Runnable() {
             public void run() {
@@ -271,8 +265,7 @@ public class ItemFactory {
     }
 
     public static void notifyGroupUpdate(final Group updatedGroup) {
-        //TODO: (DONE) notifyGroupUpdate
-        Log.d(TAG, "notifyGroupUpdate: " + updatedGroup.getUuid() + ", " + updatedGroup.getGroupName());
+//        Log.d(TAG, "notifyGroupUpdate: " + updatedGroup.getUuid() + ", " + updatedGroup.getGroupName());
 
         Runnable runnable = new Runnable() {
             public void run() {
@@ -285,8 +278,7 @@ public class ItemFactory {
     }
 
     public static void notifyGroupDeletion(final String uuid) {
-        //TODO: (DONE) notifyGroupDeletion
-        Log.d(TAG, "notifyGroupDeletion: " + uuid);
+//        Log.d(TAG, "notifyGroupDeletion: " + uuid);
 
         Runnable runnable = new Runnable() {
             public void run() {
@@ -299,7 +291,7 @@ public class ItemFactory {
     }
 
     public static void closeAllDatabase() {
-        Log.d(TAG, "XX--closeAllDatabase--XX");
+//        Log.d(TAG, "XX--closeAllDatabase--XX");
         _groupsTableHelper.close();
         _itemsTableHelper.close();
     }

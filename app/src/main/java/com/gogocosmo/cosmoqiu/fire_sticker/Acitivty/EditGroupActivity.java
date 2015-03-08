@@ -133,7 +133,6 @@ public class EditGroupActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 String newTitle = groupName.getText().toString();
-//                ItemFactory.getItemGroupList().set(_selectedIndex, newTitle);
                 Group updatedGroup =  ItemFactory.getItemGroupObjectList().get(_selectedIndex);
                 updatedGroup.setGroupName(newTitle);
                 _adapter.notifyDataSetChanged();

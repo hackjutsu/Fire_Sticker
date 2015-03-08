@@ -64,23 +64,12 @@ public class NewItemActivity extends ActionBarActivity {
 
         _titleEditText = (EditText) findViewById(R.id.title_input_editText);
 
-//        _cancelButton = (Button) findViewById(R.id.CancelItem);
-//        _newItemButton = (Button) findViewById(R.id.AddItem);
-//
-//        _cancelButton.setOnClickListener(this);
-//        _newItemButton.setOnClickListener(this);
-//
-//        _questionInput = (EditText) findViewById(R.id.editText_question);
-//        _answerInput = (EditText) findViewById(R.id.editText_answer);
-
-
         _spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 R.layout.new_item_spinner_rowlayout, ItemFactory.getItemGroupObjectNameList());
         dataAdapter.setDropDownViewResource(R.layout.new_item_spinner_rowlayout);
         _spinner.setAdapter(dataAdapter);
         _spinner.setSelection(getIntent().getExtras().getInt("CURRENT_TAB"));
-
     }
 
     private int randomColor() {
@@ -89,7 +78,6 @@ public class NewItemActivity extends ActionBarActivity {
         int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
         CardColor randomColor = CardColor.CardList.get(randomColorIndex);
 
-//        Log.d(TAG, randomColor.getColorName());
         return randomColor.getColorInt();
     }
 

@@ -173,7 +173,6 @@ public class ViewActivity extends ActionBarActivity {
         int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
         CardColor randomColor = CardColor.CardList.get(randomColorIndex);
 
-//        Log.d(TAG, randomColor.getColorName());
         return randomColor.getColorInt();
     }
 
@@ -327,8 +326,6 @@ public class ViewActivity extends ActionBarActivity {
 
     private void discardEdits() {
 
-//        _scrollView.fullScroll(ScrollView.FOCUS_UP);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _frontSideEditText.setFocusable(false);
         _backSideEditText.setFocusable(false);
@@ -371,7 +368,7 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar.setTitle("View Mode");
         _toolbar.setTitleTextColor(Color.WHITE);
 
-//        // hide the soft keyboard
+        // hide the soft keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
@@ -383,7 +380,6 @@ public class ViewActivity extends ActionBarActivity {
         _item.setTitle(_titleEditText.getText().toString());
 
         ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
-//        _scrollView.fullScroll(ScrollView.FOCUS_UP);
 
         adjustCardTextFormat();
     }
