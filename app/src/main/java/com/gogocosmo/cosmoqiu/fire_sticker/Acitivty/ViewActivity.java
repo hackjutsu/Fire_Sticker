@@ -39,9 +39,6 @@ public class ViewActivity extends ActionBarActivity {
     private ImageView _stampBack;
     private Menu _menu;
 //    private MenuItem _itemEdit;
-//    private MenuItem _itemConfirm;
-//    private MenuItem _itemBlank;
-//    private MenuItem _itemDelete;
     private MenuItem _itemFlag;
     private MenuItem _itemStamp;
 
@@ -215,16 +212,10 @@ public class ViewActivity extends ActionBarActivity {
         _menu = menu;
 
 //        _itemEdit = _menu.findItem(R.id.action_edit_view);
-//        _itemConfirm = _menu.findItem(R.id.action_confirm_view);
-//        _itemBlank = _menu.findItem(R.id.action_blank_view);
-//        _itemDelete = _menu.findItem(R.id.action_discard_view);
         _itemFlag = _menu.findItem(R.id.action_flag_view);
         _itemStamp = _menu.findItem(R.id.action_stamp_view);
 
 //        _itemEdit.setVisible(true);
-//        _itemConfirm.setVisible(false);
-//        _itemBlank.setVisible(false);
-//        _itemDelete.setVisible(false);
         _itemFlag.setVisible(true);
         _itemStamp.setVisible(true);
 
@@ -261,16 +252,6 @@ public class ViewActivity extends ActionBarActivity {
             case R.id.action_edit_view:
                 _onEditMode = true;
                 startEdits();
-                return true;
-
-            case R.id.action_confirm_view:
-                _onEditMode = false;
-                confirmEdits();
-                return true;
-
-            case R.id.action_discard_view:
-                _onEditMode = false;
-                discardEdits();
                 return true;
 
             case R.id.action_flag_view:
@@ -310,9 +291,6 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setFocusableInTouchMode(true);
         _backSideEditText.setFocusableInTouchMode(true);
         _titleEditText.setFocusableInTouchMode(true);
-//        _itemConfirm.setVisible(true);
-//        _itemEdit.setVisible(false);
-//        _itemBlank.setVisible(false);
 //        _itemDelete.setVisible(false);
         _itemFlag.setVisible(false);
         _itemStamp.setVisible(false);
@@ -330,10 +308,7 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setFocusable(false);
         _backSideEditText.setFocusable(false);
         _titleEditText.setFocusable(false);
-//        _itemConfirm.setVisible(false);
 //        _itemEdit.setVisible(true);
-//        _itemBlank.setVisible(false);
-//        _itemDelete.setVisible(false);
         _itemFlag.setVisible(true);
         _itemStamp.setVisible(true);
         _toolbar.setTitle("View Mode");
@@ -359,10 +334,7 @@ public class ViewActivity extends ActionBarActivity {
         _frontSideEditText.setFocusable(false);
         _backSideEditText.setFocusable(false);
         _titleEditText.setFocusable(false);
-//        _itemConfirm.setVisible(false);
 //        _itemEdit.setVisible(true);
-//        _itemBlank.setVisible(false);
-//        _itemDelete.setVisible(false);
         _itemFlag.setVisible(true);
         _itemStamp.setVisible(true);
         _toolbar.setTitle("View Mode");
