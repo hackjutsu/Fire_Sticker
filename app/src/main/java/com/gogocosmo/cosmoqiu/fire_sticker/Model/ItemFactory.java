@@ -211,13 +211,15 @@ public class ItemFactory {
     public static void notifyItemCreation(final Group group, final Item newItem) {
 
 //        Log.d(TAG, "notifyItemCreation");
-        Runnable runnable = new Runnable() {
-            public void run() {
-                _itemsTableHelper.addItem(group, newItem);
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
+        _itemsTableHelper.addItem(group, newItem);
+
+//        Runnable runnable = new Runnable() {
+//            public void run() {
+//                _itemsTableHelper.addItem(group, newItem);
+//            }
+//        };
+//        Thread mythread = new Thread(runnable);
+//        mythread.start();
 
     }
 
@@ -240,59 +242,66 @@ public class ItemFactory {
     public static void notifyItemDeletion(final Item item) {
 
 //        Log.d(TAG, "notifyItemDeletion");
-        Runnable runnable = new Runnable() {
-            public void run() {
-                _itemsTableHelper.deleteItem(item);
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
+        _itemsTableHelper.deleteItem(item);
 
+//        Runnable runnable = new Runnable() {
+//            public void run() {
+//                _itemsTableHelper.deleteItem(item);
+//            }
+//        };
+//        Thread mythread = new Thread(runnable);
+//        mythread.start();
+//
     }
 
     public static void notifyGroupCreation(final Group newGroup) {
 
 //        _groupsTableHelper.addGroup(new Group(newGroupName));
 //        Log.d(TAG, "notifyGroupCreation: " + newGroup.getUuid() + ", " + newGroup.getGroupName());
+        _groupsTableHelper.addGroup(newGroup);
 
-        Runnable runnable = new Runnable() {
-            public void run() {
-                _groupsTableHelper.addGroup(newGroup);
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
+
+//        Runnable runnable = new Runnable() {
+//            public void run() {
+//                _groupsTableHelper.addGroup(newGroup);
+//            }
+//        };
+//        Thread mythread = new Thread(runnable);
+//        mythread.start();
     }
 
     public static void notifyGroupUpdate(final Group updatedGroup) {
 //        Log.d(TAG, "notifyGroupUpdate: " + updatedGroup.getUuid() + ", " + updatedGroup.getGroupName());
 
-        Runnable runnable = new Runnable() {
-            public void run() {
-                _groupsTableHelper.updateGroup(updatedGroup);
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
+        _groupsTableHelper.updateGroup(updatedGroup);
+
+//        Runnable runnable = new Runnable() {
+//            public void run() {
+//            }
+//        };
+//        Thread mythread = new Thread(runnable);
+//        mythread.start();
 
     }
 
     public static void notifyGroupDeletion(final String uuid) {
 //        Log.d(TAG, "notifyGroupDeletion: " + uuid);
+        _groupsTableHelper.deleteGroup(uuid);
+        _itemsTableHelper.deleteGroupItems(uuid);
 
-        Runnable runnable = new Runnable() {
-            public void run() {
-                _groupsTableHelper.deleteGroup(uuid);
-                _itemsTableHelper.deleteGroupItems(uuid);
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
+//        Runnable runnable = new Runnable() {
+//            public void run() {
+//                _groupsTableHelper.deleteGroup(uuid);
+//                _itemsTableHelper.deleteGroupItems(uuid);
+//            }
+//        };
+//        Thread mythread = new Thread(runnable);
+//        mythread.start();
     }
 
     public static void closeAllDatabase() {
 //        Log.d(TAG, "XX--closeAllDatabase--XX");
-        _groupsTableHelper.close();
-        _itemsTableHelper.close();
+//        _groupsTableHelper.close();
+//        _itemsTableHelper.close();
     }
 }

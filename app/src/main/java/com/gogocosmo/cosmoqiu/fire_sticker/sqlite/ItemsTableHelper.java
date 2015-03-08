@@ -145,7 +145,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 values); // key/value -> keys = column names/ values = column values
 
         // 4. close
-//        db.close();
+        db.close();
     }
 
     public Item getItem(int id) {
@@ -255,11 +255,11 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         // 3. updating row
         int i = db.update(TABLE_ITEMS, //table
                 values, // column/value
-                KEY_ROW_ID + " = ?", // selections
-                new String[]{String.valueOf(item.getId())}); //selection args
+                KEY_ITEM_UUID + " = ?", // selections
+                new String[]{item.getUuid()}); //selection args
 
         // 4. close
-//        db.close();
+        db.close();
 
         return i;
     }
@@ -276,7 +276,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 new String[]{item.getUuid()});
 
         // 3. close
-//        db.close();
+        db.close();
 
 //        Log.d(TAG, "deleteItem: " + item.getUuid());
     }
@@ -292,7 +292,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 new String[]{uuid});
 
         // 3. close
-//        db.close();
+        db.close();
     }
 }
 

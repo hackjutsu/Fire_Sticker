@@ -126,7 +126,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
                 values); // key/value -> keys = column names/ values = column values
 
         // 4. close
-//        db.close();
+        db.close();
     }
 
     public Group getGroup(int groupId) {
@@ -214,7 +214,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(group.getUuid())}); //selection args
 
         // 4. close
-//        db.close();
+        db.close();
 
         return i;
     }
@@ -231,7 +231,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
                 new String[]{uuid});
 
         // 3. close
-//        db.close();
+        db.close();
     }
 }
 
