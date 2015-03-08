@@ -601,7 +601,7 @@ public class LaunchActivity extends ActionBarActivity implements
         ItemFactory.createGroup("To-Do List");
 
         // Add default items to group "Welcome!"
-        ItemFactory.createItem(0, "Bookmark the important notes", "", "BooKMark", 1, 0);
+        ItemFactory.createItem(0, "Bookmark the important notes", "", "BookMark", 1, 0);
         ItemFactory.createItem(0, "Long Press to edit.", "Stamp it when the task is finished", "Edit Notes", 0, 1);
         ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to delete", 1, 1);
         ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two sides.",

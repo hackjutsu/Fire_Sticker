@@ -116,16 +116,12 @@ public class CarouselActivity extends ActionBarActivity {
     }
 
     void swipeUpEvent() {
-//        CardFragment currentCard = (CardFragment) getCurrentFragment();
+
         if (_currentCard != null) {
             if (_topFragment.isHidden()) {
 
                 getSupportFragmentManager()
                         .beginTransaction()
-//                        .setCustomAnimations(
-//                                R.anim.abc_slide_in_top,
-//                                R.anim.abc_slide_out_top
-//                        )
                         .show(_topFragment)
                         .commit();
 
@@ -136,15 +132,11 @@ public class CarouselActivity extends ActionBarActivity {
     }
 
     void swipeDownEvent() {
-//        CardFragment currentCard = (CardFragment) getCurrentFragment();
+
         if (_currentCard != null) {
             if (!_topFragment.isHidden()) {
                 getSupportFragmentManager()
                         .beginTransaction()
-//                        .setCustomAnimations(
-//                                R.anim.abc_slide_in_top,
-//                                R.anim.abc_slide_out_top
-//                        )
                         .hide(_topFragment)
                         .commit();
                 _currentCard.swipeDownEvent(ItemFactory.getItemList(_groupId).get(_itemIndex).getFront());
@@ -157,9 +149,6 @@ public class CarouselActivity extends ActionBarActivity {
         Random r = new Random();
         int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
         CardColor randomColor = CardColor.CardList.get(randomColorIndex);
-
-//        Log.d(TAG, randomColor.getColorName());
-//        Toast.makeText(this, randomColor.getColorName(), Toast.LENGTH_SHORT).show();
         return randomColor.getColorInt();
     }
 
@@ -184,6 +173,7 @@ public class CarouselActivity extends ActionBarActivity {
         newCard.setCardColor(cardColor);
         newCard.setCardText(item.getFront());
         newCard.setMarked(item.getBookMark());
+        newCard.setStamp(item.getStamp());
 
         // Add this new card info to card trace
         _cardTrace.add(new CardHolder(cardColor, item));
@@ -262,8 +252,8 @@ public class CarouselActivity extends ActionBarActivity {
     private Fragment getCurrentFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
-        Log.d(TAG, "fragmentTag = " + fragmentTag);
-        Log.d(TAG, "BackStackEntryCount() = " + fragmentManager.getBackStackEntryCount());
+//        Log.d(TAG, "fragmentTag = " + fragmentTag);
+//        Log.d(TAG, "BackStackEntryCount() = " + fragmentManager.getBackStackEntryCount());
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
         return currentFragment;
     }

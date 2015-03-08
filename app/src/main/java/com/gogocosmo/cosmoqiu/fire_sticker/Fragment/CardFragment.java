@@ -17,6 +17,7 @@ public class CardFragment extends Fragment {
     private final String TAG = "MEMORY-ACC";
     private TextView _card;
     private int _marked = 0;
+    private int _stamp = 0;
     private int _color;
     private String _text;
 
@@ -45,12 +46,15 @@ public class CardFragment extends Fragment {
         int cardPadding = 50;
         _card.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
 
-
         ImageView bookMark = (ImageView) view.findViewById(R.id.item_card_bookmark);
         if (_marked == 0) {
             bookMark.setVisibility(View.INVISIBLE);
         }
 
+        ImageView stampDone = (ImageView) view.findViewById(R.id.item_card_done);
+        if (_stamp == 0) {
+            stampDone.setVisibility(View.INVISIBLE);
+        }
 
         return view;
     }
@@ -103,4 +107,7 @@ public class CardFragment extends Fragment {
         _marked = marked;
     }
 
+    public void setStamp(int stamp) {
+        _stamp = stamp;
+    }
 }
