@@ -1,6 +1,5 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,18 +35,9 @@ public class ViewActivity extends ActionBarActivity {
     private ImageView _bookMark;
     private ImageView _stampFront;
     private ImageView _stampBack;
-    private Menu _menu;
-//    private MenuItem _itemEdit;
-    private MenuItem _itemFlag;
-    private MenuItem _itemStamp;
 
-    private String _originFrontSide;
-    private String _originBackSide;
-    private String _originTitle;
     private Item _item;
     private int _groupId;
-
-    private boolean _onEditMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +52,7 @@ public class ViewActivity extends ActionBarActivity {
         _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _toolbar.setTitle("View Mode");
+        _toolbar.setTitle("Edit Notes");
         _toolbar.setTitleTextColor(Color.WHITE);
 
         _groupId = getIntent().getExtras().getInt("GROUP");
@@ -77,13 +66,12 @@ public class ViewActivity extends ActionBarActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
 
-        int cardPadding  = 50;
+        int cardPadding = 50;
 
         _frontSideEditText = (EditText) findViewById(R.id.frontSide_display_EditText);
         _frontSideEditText.setBackgroundColor(randomColor());
-        _frontSideEditText.setFocusable(false);
         _frontSideEditText.setMinHeight(cardMinHeight);
-        _frontSideEditText.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
+        _frontSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
 
         _bookMark = (ImageView) findViewById(R.id.item_display_bookmark);
         _stampFront = (ImageView) findViewById(R.id.item_card_front_done);
@@ -100,67 +88,16 @@ public class ViewActivity extends ActionBarActivity {
 
         _backSideEditText = (EditText) findViewById(R.id.backSide_display_editText);
         _backSideEditText.setBackgroundColor(randomColor());
-        _backSideEditText.setFocusable(false);
         _backSideEditText.setMinHeight(cardMinHeight);
-        _backSideEditText.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
+        _backSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
 
 
         _titleEditText = (EditText) findViewById(R.id.title_display_editText);
-        _titleEditText.setFocusable(false);
 
         _frontSideEditText.setText(_item.getFront());
         _backSideEditText.setText(_item.getBack());
         _titleEditText.setText(_item.getTitle());
 
-        _frontSideEditText.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                if (_onEditMode == false) {
-
-                    _onEditMode = true;
-                    startEdits();
-                    _frontSideEditText.requestFocus();
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-        _backSideEditText.setOnLongClickListener(new View.OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-                if (_onEditMode == false) {
-
-                    _onEditMode = true;
-                    startEdits();
-                    _backSideEditText.requestFocus();
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-        _titleEditText.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                if (_onEditMode == false) {
-
-                    _onEditMode = true;
-                    startEdits();
-                    _titleEditText.requestFocus();
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-        _onEditMode = false;
         adjustCardTextFormat();
     }
 
@@ -174,8 +111,8 @@ public class ViewActivity extends ActionBarActivity {
     }
 
     private void adjustCardTextFormat() {
-    // If the line count in an EditText more than two, the texts should start from left;
-    // else we put it in the center.
+        // If the line count in an EditText more than two, the texts should start from left;
+        // else we put it in the center.
 
         _frontSideEditText.post(new Runnable() {
             @Override
@@ -208,17 +145,6 @@ public class ViewActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_view, menu);
-
-        _menu = menu;
-
-//        _itemEdit = _menu.findItem(R.id.action_edit_view);
-        _itemFlag = _menu.findItem(R.id.action_flag_view);
-        _itemStamp = _menu.findItem(R.id.action_stamp_view);
-
-//        _itemEdit.setVisible(true);
-        _itemFlag.setVisible(true);
-        _itemStamp.setVisible(true);
-
         return true;
     }
 
@@ -233,15 +159,9 @@ public class ViewActivity extends ActionBarActivity {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
 
-                if (_onEditMode == true) {
+                confirmEdits();
+                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
 
-                    _onEditMode = false;
-                    confirmEdits();
-                    Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-
-                _onEditMode = false;
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("GROUP", _groupId);
                 setResult(RESULT_OK, returnIntent);
@@ -249,32 +169,31 @@ public class ViewActivity extends ActionBarActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
 
-            case R.id.action_edit_view:
-                _onEditMode = true;
-                startEdits();
-                return true;
-
             case R.id.action_flag_view:
                 if (_item.getBookMark() == 1) {
                     _item.setBookMark(0);
                     _bookMark.setVisibility(View.INVISIBLE);
+                    Toast.makeText(this, "Clear Bookmarks", Toast.LENGTH_SHORT).show();
                 } else {
                     _item.setBookMark(1);
                     _bookMark.setVisibility(View.VISIBLE);
+                    Toast.makeText(this, "Bookmarked", Toast.LENGTH_SHORT).show();
                 }
 
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
                 return true;
 
             case R.id.action_stamp_view:
-                if (_item.getStamp()== 1) {
+                if (_item.getStamp() == 1) {
                     _item.setStamp(0);
                     _stampFront.setVisibility(View.INVISIBLE);
                     _stampBack.setVisibility(View.INVISIBLE);
+                    Toast.makeText(this, "Clear Stamps", Toast.LENGTH_SHORT).show();
                 } else {
                     _item.setStamp(1);
                     _stampFront.setVisibility(View.VISIBLE);
                     _stampBack.setVisibility(View.VISIBLE);
+                    Toast.makeText(this, "Stamped", Toast.LENGTH_SHORT).show();
                 }
 
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
@@ -285,86 +204,20 @@ public class ViewActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void startEdits() {
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        _frontSideEditText.setFocusableInTouchMode(true);
-        _backSideEditText.setFocusableInTouchMode(true);
-        _titleEditText.setFocusableInTouchMode(true);
-//        _itemDelete.setVisible(false);
-        _itemFlag.setVisible(false);
-        _itemStamp.setVisible(false);
-        _toolbar.setTitle("Edit Mode");
-        _toolbar.setTitleTextColor(Color.WHITE);
-
-        _originFrontSide = _item.getFront();
-        _originBackSide = _item.getBack();
-        _originTitle = _item.getTitle();
-    }
-
-    private void discardEdits() {
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _frontSideEditText.setFocusable(false);
-        _backSideEditText.setFocusable(false);
-        _titleEditText.setFocusable(false);
-//        _itemEdit.setVisible(true);
-        _itemFlag.setVisible(true);
-        _itemStamp.setVisible(true);
-        _toolbar.setTitle("View Mode");
-        _toolbar.setTitleTextColor(Color.WHITE);
-
-        _backSideEditText.setText(_originBackSide);
-        _titleEditText.setText(_originTitle);
-        _frontSideEditText.setText(_originFrontSide);
-
-//        // hide the soft keyboard
-        InputMethodManager imm = (InputMethodManager) getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
-
-        adjustCardTextFormat();
-    }
-
     private void confirmEdits() {
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _frontSideEditText.setFocusable(false);
-        _backSideEditText.setFocusable(false);
-        _titleEditText.setFocusable(false);
-//        _itemEdit.setVisible(true);
-        _itemFlag.setVisible(true);
-        _itemStamp.setVisible(true);
-        _toolbar.setTitle("View Mode");
-        _toolbar.setTitleTextColor(Color.WHITE);
-
-        // hide the soft keyboard
-        InputMethodManager imm = (InputMethodManager) getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
 
         _item.setFront(_frontSideEditText.getText().toString());
         _item.setBack(_backSideEditText.getText().toString());
         _item.setTitle(_titleEditText.getText().toString());
 
         ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
-
-        adjustCardTextFormat();
     }
 
     @Override
     public void onBackPressed() {
 
-        if (_onEditMode == true) {
-            confirmEdits();
-            _onEditMode = false;
-            Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        confirmEdits();
+        Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("GROUP", _groupId);

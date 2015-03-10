@@ -16,12 +16,4 @@
         android:title="BookMark"
         android:icon="@drawable/flag_action"
         app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_edit_view"
-        android:orderInCategory="300"
-        android:title="Edit"
-        android:icon="@drawable/editview_action"
-        app:showAsAction="ifRoom"
-        android:visible="false"/>
 </menu>
