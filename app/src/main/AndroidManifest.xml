@@ -22,7 +22,7 @@
         <activity
             android:name=".Acitivty.NewItemActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="@string/title_activity_new_item" />
         <activity
             android:name=".Acitivty.CarouselActivity"
@@ -35,7 +35,7 @@
         <activity
             android:name=".Acitivty.ViewActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="@string/title_activity_view">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->

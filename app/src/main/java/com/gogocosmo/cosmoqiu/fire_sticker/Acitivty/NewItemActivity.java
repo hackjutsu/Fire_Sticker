@@ -1,5 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -8,8 +9,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,6 +35,7 @@ public class NewItemActivity extends ActionBarActivity {
     private EditText _frontSideEditText;
     private EditText _backSideEditText;
     private EditText _titleEditText;
+    private LinearLayout _cardsContainer;
 
     private Spinner _spinner;
 
@@ -70,6 +75,18 @@ public class NewItemActivity extends ActionBarActivity {
         dataAdapter.setDropDownViewResource(R.layout.new_item_spinner_rowlayout);
         _spinner.setAdapter(dataAdapter);
         _spinner.setSelection(getIntent().getExtras().getInt("CURRENT_TAB"));
+
+        // Hide the soft keyboard when tapping the white boarders
+        _cardsContainer = (LinearLayout)findViewById(R.id.linear_cards_input);
+        _cardsContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
+            }
+        });
     }
 
     private int randomColor() {

@@ -1,5 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
@@ -35,6 +38,7 @@ public class ViewActivity extends ActionBarActivity {
     private ImageView _bookMark;
     private ImageView _stampFront;
     private ImageView _stampBack;
+    private LinearLayout _cardsContainer;
 
     private Item _item;
     private int _groupId;
@@ -99,6 +103,18 @@ public class ViewActivity extends ActionBarActivity {
         _titleEditText.setText(_item.getTitle());
 
         adjustCardTextFormat();
+
+        // Hide the soft keyboard when tapping the white boarders
+        _cardsContainer = (LinearLayout)findViewById(R.id.linear_cards_display);
+        _cardsContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
+            }
+        });
     }
 
     private int randomColor() {
