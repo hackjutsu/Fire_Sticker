@@ -16,7 +16,8 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     final static private String TAG = "MEMORY-ACC";
     final static public int TYPE_HEADER = 0;
     final static public int TYPE_ITEM = 1;
-    final static public int TYPE_END = 2;
+    final static public int TYPE_EDIT = 2;
+    final static public int TYPE_ABOUTAPP = 3;
 
     private String _navTitles[];
     private int _profile;
@@ -60,13 +61,17 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
 
                 _profile = (ImageView) itemView.findViewById(R.id.circleView);
                 // Header doesn't need a ClickedListener
-            } else if (ViewType == TYPE_END) {
+            } else if (ViewType == TYPE_EDIT) {
+
+                _textView = (TextView) itemView.findViewById(R.id.rowText);
+                itemView.setOnClickListener(this);
+            } else if (ViewType == TYPE_ABOUTAPP) {
 
                 _textView = (TextView) itemView.findViewById(R.id.rowText);
                 itemView.setOnClickListener(this);
             }
+//            itemView.setOnClickListener(this);
         }
-
 
         @Override
         public void onClick(View v) {
@@ -122,16 +127,29 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             });
             return vhHeader;
 
-        } else if (viewType == TYPE_END) {
+        } else if (viewType == TYPE_EDIT) {
 
             View v = LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.drawer_recyclerview_end, parent, false);
+                    parent.getContext()).inflate(R.layout.drawer_recyclerview_edit, parent, false);
 
             ViewHolder vhEnd = new ViewHolder(v, viewType, new ViewHolder.IViewHolderClickListener() {
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_END);
+                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_EDIT);
+                }
+            });
+            return vhEnd;
+        } else if (viewType == TYPE_ABOUTAPP) {
+
+            View v = LayoutInflater.from(
+                    parent.getContext()).inflate(R.layout.drawer_recyclerview_about, parent, false);
+
+            ViewHolder vhEnd = new ViewHolder(v, viewType, new ViewHolder.IViewHolderClickListener() {
+                @Override
+                public void onClickedEvent(View v, int position) {
+
+                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_ABOUTAPP);
                 }
             });
             return vhEnd;
@@ -153,17 +171,21 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             holder._profile.setImageResource(_profile);
             holder._position = position;
             //holder._email.setText(_email);
-        } else if (holder._viewType == TYPE_END) {
+        } else if (holder._viewType == TYPE_EDIT) {
 
             holder._textView.setText("Edit Group List");
+            holder._position = position;
+        } else if (holder._viewType == TYPE_ABOUTAPP) {
+
+            holder._textView.setText("About App");
             holder._position = position;
         }
     }
 
     @Override
     public int getItemCount() {
-        // Including the header and the end section
-        return _navTitles.length + 2;
+        // Including the header and the edit section
+        return _navTitles.length + 3;
     }
 
     @Override
@@ -171,8 +193,10 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
 
         if (isPositionHeader(position)) {
             return TYPE_HEADER;
-        } else if (isPositionEndSection(position)) {
-            return TYPE_END;
+        } else if (isPositionEditSection(position)) {
+            return TYPE_EDIT;
+        } else if (isPositionAboutSection(position)) {
+            return TYPE_ABOUTAPP;
         }
         return TYPE_ITEM;
     }
@@ -181,7 +205,11 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
         return position == 0;
     }
 
-    private boolean isPositionEndSection(int position) {
+    private boolean isPositionEditSection(int position) {
+        return position == getItemCount() - 2;
+    }
+
+    private boolean isPositionAboutSection(int position) {
         return position == getItemCount() - 1;
     }
 }

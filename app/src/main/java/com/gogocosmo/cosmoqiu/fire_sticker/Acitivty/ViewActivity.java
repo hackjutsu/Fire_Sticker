@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -176,7 +177,7 @@ public class ViewActivity extends ActionBarActivity {
             case android.R.id.home:
 
                 confirmEdits();
-                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
+                showToast("SAVE");
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("GROUP", _groupId);
@@ -189,11 +190,11 @@ public class ViewActivity extends ActionBarActivity {
                 if (_item.getBookMark() == 1) {
                     _item.setBookMark(0);
                     _bookMark.setVisibility(View.INVISIBLE);
-                    Toast.makeText(this, "Clear Bookmarks", Toast.LENGTH_SHORT).show();
+                    showToast("Clear Bookmarks");
                 } else {
                     _item.setBookMark(1);
                     _bookMark.setVisibility(View.VISIBLE);
-                    Toast.makeText(this, "Bookmarked", Toast.LENGTH_SHORT).show();
+                    showToast("Bookmarked");
                 }
 
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
@@ -204,12 +205,12 @@ public class ViewActivity extends ActionBarActivity {
                     _item.setStamp(0);
                     _stampFront.setVisibility(View.INVISIBLE);
                     _stampBack.setVisibility(View.INVISIBLE);
-                    Toast.makeText(this, "Clear Stamps", Toast.LENGTH_SHORT).show();
+                    showToast("Clear Stamps");
                 } else {
                     _item.setStamp(1);
                     _stampFront.setVisibility(View.VISIBLE);
                     _stampBack.setVisibility(View.VISIBLE);
-                    Toast.makeText(this, "Stamped", Toast.LENGTH_SHORT).show();
+                    showToast("Stamped");
                 }
 
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
@@ -233,12 +234,26 @@ public class ViewActivity extends ActionBarActivity {
     public void onBackPressed() {
 
         confirmEdits();
-        Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
+        showToast("SAVE");
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("GROUP", _groupId);
         setResult(RESULT_OK, returnIntent);
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void showToast(String msg) {
+
+        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        toast.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 650);
     }
 }

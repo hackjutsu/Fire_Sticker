@@ -3,10 +3,10 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,7 +115,7 @@ public class NewItemActivity extends ActionBarActivity {
 
         switch (id) {
             case android.R.id.home:
-                Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
+                showToast("CANCEL");
                 finish();
                 return true;
             case R.id.confirm_new_item:
@@ -124,7 +124,7 @@ public class NewItemActivity extends ActionBarActivity {
                 returnIntent.putExtra("UPDATED_GROUP", _spinner.getSelectedItemPosition());
                 setResult(RESULT_OK, returnIntent);
                 finish();
-                Toast.makeText(this, "SAVE", Toast.LENGTH_SHORT).show();
+                showToast("SAVE");
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
             default:
@@ -156,7 +156,21 @@ public class NewItemActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
 
-        Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
+        showToast("CANCEL");
         finish();
+    }
+
+    private void showToast(String msg) {
+
+        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        toast.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 650);
     }
 }
