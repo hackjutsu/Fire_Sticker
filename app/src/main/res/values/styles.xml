@@ -18,8 +18,9 @@
     </style>
 
     <style name="MenuTextStyle">
+        <!--This will affect the text size in ActionBar, e.g. during text selection (tested in Lollipop)-->
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="MyTabTextStyle" parent="@android:style/Widget.ActionBar.TabText">

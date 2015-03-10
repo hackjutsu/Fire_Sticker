@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -602,7 +603,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         // Add default items to group "Welcome!"
         ItemFactory.createItem(0, "Bookmark the important notes", "", "BookMark", 1, 0);
-        ItemFactory.createItem(0, "Long Press to edit.", "Stamp it when the task is finished", "Edit Notes", 0, 1);
+        ItemFactory.createItem(0, "Try to edit this note ^_^", "Stamp it when the task is finished", "Edit Notes", 0, 1);
         ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to delete", 1, 1);
         ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two sides.",
                 " You can write down the notes on the front and add hint on the back. " +
@@ -638,7 +639,14 @@ public class LaunchActivity extends ActionBarActivity implements
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.CENTER_IN_PARENT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin * 8);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // only for lollipop and newer versions
+            lps.setMargins(margin, margin, margin, margin * 8);
+
+        } else {
+            lps.setMargins(margin, margin, margin, margin * 8);
+        }
 
         ShowcaseView sv;
         sv = new ShowcaseView.Builder(this)
@@ -672,7 +680,13 @@ public class LaunchActivity extends ActionBarActivity implements
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // only for lollipop and newer versions
+            lps.setMargins(margin, margin, margin, margin * 5);
+
+        } else {
+            lps.setMargins(margin, margin, margin, margin);
+        }
 
         ShowcaseView sv;
         sv = new ShowcaseView.Builder(this)
@@ -706,7 +720,13 @@ public class LaunchActivity extends ActionBarActivity implements
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // only for lollipop and newer versions
+            lps.setMargins(margin, margin, margin, margin * 5);
+
+        } else {
+            lps.setMargins(margin, margin, margin, margin);
+        }
 
         ShowcaseView sv;
         sv = new ShowcaseView.Builder(this)
@@ -741,7 +761,13 @@ public class LaunchActivity extends ActionBarActivity implements
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // only for lollipop and newer versions
+            lps.setMargins(margin, margin, margin, margin * 5);
+
+        } else {
+            lps.setMargins(margin, margin, margin, margin);
+        }
 
         ShowcaseView sv;
         sv = new ShowcaseView.Builder(this)
