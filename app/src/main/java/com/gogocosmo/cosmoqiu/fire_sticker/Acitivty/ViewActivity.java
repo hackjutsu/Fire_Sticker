@@ -22,6 +22,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 
@@ -177,7 +178,7 @@ public class ViewActivity extends ActionBarActivity {
             case android.R.id.home:
 
                 confirmEdits();
-                showToast("SAVE");
+                CustomizedToast.showToast(this, "SAVE");
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("GROUP", _groupId);
@@ -188,13 +189,15 @@ public class ViewActivity extends ActionBarActivity {
 
             case R.id.action_flag_view:
                 if (_item.getBookMark() == 1) {
+
                     _item.setBookMark(0);
                     _bookMark.setVisibility(View.INVISIBLE);
-                    showToast("Clear Bookmarks");
+                    CustomizedToast.showToast(this, "Clear Bookmarks");
                 } else {
+
                     _item.setBookMark(1);
                     _bookMark.setVisibility(View.VISIBLE);
-                    showToast("Bookmarked");
+                    CustomizedToast.showToast(this, "Bookmarked");
                 }
 
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
@@ -202,15 +205,17 @@ public class ViewActivity extends ActionBarActivity {
 
             case R.id.action_stamp_view:
                 if (_item.getStamp() == 1) {
+
                     _item.setStamp(0);
                     _stampFront.setVisibility(View.INVISIBLE);
                     _stampBack.setVisibility(View.INVISIBLE);
-                    showToast("Clear Stamps");
+                    CustomizedToast.showToast(this, "Clear Stamps");
                 } else {
+
                     _item.setStamp(1);
                     _stampFront.setVisibility(View.VISIBLE);
                     _stampBack.setVisibility(View.VISIBLE);
-                    showToast("Stamped");
+                    CustomizedToast.showToast(this, "Stamped");
                 }
 
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
@@ -234,26 +239,12 @@ public class ViewActivity extends ActionBarActivity {
     public void onBackPressed() {
 
         confirmEdits();
-        showToast("SAVE");
+        CustomizedToast.showToast(this, "SAVE");
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("GROUP", _groupId);
         setResult(RESULT_OK, returnIntent);
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
-    private void showToast(String msg) {
-
-        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-        toast.show();
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                toast.cancel();
-            }
-        }, 650);
     }
 }

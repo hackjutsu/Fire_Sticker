@@ -41,6 +41,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;

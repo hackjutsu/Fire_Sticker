@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 
@@ -115,7 +116,7 @@ public class NewItemActivity extends ActionBarActivity {
 
         switch (id) {
             case android.R.id.home:
-                showToast("CANCEL");
+                CustomizedToast.showToast(this, "CANCEL");
                 finish();
                 return true;
             case R.id.confirm_new_item:
@@ -124,7 +125,7 @@ public class NewItemActivity extends ActionBarActivity {
                 returnIntent.putExtra("UPDATED_GROUP", _spinner.getSelectedItemPosition());
                 setResult(RESULT_OK, returnIntent);
                 finish();
-                showToast("SAVE");
+                CustomizedToast.showToast(this, "SAVE");
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
             default:
@@ -156,21 +157,7 @@ public class NewItemActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
 
-        showToast("CANCEL");
+        CustomizedToast.showToast(this, "CANCEL");
         finish();
-    }
-
-    private void showToast(String msg) {
-
-        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-        toast.show();
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                toast.cancel();
-            }
-        }, 650);
     }
 }
