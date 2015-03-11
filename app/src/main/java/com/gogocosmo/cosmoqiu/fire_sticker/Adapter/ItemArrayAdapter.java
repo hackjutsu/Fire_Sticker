@@ -1,7 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class ItemArrayAdapter extends ArrayAdapter<Item> {
@@ -21,7 +21,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
     private final ArrayList<Item> _values;
     final private String TAG = "MEMORY-ACC";
 
-    HashMap<Item, Integer> mIdMap = new HashMap<>();
+    HashMap<Item, Long> mIdMap = new HashMap<>();
 
 
     public class ViewHolder {
@@ -38,7 +38,8 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         this._values = values;
 
         for (int i = 0; i < values.size(); ++i) {
-            mIdMap.put(values.get(i), i);
+
+            mIdMap.put(values.get(i), randomLongIdGenerator());
         }
     }
 
@@ -106,17 +107,35 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         // Special condition for ListView's EmptyView. In this case, _values is empty and we cannot
         // get item by calling getItem(id), which will return null pointer
-        if (position == 0 && mIdMap.size() != 0 && _values.size() ==0) {
+        if (position == 0 && mIdMap.size() != 0 && _values.size() == 0) {
             return 0;
         }
 
         Item item = getItem(position);
+
+        if (!mIdMap.containsKey(item)) {
+
+            mIdMap.put(item, randomLongIdGenerator());
+        }
+
         return mIdMap.get(item);
     }
 
     @Override
     public boolean hasStableIds() {
         return true;
+    }
+
+    @Override
+    public void remove(Item object) {
+
+        mIdMap.remove(object);
+        super.remove(object);
+    }
+
+    private long randomLongIdGenerator() {
+
+        return new Random().nextLong();
     }
 }
 

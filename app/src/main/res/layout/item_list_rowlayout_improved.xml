@@ -40,7 +40,7 @@
                 android:paddingTop="3dp"
                 android:paddingBottom="7dp"
                 android:paddingLeft="25dp"
-                android:paddingRight="100dp"
+                android:paddingRight="25dp"
                 android:singleLine="true"
                 android:ellipsize="marquee" />
 

@@ -10,11 +10,18 @@
         android:icon="@drawable/add_action"
         app:showAsAction="ifRoom" />
 
+    <!--<item-->
+        <!--android:id="@+id/action_back"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="  Back  "-->
+        <!--android:icon="@drawable/back_action"-->
+        <!--app:showAsAction="ifRoom" />-->
+
     <item
-        android:id="@+id/action_back"
-        android:orderInCategory="100"
-        android:title="  Back  "
-        android:icon="@drawable/back_action"
+        android:id="@+id/action_move_to_top"
+        android:orderInCategory="125"
+        android:title="  Move to Top  "
+        android:icon="@drawable/move_to_top_action"
         app:showAsAction="ifRoom" />
 
     <item

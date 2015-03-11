@@ -22,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -320,11 +322,13 @@ public class LaunchActivity extends ActionBarActivity implements
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemMoveToTop = _menu.findItem(R.id.action_move_to_top);
+//        MenuItem itemBack = _menu.findItem(R.id.action_back);
         MenuItem itemSlash = _menu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(true);
-        itemBack.setVisible(false);
+//        itemBack.setVisible(false);
+        itemMoveToTop.setVisible(false);
         itemDelete.setVisible(false);
         itemSlash.setVisible(false);
 
@@ -365,9 +369,11 @@ public class LaunchActivity extends ActionBarActivity implements
                 startActivityForResult(intent, NEW_ITEM_REQ);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
-            case R.id.action_back:
+            case R.id.action_move_to_top:
 
+                moveToTop();
                 if (_actionMode != null) {
+
                     _actionMode.finish();
                 }
                 return true;
@@ -400,11 +406,13 @@ public class LaunchActivity extends ActionBarActivity implements
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemBack = _menu.findItem(R.id.action_back);
+        MenuItem itemMoveToTop = _menu.findItem(R.id.action_move_to_top);
+//        MenuItem itemBack = _menu.findItem(R.id.action_back);
         MenuItem itemSlash = _menu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(false);
-        itemBack.setVisible(true);
+//        itemBack.setVisible(true);
+        itemMoveToTop.setVisible(true);
         itemDelete.setVisible(true);
         itemSlash.setVisible(true);
 
@@ -435,14 +443,15 @@ public class LaunchActivity extends ActionBarActivity implements
 
         MenuItem itemAdd = _menu.findItem(R.id.action_add);
         MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemBack = _menu.findItem(R.id.action_back);
+//        MenuItem itemBack = _menu.findItem(R.id.action_back);
         MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+        MenuItem itemMoveToTop = _menu.findItem(R.id.action_move_to_top);
 
         itemAdd.setVisible(true);
-        itemBack.setVisible(false);
+//        itemBack.setVisible(false);
         itemDelete.setVisible(false);
+        itemMoveToTop.setVisible(false);
         itemSlash.setVisible(false);
-
 
         _fireButton.setVisibility(View.VISIBLE);
         _actionMode = null;
@@ -516,6 +525,75 @@ public class LaunchActivity extends ActionBarActivity implements
             }
         }
     }//onActivityResult
+
+    // Move the selected item to the top of the list. The list will automatically scroll to the top,
+    // and blink the first item view to notify the users.
+    private void moveToTop() {
+
+        int toMoveToTopIndex = ItemFactory.getSelectedItemIndex(_activatedGroupId);
+        Item oldItem = ItemFactory.getItemList(_activatedGroupId).get(toMoveToTopIndex);
+
+        Item newItem = ItemFactory.createItem(
+                _activatedGroupId,
+                oldItem.getFront(),
+                oldItem.getBack(),
+                oldItem.getTitle(),
+                oldItem.getBookMark(),
+                oldItem.getStamp()
+        );
+
+        // Interestingly, when adapter.remove() is called, the notifyDataSetChanged() method is
+        // also called. Therefore, we don't need to call notifyDataSetChanged() method to notify
+        // the adding of the new item.
+        _activatedItemArrayAdapter.remove(oldItem);
+        ItemFactory.notifyItemDeletion(oldItem);
+
+        // Scroll to the top
+        _activatedItemListView.smoothScrollToPosition(0);
+
+        // When scrolled to the top, blink the first item view
+        _activatedItemListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                // When the first visible view is the top view...
+                boolean topOfFirst = _activatedItemListView.getChildAt(0).getTop() == 0;
+                if (topOfFirst) {
+
+                    final View v = _activatedItemListView.getChildAt(0);
+                    Animation fadeOut = new AlphaAnimation(1.0f, 0.1f);
+                    fadeOut.setDuration(500);
+                    fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            Animation fadeIn = new AlphaAnimation(0.1f, 1.0f);
+                            fadeIn.setDuration(500);
+                            v.startAnimation(fadeIn);
+                        }
+                    });
+
+                    v.startAnimation(fadeOut);
+
+                    // Cancel the OnScrollListener so that the top view won't blink during normal scroll
+                    _activatedItemListView.setOnScrollListener(null);
+                }
+            }
+        });
+    }
 
     // Adapted from Google I/O 2013
     public void animateRemoval(final ArrayAdapter adapter,
@@ -630,8 +708,8 @@ public class LaunchActivity extends ActionBarActivity implements
                 "Listen closely. Be observant and informed. Be patient and in the moment", "Ready, Attentions", 0, 0);
 
         // Add default items to group "To-Do List"
-        ItemFactory.createItem(2, "Read the Wiki about Scotland History in 19 century.", "Watch the documentary.", "Investigate Scotland History", 0, 1);
-        ItemFactory.createItem(2, "Everyone is talking about it. It must be interesting.", "Order it online!", "Order The Lean Startup", 0, 1);
+        ItemFactory.createItem(2, "Read the Wiki about Scotland History in 19 century.", "Watch the documentary.", "Investigate Scotland History", 1, 1);
+        ItemFactory.createItem(2, "Everyone is talking about it. It must be interesting.", "Order it online!", "Order The Lean Startup", 0, 0);
         ItemFactory.createItem(2, "Egg, Milk, Onions, Cheese", "Maybe some pens.", "Target Shopping", 0, 1);
         ItemFactory.createItem(2, "Just do it!", "Keep running!", "30 minutes' Running", 1, 0);
 
