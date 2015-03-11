@@ -28,10 +28,14 @@
     <color name="DRAWERLIST_BACKGROUND">@color/RED</color>
     <color name="DRAWERLIST_ROW_TEXT">@color/PURE_WHITE</color>
 
+    <!-- ViewActivity & NewItemActivity -->
+    <color name="NOTE_TITLE_COLOR">@color/GREY</color>
+
     <!-- Frequently Used Colors -->
     <color name="RED">@color/YANZHI</color>
     <color name="BLUE">@color/HAILAN</color>
     <color name="WHITE">@color/XUESE</color>
+    <color name="GREY">@color/GREY900</color>
     <color name="PURE_WHITE">@android:color/white</color>
     <color name="PURE_BLACK">@android:color/black</color>
 
@@ -41,6 +45,7 @@
     <color name="XUESE">#fffafa</color>
     <color name="HAILAN">#17507d</color>
     <color name="ORANGE">#FF9800</color>
+    <color name="GREY900">#424242</color>
 
 
 </resources>

@@ -8,18 +8,12 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="@dimen/ITEMLIST_SIDE_BAR_DIMEN"
-            android:layout_height="match_parent"
-            android:background="@color/ITEMLIST_SIDE_BAR"></FrameLayout>
-
         <ListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="2.0sp"
             android:divider="@android:color/transparent"
-            android:dividerHeight="4.0sp"
+            android:dividerHeight="0sp"
             android:choiceMode="singleChoice"
             android:fadingEdgeLength="30dp"
             android:requiresFadingEdge="vertical"

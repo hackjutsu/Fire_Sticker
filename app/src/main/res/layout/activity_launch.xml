@@ -39,6 +39,7 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/TAB_HEIGHT"
+                android:layout_marginBottom="-2dp"
                 android:elevation="2dp"
                 android:background="@color/WHITE" />
 
@@ -55,10 +56,10 @@
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
-
+                android:layout_marginTop="0dp"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:layout_weight="1"></android.support.v4.view.ViewPager>
+                android:layout_weight="1"/>
 
         </LinearLayout>
 

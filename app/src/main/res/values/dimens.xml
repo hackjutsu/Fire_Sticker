@@ -11,7 +11,7 @@
     <dimen name="ROUND_BUTTON_DIMEN">60dp</dimen>
 
     <!-- Tabs -->
-    <dimen name="TAB_HEIGHT">48dp</dimen>
+    <dimen name="TAB_HEIGHT">50dp</dimen>
 
     <!-- Item List -->
     <dimen name="ITEMLIST_SIDE_BAR_DIMEN">3dp</dimen>

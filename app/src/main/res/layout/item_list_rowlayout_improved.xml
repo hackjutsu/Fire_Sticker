@@ -1,78 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/pressed_background_indicator">
+    android:orientation="horizontal">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/item_sidebar"
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1sp"
+        android:layout_marginBottom="1sp"
+        android:background="@color/ITEMLIST_SIDE_BAR" />
+
+    <FrameLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="2sp"
+        android:layout_marginBottom="1sp"
+        android:background="@drawable/pressed_background_indicator">
 
 
-        <TextView
-            android:id="@+id/item_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Happy Titile"
-            android:textStyle="normal"
-            android:fontFamily="serif"
-            android:textColor="@color/PURE_BLACK"
-            android:textSize="18sp"
-            android:paddingTop="3dp"
-            android:paddingBottom="7dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="100dp"
-            android:singleLine="true"
-            android:ellipsize="marquee" />
+            android:layout_marginTop="4.0dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="I'm an awesome question demo."
-            android:fontFamily="serif"
-            android:textColor="@color/PURE_BLACK"
-            android:textSize="13sp"
-            android:paddingLeft="25dp"
-            android:paddingRight="100dp"
-            android:layout_marginBottom="-4dp"
-            android:singleLine="true"
-            android:ellipsize="marquee" />
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Happy Titile"
+                android:textStyle="normal"
+                android:fontFamily="serif"
+                android:textColor="@color/PURE_BLACK"
+                android:textSize="18sp"
+                android:paddingTop="3dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="100dp"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
 
-        <TextView
-            android:id="@+id/item_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="I'm an exciting answer demo."
-            android:fontFamily="serif"
-            android:textColor="@color/PURE_BLACK"
-            android:textSize="13sp"
-            android:paddingLeft="25dp"
-            android:paddingRight="100dp"
-            android:paddingBottom="5dp"
-            android:singleLine="true"
-            android:ellipsize="marquee" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/item_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I'm an awesome question demo."
+                android:fontFamily="serif"
+                android:textColor="@color/PURE_BLACK"
+                android:textSize="13sp"
+                android:paddingLeft="25dp"
+                android:paddingRight="100dp"
+                android:layout_marginBottom="-4dp"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right"
-        android:layout_marginTop="-10dp"
-        android:layout_marginRight="5dp"
-        android:id="@+id/item_bookmark"
-        android:src="@drawable/bookmark_action_improved" />
+            <TextView
+                android:id="@+id/item_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I'm an exciting answer demo."
+                android:fontFamily="serif"
+                android:textColor="@color/PURE_BLACK"
+                android:textSize="13sp"
+                android:paddingLeft="25dp"
+                android:paddingRight="100dp"
+                android:paddingBottom="5dp"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
+        </LinearLayout>
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        android:layout_gravity="right"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="70dp"
-        android:id="@+id/item_done"
-        android:src="@drawable/done"
-        android:scaleType="centerInside"/>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="-10dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/item_bookmark"
+            android:src="@drawable/bookmark_action_improved" />
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="70dp"
+            android:id="@+id/item_done"
+            android:src="@drawable/done"
+            android:scaleType="centerInside" />
+
+
+    </FrameLayout>
+</LinearLayout>

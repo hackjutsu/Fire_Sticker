@@ -500,7 +500,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
                 updateSlidingTabs();
                 _slidingTabsLayout.setCurrentTab(_activatedGroupId);
-
             }
             if (resultCode == RESULT_CANCELED) {
 
@@ -611,7 +610,7 @@ public class LaunchActivity extends ActionBarActivity implements
         // Add default items to group "Welcome!"
         ItemFactory.createItem(0, "Bookmark the important notes", "", "BookMark", 1, 0);
         ItemFactory.createItem(0, "Try to edit this note ^_^", "Stamp it when the task is finished", "Edit Notes", 0, 1);
-        ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to delete", 1, 1);
+        ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to Delete", 1, 1);
         ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two colorful sides.",
                 "You can write down the notes on the front and add hint on the back. " +
                         "Or just write the question on the front, and solutions on the back",
