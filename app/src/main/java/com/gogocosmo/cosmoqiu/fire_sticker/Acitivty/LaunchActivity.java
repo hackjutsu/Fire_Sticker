@@ -549,8 +549,19 @@ public class LaunchActivity extends ActionBarActivity implements
         _activatedItemArrayAdapter.remove(oldItem);
         ItemFactory.notifyItemDeletion(oldItem);
 
+        // Set the listview to display to the top of the list. Refer to the following link to see
+        // why I use a runnable().
+        _activatedItemListView.post(new Runnable() {
+            @Override
+            public void run() {
+                // https://groups.google.com/forum/#!topic/android-developers/EnyldBQDUwE
+                _activatedItemListView.setSelection(0);
+            }
+        });
+
+        // If the data set is large, the scrolling animation will make people fill dizzy
         // Scroll to the top
-        _activatedItemListView.smoothScrollToPosition(0);
+//        _activatedItemListView.smoothScrollToPosition(0);
 
         // When scrolled to the top, blink the first item view
         _activatedItemListView.setOnScrollListener(new AbsListView.OnScrollListener() {
