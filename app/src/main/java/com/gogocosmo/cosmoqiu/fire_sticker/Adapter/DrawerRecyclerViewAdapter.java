@@ -19,11 +19,9 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     final static public int TYPE_EDIT = 2;
     final static public int TYPE_ABOUTAPP = 3;
 
-    private String _navTitles[];
-    private int _profile;
-
-    private IDrawerListItemClickListener _drawerItemClickListener;
-
+    private String mNavTitles[];
+    private int mProfile;
+    private IDrawerListItemClickListener mDrawerItemClickListener;
 
     public interface IDrawerListItemClickListener {
 
@@ -40,34 +38,34 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             public void onClickedEvent(View v, int position);
         }
 
-        private int _viewType;
-        private int _position;
+        private int mViewType;
+        private int mViewHolderPosition;
 
-        private TextView _textView;
-        private ImageView _profile;
-        private IViewHolderClickListener _viewHolderClickListener;
+        private TextView mTextField;
+        private ImageView mProfileImage;
+        private IViewHolderClickListener mViewHolderClickListener;
 
         public ViewHolder(View itemView, int ViewType, IViewHolderClickListener listener) {
             super(itemView);
 
-            _viewType = ViewType;
-            _viewHolderClickListener = listener;
+            mViewType = ViewType;
+            mViewHolderClickListener = listener;
 
             if (ViewType == TYPE_ITEM) {
 
-                _textView = (TextView) itemView.findViewById(R.id.rowText);
+                mTextField = (TextView) itemView.findViewById(R.id.rowText);
                 itemView.setOnClickListener(this);
             } else if (ViewType == TYPE_HEADER) {
 
-                _profile = (ImageView) itemView.findViewById(R.id.circleView);
+                mProfileImage = (ImageView) itemView.findViewById(R.id.circleView);
                 // Header doesn't need a ClickedListener
             } else if (ViewType == TYPE_EDIT) {
 
-                _textView = (TextView) itemView.findViewById(R.id.rowText);
+                mTextField = (TextView) itemView.findViewById(R.id.rowText);
                 itemView.setOnClickListener(this);
             } else if (ViewType == TYPE_ABOUTAPP) {
 
-                _textView = (TextView) itemView.findViewById(R.id.rowText);
+                mTextField = (TextView) itemView.findViewById(R.id.rowText);
                 itemView.setOnClickListener(this);
             }
 //            itemView.setOnClickListener(this);
@@ -76,24 +74,22 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
         @Override
         public void onClick(View v) {
 
-            if (_viewHolderClickListener != null) {
+            if (mViewHolderClickListener != null) {
 
                 v.startAnimation(new AlphaAnimation(1.0f, 0.5f));
-                _viewHolderClickListener.onClickedEvent(v, _position);
+                mViewHolderClickListener.onClickedEvent(v, mViewHolderPosition);
             }
         }
     }
 
     public DrawerRecyclerViewAdapter(
             String Titles[],
-            String name,
-            String email,
             int profile,
             IDrawerListItemClickListener drawerItemClickListener) {
 
-        _navTitles = Titles;
-        _profile = profile;
-        _drawerItemClickListener = drawerItemClickListener;
+        mNavTitles = Titles;
+        mProfile = profile;
+        mDrawerItemClickListener = drawerItemClickListener;
     }
 
     @Override
@@ -108,7 +104,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_ITEM);
+                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_ITEM);
                 }
             });
             return vhItem;
@@ -122,7 +118,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-//                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_HEADER);
+//                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_HEADER);
                 }
             });
             return vhHeader;
@@ -136,7 +132,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_EDIT);
+                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_EDIT);
                 }
             });
             return vhEnd;
@@ -149,7 +145,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-                    _drawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_ABOUTAPP);
+                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_ABOUTAPP);
                 }
             });
             return vhEnd;
@@ -161,31 +157,31 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     @Override
     public void onBindViewHolder(DrawerRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        if (holder._viewType == TYPE_ITEM) {
+        if (holder.mViewType == TYPE_ITEM) {
 
-            holder._textView.setText(_navTitles[position - 1]);
-            holder._position = position;
+            holder.mTextField.setText(mNavTitles[position - 1]);
+            holder.mViewHolderPosition = position;
 
-        } else if (holder._viewType == TYPE_HEADER) {
+        } else if (holder.mViewType == TYPE_HEADER) {
 
-            holder._profile.setImageResource(_profile);
-            holder._position = position;
+            holder.mProfileImage.setImageResource(mProfile);
+            holder.mViewHolderPosition = position;
             //holder._email.setText(_email);
-        } else if (holder._viewType == TYPE_EDIT) {
+        } else if (holder.mViewType == TYPE_EDIT) {
 
-            holder._textView.setText("Edit Group List");
-            holder._position = position;
-        } else if (holder._viewType == TYPE_ABOUTAPP) {
+            holder.mTextField.setText("Edit Group List");
+            holder.mViewHolderPosition = position;
+        } else if (holder.mViewType == TYPE_ABOUTAPP) {
 
-            holder._textView.setText("About App");
-            holder._position = position;
+            holder.mTextField.setText("About App");
+            holder.mViewHolderPosition = position;
         }
     }
 
     @Override
     public int getItemCount() {
         // Including the header and the edit section
-        return _navTitles.length + 3;
+        return mNavTitles.length + 3;
     }
 
     @Override

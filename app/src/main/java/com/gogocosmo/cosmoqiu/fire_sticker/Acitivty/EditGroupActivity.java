@@ -31,15 +31,15 @@ public class EditGroupActivity extends ActionBarActivity implements
 
     final private String TAG = "MEMORY-ACC";
 
-    private Toolbar _toolbar;
-    private ListView _listView;
-    private GroupArrayAdapter _adapter;
+    private Toolbar mToolbar;
+    private ListView mListView;
+    private GroupArrayAdapter mAdapter;
 
-    private android.view.ActionMode _actionMode;
-    private Menu _menu;
-    private int _selectedIndex;
+    private android.view.ActionMode mActionMode;
+    private Menu mMenu;
+    private int mSelectedIndex;
 
-    private TextView _totalStickerNum;
+    private TextView mTotalStickerNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,42 +51,42 @@ public class EditGroupActivity extends ActionBarActivity implements
         ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
         // Toolbar Configurations
-        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
-        _listView = (ListView) findViewById(R.id.listview);
-        _adapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupObjectList());
-        _listView.setAdapter(_adapter);
-        _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mListView = (ListView) findViewById(R.id.listview);
+        mAdapter = new GroupArrayAdapter(this, ItemFactory.getItemGroupObjectList());
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // Important method: set the list item in this position activated.
                 // No matter whether this view is recycled or not.
-                _listView.setItemChecked(position, true);
-                _selectedIndex = position;
+                mListView.setItemChecked(position, true);
+                mSelectedIndex = position;
                 startActionMode(EditGroupActivity.this);
                 return true;
             }
         });
 
-        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                _selectedIndex = position;
+                mSelectedIndex = position;
 
-                if (_actionMode != null) {
+                if (mActionMode != null) {
                     return;
                 }
 
                 startEditDialog();
-                _listView.setItemChecked(_selectedIndex, true);
+                mListView.setItemChecked(mSelectedIndex, true);
             }
         });
 
-        _totalStickerNum = (TextView) findViewById(R.id.total_sticker_num);
+        mTotalStickerNum = (TextView) findViewById(R.id.total_sticker_num);
         updateTotalStickerNum();
     }
 
@@ -99,7 +99,7 @@ public class EditGroupActivity extends ActionBarActivity implements
             totalStickers += ItemFactory.getItemList(i).size();
         }
 
-        _totalStickerNum.setText(String.valueOf(totalStickers));
+        mTotalStickerNum.setText(String.valueOf(totalStickers));
     }
 
     private void startEditDialog() {
@@ -114,7 +114,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         ImageView confirmImage = (ImageView) dialog.findViewById(R.id.confirm_dialog);
         final EditText groupName = (EditText) dialog.findViewById(R.id.editText_groupName);
 
-        String originalTitle = ItemFactory.getItemGroupObjectList().get(_selectedIndex).getGroupName();
+        String originalTitle = ItemFactory.getItemGroupObjectList().get(mSelectedIndex).getGroupName();
         groupName.setText(originalTitle);
 
         // Set cursor at the end of the content
@@ -133,9 +133,9 @@ public class EditGroupActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 String newTitle = groupName.getText().toString();
-                Group updatedGroup =  ItemFactory.getItemGroupObjectList().get(_selectedIndex);
+                Group updatedGroup =  ItemFactory.getItemGroupObjectList().get(mSelectedIndex);
                 updatedGroup.setGroupName(newTitle);
-                _adapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
                 updateTotalStickerNum();
                 ItemFactory.notifyGroupUpdate(updatedGroup);
                 dialog.dismiss();
@@ -183,10 +183,10 @@ public class EditGroupActivity extends ActionBarActivity implements
                 }
 
                 ItemFactory.createGroup(newTitle);
-                _adapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
                 updateTotalStickerNum();
-                _selectedIndex = ItemFactory.getItemGroupObjectList().size() - 1;
-                _listView.setItemChecked(ItemFactory.getItemGroupObjectList().size() - 1, true);
+                mSelectedIndex = ItemFactory.getItemGroupObjectList().size() - 1;
+                mListView.setItemChecked(ItemFactory.getItemGroupObjectList().size() - 1, true);
 
                 dialog.dismiss();
             }
@@ -202,32 +202,32 @@ public class EditGroupActivity extends ActionBarActivity implements
 
     private void deleteGroup() {
 
-        String uuid = ItemFactory.getItemGroupObjectList().get(_selectedIndex).getUuid();
-        ItemFactory.getSelectedItemIndexesList().remove(_selectedIndex);
-        ItemFactory.getItemLists().remove(_selectedIndex);
-        ItemFactory.getItemGroupObjectList().remove(_selectedIndex);
-        _adapter.notifyDataSetChanged();
+        String uuid = ItemFactory.getItemGroupObjectList().get(mSelectedIndex).getUuid();
+        ItemFactory.getSelectedItemIndexesList().remove(mSelectedIndex);
+        ItemFactory.getItemLists().remove(mSelectedIndex);
+        ItemFactory.getItemGroupObjectList().remove(mSelectedIndex);
+        mAdapter.notifyDataSetChanged();
 
         // Notify Database the Group Deletion
         ItemFactory.notifyGroupDeletion(uuid);
 
         updateTotalStickerNum();
 
-        _actionMode.finish();
+        mActionMode.finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_group, menu);
-        _menu = menu;
+        mMenu = menu;
 
-        _toolbar.setTitle("Group List");
+        mToolbar.setTitle("Group List");
 
-        MenuItem itemAdd = _menu.findItem(R.id.action_add);
-        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemBack = _menu.findItem(R.id.action_back);
-        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
+        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
+        MenuItem itemBack = mMenu.findItem(R.id.action_back);
+        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(true);
         itemBack.setVisible(false);
@@ -248,8 +248,8 @@ public class EditGroupActivity extends ActionBarActivity implements
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
 
-                if (_actionMode != null) {
-                    _actionMode.finish();
+                if (mActionMode != null) {
+                    mActionMode.finish();
                 } else {
                     Intent returnIntent = new Intent();
                     setResult(RESULT_OK, returnIntent);
@@ -264,7 +264,7 @@ public class EditGroupActivity extends ActionBarActivity implements
             case R.id.action_delete:
 
                 deleteGroup();
-                _listView.setItemChecked(_selectedIndex, false);
+                mListView.setItemChecked(mSelectedIndex, false);
                 return true;
             default:
         }
@@ -274,19 +274,19 @@ public class EditGroupActivity extends ActionBarActivity implements
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
-        _toolbar.setTitle("Edit Mode");
+        mToolbar.setTitle("Edit Mode");
 
-        MenuItem itemAdd = _menu.findItem(R.id.action_add);
-        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemBack = _menu.findItem(R.id.action_back);
-        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
+        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
+        MenuItem itemBack = mMenu.findItem(R.id.action_back);
+        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(false);
         itemBack.setVisible(false);
         itemDelete.setVisible(true);
         itemSlash.setVisible(false);
 
-        _actionMode = mode;
+        mActionMode = mode;
 
         // Return false since we are using a fake Action Mode with a toolbar
         return false;
@@ -305,32 +305,32 @@ public class EditGroupActivity extends ActionBarActivity implements
     @Override
     public void onDestroyActionMode(ActionMode mode) {
 
-        MenuItem itemAdd = _menu.findItem(R.id.action_add);
-        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemBack = _menu.findItem(R.id.action_back);
-        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
+        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
+        MenuItem itemBack = mMenu.findItem(R.id.action_back);
+        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(true);
         itemBack.setVisible(false);
         itemDelete.setVisible(false);
         itemSlash.setVisible(false);
 
-        _actionMode = null;
+        mActionMode = null;
 
-        if ((_selectedIndex >= 0) && (_selectedIndex < ItemFactory.getItemGroupObjectList().size())) {
+        if ((mSelectedIndex >= 0) && (mSelectedIndex < ItemFactory.getItemGroupObjectList().size())) {
 
-            _listView.setItemChecked(_selectedIndex, false);
+            mListView.setItemChecked(mSelectedIndex, false);
         }
 
-        _toolbar.setTitle("Group List");
+        mToolbar.setTitle("Group List");
     }
 
     @Override
     public void onBackPressed() {
 
-        if (_actionMode != null) {
+        if (mActionMode != null) {
 
-            _actionMode.finish();
+            mActionMode.finish();
         } else {
 
             Intent returnIntent = new Intent();

@@ -1,7 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.GesturesListener;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,10 +9,10 @@ public abstract class OnMultiGesturesListener implements View.OnTouchListener {
 
     final private String TAG = "MEMORY-ACC";
 
-    private final GestureDetector _gestureDetector;
+    private final GestureDetector mGestureDetector;
 
     public OnMultiGesturesListener(Context context) {
-        _gestureDetector = new GestureDetector(context, new GestureListener());
+        mGestureDetector = new GestureDetector(context, new GestureListener());
     }
 
     abstract public void onSwipeLeft();
@@ -46,7 +45,7 @@ public abstract class OnMultiGesturesListener implements View.OnTouchListener {
                 break;
             default:
         }
-        return _gestureDetector.onTouchEvent(event);
+        return mGestureDetector.onTouchEvent(event);
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {

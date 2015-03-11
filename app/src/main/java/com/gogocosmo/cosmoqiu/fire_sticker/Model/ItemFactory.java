@@ -1,7 +1,5 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 
-import android.util.Log;
-
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 
@@ -10,34 +8,32 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ItemFactory {
-    //TODO: (DONE) Refactor ItemFactory to be a Proxy to SQLite Database
 
     static final private String TAG = "MEMORY-ACC";
 
-    private static ArrayList<ArrayList<Item>> _itemLists = null;
-    private static ArrayList<String> _itemGroupList = new ArrayList<>();
-    private static ArrayList<Group> _itemGroupObjectList = null;
-    private static ArrayList<Integer> _selectedItemIndexes = null;
+    private static ArrayList<ArrayList<Item>> mItemLists = null;
+    private static ArrayList<Group> mItemGroupObjectList = null;
+    private static ArrayList<Integer> mSelectedItemIndexes = null;
 
-    private static ItemsTableHelper _itemsTableHelper;
-    private static GroupsTableHelper _groupsTableHelper;
+    private static ItemsTableHelper mItemsTableHelper;
+    private static GroupsTableHelper mGroupsTableHelper;
 
     public static void setItemsTableHelper(ItemsTableHelper itemsTableHelper) {
-        _itemsTableHelper = itemsTableHelper;
+        mItemsTableHelper = itemsTableHelper;
     }
 
     public static void setGroupsTableHelper(GroupsTableHelper groupsTableHelper) {
-        _groupsTableHelper = groupsTableHelper;
+        mGroupsTableHelper = groupsTableHelper;
     }
 
     public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark, int stamp) {
 
-        if (groupId < 0 || groupId >= _itemLists.size()) {
+        if (groupId < 0 || groupId >= mItemLists.size()) {
 //            Log.d(TAG, "Invalid group Id!");
             return null;
         }
 
-        ArrayList<Item> itemList = _itemLists.get(groupId);
+        ArrayList<Item> itemList = mItemLists.get(groupId);
 
         String realTitle = title;
         if (realTitle == "") {
@@ -89,37 +85,36 @@ public class ItemFactory {
 
     public static ArrayList<ArrayList<Item>> getItemLists() {
 
-        if (_itemLists == null) {
-//            Log.d(TAG, "_itemLists retrieve data from dataBase");
-            _itemLists = new ArrayList<ArrayList<Item>>();
-            _itemGroupObjectList = getItemGroupObjectList();
+        if (mItemLists == null) {
+//            Log.d(TAG, "mItemLists retrieve data from dataBase");
+            mItemLists = new ArrayList<ArrayList<Item>>();
+            mItemGroupObjectList = getItemGroupObjectList();
 
-            for (int i = 0; i < _itemGroupObjectList.size(); ++i) {
+            for (int i = 0; i < mItemGroupObjectList.size(); ++i) {
 
-                String groupUUID = _itemGroupObjectList.get(i).getUuid();
-                ArrayList<Item> newItemList = _itemsTableHelper.getItemList(groupUUID);
-                _itemLists.add(newItemList);
-//                Log.d(TAG, _itemGroupObjectList.get(i).getGroupName() + ": " + newItemList.size());
+                String groupUUID = mItemGroupObjectList.get(i).getUuid();
+                ArrayList<Item> newItemList = mItemsTableHelper.getItemList(groupUUID);
+                mItemLists.add(newItemList);
+//                Log.d(TAG, mItemGroupObjectList.get(i).getGroupName() + ": " + newItemList.size());
 
             }
         }
 
-        return _itemLists;
+        return mItemLists;
     }
 
     public static ArrayList<Item> createGroup(String groupName) {
 
         ArrayList<Item> newItemList = new ArrayList<>();
 
-        _itemLists = getItemLists();
-        _selectedItemIndexes = getSelectedItemIndexesList();
+        mItemLists = getItemLists();
+        mSelectedItemIndexes = getSelectedItemIndexesList();
 
-        _itemLists.add(newItemList);
-        _itemGroupList.add(groupName);
+        mItemLists.add(newItemList);
 
         Group newGroup = new Group(groupName);
-        _itemGroupObjectList.add(newGroup);
-        _selectedItemIndexes.add(Integer.valueOf(-1));
+        mItemGroupObjectList.add(newGroup);
+        mSelectedItemIndexes.add(Integer.valueOf(-1));
 
         // Notify Database the item creation
         notifyGroupCreation(newGroup);
@@ -129,68 +124,64 @@ public class ItemFactory {
 
     public static ArrayList<Integer> getSelectedItemIndexesList() {
 
-        if (_selectedItemIndexes==null) {
-            _selectedItemIndexes = new ArrayList<>();
+        if (mSelectedItemIndexes == null) {
+            mSelectedItemIndexes = new ArrayList<>();
 
-            _itemGroupObjectList = getItemGroupObjectList();
+            mItemGroupObjectList = getItemGroupObjectList();
 
-            for (int i = 0; i < _itemGroupObjectList.size(); ++i) {
-                _selectedItemIndexes.add(-1);
+            for (int i = 0; i < mItemGroupObjectList.size(); ++i) {
+                mSelectedItemIndexes.add(-1);
 //                Log.d(TAG, String.valueOf(i));
             }
 
         }
 
-//        Log.d(TAG, "_selectedItemIndexes.size() = " + String.valueOf(_selectedItemIndexes.size()));
-        return _selectedItemIndexes;
+//        Log.d(TAG, "mSelectedItemIndexes.size() = " + String.valueOf(mSelectedItemIndexes.size()));
+        return mSelectedItemIndexes;
     }
 
     public static ArrayList<Item> getItemList(int groupId) {
 
-        _itemLists = getItemLists();
+        mItemLists = getItemLists();
 
-        if (groupId < 0 || groupId >= _itemLists.size()) {
+        if (groupId < 0 || groupId >= mItemLists.size()) {
 //            Log.d(TAG, "Invalid group Id! " + String.valueOf(groupId));
-//            Log.d(TAG, "_itemLists.size() " + String.valueOf(_itemLists.size()));
+//            Log.d(TAG, "mItemLists.size() " + String.valueOf(mItemLists.size()));
 
         }
 
-        return _itemLists.get(groupId);
+        return mItemLists.get(groupId);
     }
 
     public static int getSelectedItemIndex(int groupId) {
 
         getSelectedItemIndexesList();
 
-        if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
+        if (groupId < 0 || groupId >= mSelectedItemIndexes.size()) {
 //            Log.d(TAG, "Invalid group Id!");
         }
 
-        return _selectedItemIndexes.get(groupId);
-    }
-
-    public static ArrayList<String> getItemGroupList() {
-        return _itemGroupList;
+        return mSelectedItemIndexes.get(groupId);
     }
 
     public static ArrayList<Group> getItemGroupObjectList() {
 
-        if (_itemGroupObjectList == null) {
-            _itemGroupObjectList = _groupsTableHelper.getAllGroups();
-//            Log.d(TAG, "Retrieve Group List from DataBase: " + _itemGroupObjectList.size());
+        if (mItemGroupObjectList == null) {
+            mItemGroupObjectList = mGroupsTableHelper.getAllGroups();
+//            Log.d(TAG, "Retrieve Group List from DataBase: " + mItemGroupObjectList.size());
         }
 
-        return _itemGroupObjectList;
+        return mItemGroupObjectList;
     }
 
     public static ArrayList<String> getItemGroupObjectNameList() {
 
         ArrayList<String> groupNameArray = new ArrayList<>();
 
-        _itemGroupObjectList = getItemGroupObjectList();
+        mItemGroupObjectList = getItemGroupObjectList();
 
-        for (int i = 0; i < _itemGroupObjectList.size(); ++i) {
-            groupNameArray.add(_itemGroupObjectList.get(i).getGroupName());
+        for (int i = 0; i < mItemGroupObjectList.size(); ++i) {
+            groupNameArray.add(mItemGroupObjectList.get(i).getGroupName());
         }
 
         return groupNameArray;
@@ -201,21 +192,21 @@ public class ItemFactory {
 
         getSelectedItemIndexesList();
 
-        if (groupId < 0 || groupId >= _selectedItemIndexes.size()) {
+        if (groupId < 0 || groupId >= mSelectedItemIndexes.size()) {
 //            Log.d(TAG, "Invalid group Id!");
         }
 
-        _selectedItemIndexes.set(groupId, selectedItemIndex);
+        mSelectedItemIndexes.set(groupId, selectedItemIndex);
     }
 
     public static void notifyItemCreation(final Group group, final Item newItem) {
 
 //        Log.d(TAG, "notifyItemCreation");
-        _itemsTableHelper.addItem(group, newItem);
+        mItemsTableHelper.addItem(group, newItem);
 
 //        Runnable runnable = new Runnable() {
 //            public void run() {
-//                _itemsTableHelper.addItem(group, newItem);
+//                mItemsTableHelper.addItem(group, newItem);
 //            }
 //        };
 //        Thread mythread = new Thread(runnable);
@@ -226,12 +217,12 @@ public class ItemFactory {
     public static void notifyItemUpdate(final Group group, final Item item) {
 
 //        Log.d(TAG, "notifyItemUpdate");
-        _itemsTableHelper.updateItem(group, item);
+        mItemsTableHelper.updateItem(group, item);
 
 
 //        Runnable runnable = new Runnable() {
 //            public void run() {
-//                _itemsTableHelper.updateItem(group, item);
+//                mItemsTableHelper.updateItem(group, item);
 //            }
 //        };
 //        Thread mythread = new Thread(runnable);
@@ -242,11 +233,11 @@ public class ItemFactory {
     public static void notifyItemDeletion(final Item item) {
 
 //        Log.d(TAG, "notifyItemDeletion");
-        _itemsTableHelper.deleteItem(item);
+        mItemsTableHelper.deleteItem(item);
 
 //        Runnable runnable = new Runnable() {
 //            public void run() {
-//                _itemsTableHelper.deleteItem(item);
+//                mItemsTableHelper.deleteItem(item);
 //            }
 //        };
 //        Thread mythread = new Thread(runnable);
@@ -256,14 +247,14 @@ public class ItemFactory {
 
     public static void notifyGroupCreation(final Group newGroup) {
 
-//        _groupsTableHelper.addGroup(new Group(newGroupName));
+//        mGroupsTableHelper.addGroup(new Group(newGroupName));
 //        Log.d(TAG, "notifyGroupCreation: " + newGroup.getUuid() + ", " + newGroup.getGroupName());
-        _groupsTableHelper.addGroup(newGroup);
+        mGroupsTableHelper.addGroup(newGroup);
 
 
 //        Runnable runnable = new Runnable() {
 //            public void run() {
-//                _groupsTableHelper.addGroup(newGroup);
+//                mGroupsTableHelper.addGroup(newGroup);
 //            }
 //        };
 //        Thread mythread = new Thread(runnable);
@@ -273,7 +264,7 @@ public class ItemFactory {
     public static void notifyGroupUpdate(final Group updatedGroup) {
 //        Log.d(TAG, "notifyGroupUpdate: " + updatedGroup.getUuid() + ", " + updatedGroup.getGroupName());
 
-        _groupsTableHelper.updateGroup(updatedGroup);
+        mGroupsTableHelper.updateGroup(updatedGroup);
 
 //        Runnable runnable = new Runnable() {
 //            public void run() {
@@ -286,13 +277,13 @@ public class ItemFactory {
 
     public static void notifyGroupDeletion(final String uuid) {
 //        Log.d(TAG, "notifyGroupDeletion: " + uuid);
-        _groupsTableHelper.deleteGroup(uuid);
-        _itemsTableHelper.deleteGroupItems(uuid);
+        mGroupsTableHelper.deleteGroup(uuid);
+        mItemsTableHelper.deleteGroupItems(uuid);
 
 //        Runnable runnable = new Runnable() {
 //            public void run() {
-//                _groupsTableHelper.deleteGroup(uuid);
-//                _itemsTableHelper.deleteGroupItems(uuid);
+//                mGroupsTableHelper.deleteGroup(uuid);
+//                mItemsTableHelper.deleteGroupItems(uuid);
 //            }
 //        };
 //        Thread mythread = new Thread(runnable);
@@ -301,7 +292,7 @@ public class ItemFactory {
 
     public static void closeAllDatabase() {
 //        Log.d(TAG, "XX--closeAllDatabase--XX");
-//        _groupsTableHelper.close();
-//        _itemsTableHelper.close();
+//        mGroupsTableHelper.close();
+//        mItemsTableHelper.close();
     }
 }

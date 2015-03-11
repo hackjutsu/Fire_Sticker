@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -16,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
@@ -33,17 +31,17 @@ public class ViewActivity extends ActionBarActivity {
 
     final private String TAG = "MEMORY-ACC";
 
-    private Toolbar _toolbar;
-    private EditText _frontSideEditText;
-    private EditText _backSideEditText;
-    private EditText _titleEditText;
-    private ImageView _bookMark;
-    private ImageView _stampFront;
-    private ImageView _stampBack;
-    private LinearLayout _cardsContainer;
+    private Toolbar mToolbar;
+    private EditText mFrontSideEditText;
+    private EditText mBackSideEditText;
+    private EditText mTitleEditText;
+    private ImageView mBookmark;
+    private ImageView mStampFront;
+    private ImageView mStampBack;
+    private LinearLayout mCardsContainer;
 
-    private Item _item;
-    private int _groupId;
+    private Item mItem;
+    private int mGroupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +53,17 @@ public class ViewActivity extends ActionBarActivity {
         ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
         // Toolbar Configurations
-        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _toolbar.setTitle("Edit Notes");
-        _toolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setTitle("Edit Notes");
+        mToolbar.setTitleTextColor(Color.WHITE);
 
-        _groupId = getIntent().getExtras().getInt("GROUP");
-        ArrayList<Item> itemList = ItemFactory.getItemList(_groupId);
+        mGroupId = getIntent().getExtras().getInt("GROUP");
+        ArrayList<Item> itemList = ItemFactory.getItemList(mGroupId);
 
         int position = getIntent().getExtras().getInt("POSITION");
-        _item = itemList.get(position);
+        mItem = itemList.get(position);
 
         // Get the width of the Windows and set it as the minHeight of the card
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -74,47 +72,47 @@ public class ViewActivity extends ActionBarActivity {
 
         int cardPadding = 50;
 
-        _frontSideEditText = (EditText) findViewById(R.id.frontSide_display_EditText);
-        _frontSideEditText.setBackgroundColor(randomColor());
-        _frontSideEditText.setMinHeight(cardMinHeight);
-        _frontSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
+        mFrontSideEditText = (EditText) findViewById(R.id.frontSide_display_EditText);
+        mFrontSideEditText.setBackgroundColor(randomColor());
+        mFrontSideEditText.setMinHeight(cardMinHeight);
+        mFrontSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
 
-        _bookMark = (ImageView) findViewById(R.id.item_display_bookmark);
-        _stampFront = (ImageView) findViewById(R.id.item_card_front_done);
-        _stampBack = (ImageView) findViewById(R.id.item_card_back_done);
+        mBookmark = (ImageView) findViewById(R.id.item_display_bookmark);
+        mStampFront = (ImageView) findViewById(R.id.item_card_front_done);
+        mStampBack = (ImageView) findViewById(R.id.item_card_back_done);
 
-        if (_item.getBookMark() == 0) {
-            _bookMark.setVisibility(View.INVISIBLE);
+        if (mItem.getBookMark() == 0) {
+            mBookmark.setVisibility(View.INVISIBLE);
         }
 
-        if (_item.getStamp() == 0) {
-            _stampFront.setVisibility(View.INVISIBLE);
-            _stampBack.setVisibility(View.INVISIBLE);
+        if (mItem.getStamp() == 0) {
+            mStampFront.setVisibility(View.INVISIBLE);
+            mStampBack.setVisibility(View.INVISIBLE);
         }
 
-        _backSideEditText = (EditText) findViewById(R.id.backSide_display_editText);
-        _backSideEditText.setBackgroundColor(randomColor());
-        _backSideEditText.setMinHeight(cardMinHeight);
-        _backSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
+        mBackSideEditText = (EditText) findViewById(R.id.backSide_display_editText);
+        mBackSideEditText.setBackgroundColor(randomColor());
+        mBackSideEditText.setMinHeight(cardMinHeight);
+        mBackSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
 
 
-        _titleEditText = (EditText) findViewById(R.id.title_display_editText);
+        mTitleEditText = (EditText) findViewById(R.id.title_display_editText);
 
-        _frontSideEditText.setText(_item.getFront());
-        _backSideEditText.setText(_item.getBack());
-        _titleEditText.setText(_item.getTitle());
+        mFrontSideEditText.setText(mItem.getFront());
+        mBackSideEditText.setText(mItem.getBack());
+        mTitleEditText.setText(mItem.getTitle());
 
         adjustCardTextFormat();
 
         // Hide the soft keyboard when tapping the white boarders
-        _cardsContainer = (LinearLayout)findViewById(R.id.linear_cards_display);
-        _cardsContainer.setOnClickListener(new View.OnClickListener() {
+        mCardsContainer = (LinearLayout)findViewById(R.id.linear_cards_display);
+        mCardsContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mFrontSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(mBackSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(mTitleEditText.getWindowToken(), 0);
             }
         });
     }
@@ -122,8 +120,8 @@ public class ViewActivity extends ActionBarActivity {
     private int randomColor() {
 
         Random r = new Random();
-        int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
-        CardColor randomColor = CardColor.CardList.get(randomColorIndex);
+        int randomColorIndex = r.nextInt(CardColor.COLOR_LIST.size() - 1 - 0 + 1) + 0;
+        CardColor randomColor = CardColor.COLOR_LIST.get(randomColorIndex);
 
         return randomColor.getColorInt();
     }
@@ -132,28 +130,28 @@ public class ViewActivity extends ActionBarActivity {
         // If the line count in an EditText more than two, the texts should start from left;
         // else we put it in the center.
 
-        _frontSideEditText.post(new Runnable() {
+        mFrontSideEditText.post(new Runnable() {
             @Override
             public void run() {
-                int lineCountFront = _frontSideEditText.getLineCount();
+                int lineCountFront = mFrontSideEditText.getLineCount();
 
                 if (lineCountFront <= 1) {
-                    _frontSideEditText.setGravity(Gravity.CENTER);
+                    mFrontSideEditText.setGravity(Gravity.CENTER);
                 } else {
-                    _frontSideEditText.setGravity(Gravity.CENTER_VERTICAL);
+                    mFrontSideEditText.setGravity(Gravity.CENTER_VERTICAL);
                 }
             }
         });
 
-        _backSideEditText.post(new Runnable() {
+        mBackSideEditText.post(new Runnable() {
             @Override
             public void run() {
-                int lineCountFront = _backSideEditText.getLineCount();
+                int lineCountFront = mBackSideEditText.getLineCount();
 
                 if (lineCountFront <= 1) {
-                    _backSideEditText.setGravity(Gravity.CENTER);
+                    mBackSideEditText.setGravity(Gravity.CENTER);
                 } else {
-                    _backSideEditText.setGravity(Gravity.CENTER_VERTICAL);
+                    mBackSideEditText.setGravity(Gravity.CENTER_VERTICAL);
                 }
             }
         });
@@ -181,44 +179,44 @@ public class ViewActivity extends ActionBarActivity {
                 CustomizedToast.showToast(this, "SAVE");
 
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("GROUP", _groupId);
+                returnIntent.putExtra("GROUP", mGroupId);
                 setResult(RESULT_OK, returnIntent);
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
 
             case R.id.action_flag_view:
-                if (_item.getBookMark() == 1) {
+                if (mItem.getBookMark() == 1) {
 
-                    _item.setBookMark(0);
-                    _bookMark.setVisibility(View.INVISIBLE);
+                    mItem.setBookMark(0);
+                    mBookmark.setVisibility(View.INVISIBLE);
                     CustomizedToast.showToast(this, "Clear Bookmarks");
                 } else {
 
-                    _item.setBookMark(1);
-                    _bookMark.setVisibility(View.VISIBLE);
+                    mItem.setBookMark(1);
+                    mBookmark.setVisibility(View.VISIBLE);
                     CustomizedToast.showToast(this, "Bookmarked");
                 }
 
-                ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
+                ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
                 return true;
 
             case R.id.action_stamp_view:
-                if (_item.getStamp() == 1) {
+                if (mItem.getStamp() == 1) {
 
-                    _item.setStamp(0);
-                    _stampFront.setVisibility(View.INVISIBLE);
-                    _stampBack.setVisibility(View.INVISIBLE);
+                    mItem.setStamp(0);
+                    mStampFront.setVisibility(View.INVISIBLE);
+                    mStampBack.setVisibility(View.INVISIBLE);
                     CustomizedToast.showToast(this, "Clear Stamps");
                 } else {
 
-                    _item.setStamp(1);
-                    _stampFront.setVisibility(View.VISIBLE);
-                    _stampBack.setVisibility(View.VISIBLE);
+                    mItem.setStamp(1);
+                    mStampFront.setVisibility(View.VISIBLE);
+                    mStampBack.setVisibility(View.VISIBLE);
                     CustomizedToast.showToast(this, "Stamped");
                 }
 
-                ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
+                ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
                 return true;
 
             default:
@@ -228,11 +226,11 @@ public class ViewActivity extends ActionBarActivity {
 
     private void confirmEdits() {
 
-        _item.setFront(_frontSideEditText.getText().toString());
-        _item.setBack(_backSideEditText.getText().toString());
-        _item.setTitle(_titleEditText.getText().toString());
+        mItem.setFront(mFrontSideEditText.getText().toString());
+        mItem.setBack(mBackSideEditText.getText().toString());
+        mItem.setTitle(mTitleEditText.getText().toString());
 
-        ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(_groupId), _item);
+        ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
     }
 
     @Override
@@ -242,7 +240,7 @@ public class ViewActivity extends ActionBarActivity {
         CustomizedToast.showToast(this, "SAVE");
 
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("GROUP", _groupId);
+        returnIntent.putExtra("GROUP", mGroupId);
         setResult(RESULT_OK, returnIntent);
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

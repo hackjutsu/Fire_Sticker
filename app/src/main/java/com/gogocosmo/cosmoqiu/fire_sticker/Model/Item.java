@@ -2,98 +2,97 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 
 import java.util.UUID;
 
-/**
- * Created by cosmoqiu on 1/29/15.
- */
 public class Item {
 
-    private int id;
-    private String _uuid;
-    private String _front = null;
-    private String _back = null;
-    private String _title = null;
-    private int _bookMark = 0;
-    private int _stamp = 0;
+    private int mId;
+    private String mUuid;
+    private String mFront = null;
+    private String mBack = null;
+    private String mTitle = null;
+    private int mBookmark = 0;
+    private int mStamp = 0;
 
     public Item() {
 
     }
 
     public Item(String front, String back, String title) {
-        _front = front;
-        _back = back;
-        _title = title;
-        _uuid = UUID.randomUUID().toString();
+        mFront = front;
+        mBack = back;
+        mTitle = title;
+        mUuid = UUID.randomUUID().toString();
     }
 
     public Item(String front, String back, String title, int bookMark, int stamp) {
-        _front = front;
-        _back = back;
-        _title = title;
-        _bookMark = bookMark;
-        _stamp = stamp;
-        _uuid = UUID.randomUUID().toString();
+        mFront = front;
+        mBack = back;
+        mTitle = title;
+        mBookmark = bookMark;
+        mStamp = stamp;
+        mUuid = UUID.randomUUID().toString();
     }
 
     public int getId() {
-        return id;
+        return mId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getUuid() {
-        return _uuid;
+        return mUuid;
     }
 
     public void setUuid(String uuid) {
-        _uuid = uuid;
+        mUuid = uuid;
     }
 
     public void setFront(String front) {
-        this._front = front;
+        this.mFront = front;
     }
 
     public void setBack(String back) {
-        this._back = back;
+        this.mBack = back;
     }
 
-    public void setTitle(String _title) {
-        this._title = _title;
+    public void setTitle(String title) {
+        this.mTitle = title;
     }
 
     public void setBookMark(int bookMark) {
-        _bookMark = bookMark;
+        mBookmark = bookMark;
     }
 
-    public void setStamp(int _stamp) {
-        this._stamp = _stamp;
+    public void setStamp(int stamp) {
+        this.mStamp = stamp;
     }
 
     public String getFront() {
-        return _front;
+        return mFront;
     }
 
     public String getBack() {
-        return _back;
+        return mBack;
     }
 
     public String getTitle() {
-        return _title;
+        return mTitle;
     }
 
     public int getBookMark() {
-        return _bookMark;
+        return mBookmark;
     }
 
     public int getStamp() {
-        return _stamp;
+        return mStamp;
     }
 
     public String toString() {
-        return "Title: " + _title + "," +
-                "Front: " + _front + ", " +
-                "Back: " + _back;
+        return "Title: " + mTitle + ", " +
+                "Front: " + mFront + ", " +
+                "Back: " + mBack + ", " +
+                "Bookmark: " + String.valueOf(mBookmark) + ", " +
+                "Stamp: " + String.valueOf(mStamp);
     }
 }

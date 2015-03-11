@@ -2,28 +2,25 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 
-/**
- * Created by cosmoqiu on 2/8/15.
- */
 public class CardHolder {
 
-    int _color;
-    Item _item;
+    private int mColor;
+    private Item mItem;
 
     public CardHolder(int color, Item item) {
-        _color = color;
-        _item = item;
+        mColor = color;
+        mItem = item;
     }
 
     public CardHolder(int color) {
-        _color = color;
+        mColor = color;
     }
 
     public int getColor() {
-        return _color;
+        return mColor;
     }
 
     public Item getItem() {
-        return _item;
+        return mItem;
     }
 }

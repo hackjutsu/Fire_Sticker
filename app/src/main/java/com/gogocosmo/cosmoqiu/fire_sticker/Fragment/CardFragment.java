@@ -15,11 +15,12 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 public class CardFragment extends Fragment {
 
     private final String TAG = "MEMORY-ACC";
-    private TextView _card;
-    private int _marked = 0;
-    private int _stamp = 0;
-    private int _color;
-    private String _text;
+
+    private TextView mCard;
+    private int mMarked = 0;
+    private int mStamp = 0;
+    private int mColor;
+    private String mText;
 
     @Override
     public void onAttach(Activity activity) {
@@ -39,20 +40,20 @@ public class CardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_card,
                 container, false);
 
-        _card = (TextView) view.findViewById(R.id.card);
-        _card.setBackgroundColor(_color);
-        _card.setText(_text);
+        mCard = (TextView) view.findViewById(R.id.card);
+        mCard.setBackgroundColor(mColor);
+        mCard.setText(mText);
 
         int cardPadding = 50;
-        _card.setPadding(cardPadding, cardPadding ,cardPadding ,cardPadding);
+        mCard.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
 
         ImageView bookMark = (ImageView) view.findViewById(R.id.item_card_bookmark);
-        if (_marked == 0) {
+        if (mMarked == 0) {
             bookMark.setVisibility(View.INVISIBLE);
         }
 
         ImageView stampDone = (ImageView) view.findViewById(R.id.item_card_done);
-        if (_stamp == 0) {
+        if (mStamp == 0) {
             stampDone.setVisibility(View.INVISIBLE);
         }
 
@@ -62,52 +63,52 @@ public class CardFragment extends Fragment {
     public void swipeDownEvent(String text) {
 
 //        Integer colorFrom = Color.rgb(43, 94, 125);
-//        Integer colorTo = _color;
+//        Integer colorTo = mColor;
 //        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
 //        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 //
 //            @Override
 //            public void onAnimationUpdate(ValueAnimator animator) {
-//                _card.setBackgroundColor((Integer)animator.getAnimatedValue());
+//                mCard.setBackgroundColor((Integer)animator.getAnimatedValue());
 //            }
 //
 //        });
 //        colorAnimation.start();
-//        _card.setBackgroundColor(_color);
-        _card.setText(text);
+//        mCard.setBackgroundColor(mColor);
+        mCard.setText(text);
     }
 
     public void swipeUpEvent(String text) {
 
-//        Integer colorFrom = _color;
+//        Integer colorFrom = mColor;
 //        Integer colorTo = Targetcolor;
 //        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
 //        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 //
 //            @Override
 //            public void onAnimationUpdate(ValueAnimator animator) {
-//                _card.setBackgroundColor((Integer)animator.getAnimatedValue());
+//                mCard.setBackgroundColor((Integer)animator.getAnimatedValue());
 //            }
 //
 //        });
 //        colorAnimation.start();
 
-        _card.setText(text);
+        mCard.setText(text);
     }
 
     public void setCardColor(int color) {
-        _color = color;
+        mColor = color;
     }
 
     public void setCardText(String text) {
-        _text = text;
+        mText = text;
     }
 
     public void setMarked(int marked) {
-        _marked = marked;
+        mMarked = marked;
     }
 
     public void setStamp(int stamp) {
-        _stamp = stamp;
+        mStamp = stamp;
     }
 }

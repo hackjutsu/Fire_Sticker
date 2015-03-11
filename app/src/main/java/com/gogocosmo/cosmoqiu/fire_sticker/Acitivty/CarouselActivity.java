@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -32,14 +31,15 @@ import java.util.UUID;
 public class CarouselActivity extends ActionBarActivity {
 
     final private String TAG = "MEMORY-ACC";
-    private ArrayList<CardHolder> _cardTrace;
-    private int _itemIndex;
-    private TopFragment _topFragment;
-    private CardFragment _currentCard;
 
-    private Toolbar _toolbar;
-    private TextView _title;
-    private int _groupId;
+    private ArrayList<CardHolder> mCardTrace;
+    private int mItemIndex;
+    private TopFragment mTopFragment;
+    private CardFragment mCurrentCard;
+
+    private Toolbar mToolbar;
+    private TextView mTitle;
+    private int mGroupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,36 +50,36 @@ public class CarouselActivity extends ActionBarActivity {
         ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
         ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
-        _groupId = getIntent().getExtras().getInt("GROUP");
+        mGroupId = getIntent().getExtras().getInt("GROUP");
 
         // Toolbar Configurations
-        _toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _title = (TextView) findViewById(R.id.toolbar_title);
+        mTitle = (TextView) findViewById(R.id.toolbar_title);
 
-        _topFragment = new TopFragment();
+        mTopFragment = new TopFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.topFragmentContainer, _topFragment)
-                .hide(_topFragment)
+                .replace(R.id.topFragmentContainer, mTopFragment)
+                .hide(mTopFragment)
                 .commit();
 
-        _cardTrace = new ArrayList<>();
-        _itemIndex = -1;
+        mCardTrace = new ArrayList<>();
+        mItemIndex = -1;
 
         FrameLayout layout = (FrameLayout) findViewById(R.id.fragmentContainer);
         layout.setOnTouchListener(new OnMultiGesturesListener(this) {
             @Override
             public void onSwipeLeft() {
-                if (_topFragment.isHidden()) {
+                if (mTopFragment.isHidden()) {
                     nextCard();
                 }
             }
 
             @Override
             public void onSwipeRight() {
-                if (_topFragment.isHidden()) {
+                if (mTopFragment.isHidden()) {
                     previousCard();
 
                 }
@@ -117,29 +117,29 @@ public class CarouselActivity extends ActionBarActivity {
 
     void swipeUpEvent() {
 
-        if (_currentCard != null) {
-            if (_topFragment.isHidden()) {
+        if (mCurrentCard != null) {
+            if (mTopFragment.isHidden()) {
 
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .show(_topFragment)
+                        .show(mTopFragment)
                         .commit();
 
-                _currentCard.swipeUpEvent(
-                        ItemFactory.getItemList(_groupId).get(_itemIndex).getBack());
+                mCurrentCard.swipeUpEvent(
+                        ItemFactory.getItemList(mGroupId).get(mItemIndex).getBack());
             }
         }
     }
 
     void swipeDownEvent() {
 
-        if (_currentCard != null) {
-            if (!_topFragment.isHidden()) {
+        if (mCurrentCard != null) {
+            if (!mTopFragment.isHidden()) {
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .hide(_topFragment)
+                        .hide(mTopFragment)
                         .commit();
-                _currentCard.swipeDownEvent(ItemFactory.getItemList(_groupId).get(_itemIndex).getFront());
+                mCurrentCard.swipeDownEvent(ItemFactory.getItemList(mGroupId).get(mItemIndex).getFront());
             }
         }
     }
@@ -147,25 +147,25 @@ public class CarouselActivity extends ActionBarActivity {
     private int randomColor() {
 
         Random r = new Random();
-        int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
-        CardColor randomColor = CardColor.CardList.get(randomColorIndex);
+        int randomColorIndex = r.nextInt(CardColor.COLOR_LIST.size() - 1 - 0 + 1) + 0;
+        CardColor randomColor = CardColor.COLOR_LIST.get(randomColorIndex);
         return randomColor.getColorInt();
     }
 
 
     private void nextCard() {
 
-        _itemIndex++;
+        mItemIndex++;
 
         // Return on invalid card index
-        if (_itemIndex >= ItemFactory.getItemList(_groupId).size()) {
-            _itemIndex--;
+        if (mItemIndex >= ItemFactory.getItemList(mGroupId).size()) {
+            mItemIndex--;
 
             Toast.makeText(this, "This is the last card ~", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Item item = ItemFactory.getItemList(_groupId).get(_itemIndex);
+        Item item = ItemFactory.getItemList(mGroupId).get(mItemIndex);
 
         // Set up a new card with a new color
         CardFragment newCard = new CardFragment();
@@ -176,13 +176,13 @@ public class CarouselActivity extends ActionBarActivity {
         newCard.setStamp(item.getStamp());
 
         // Add this new card info to card trace
-        _cardTrace.add(new CardHolder(cardColor, item));
-        _currentCard = newCard;
+        mCardTrace.add(new CardHolder(cardColor, item));
+        mCurrentCard = newCard;
 
         // Add the new card to the foreground
         String id = UUID.randomUUID().toString();
 
-        if (_itemIndex == 0) {
+        if (mItemIndex == 0) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentContainer, newCard, id)
@@ -198,12 +198,12 @@ public class CarouselActivity extends ActionBarActivity {
                     .addToBackStack(id)
                     .commit();
         }
-        _title.setText(item.getTitle());
+        mTitle.setText(item.getTitle());
     }
 
     private void previousCard() {
 
-        int lastIndex = _cardTrace.size() - 1;
+        int lastIndex = mCardTrace.size() - 1;
 
         // Return if the array size is 0 or 1
         if (lastIndex <= 0) {
@@ -212,11 +212,11 @@ public class CarouselActivity extends ActionBarActivity {
             return;
         }
 
-        _itemIndex--;
+        mItemIndex--;
 
         // Remove the last card in the card trace
-        _cardTrace.remove(lastIndex);
-        CardHolder currentHolder = _cardTrace.get(lastIndex - 1);
+        mCardTrace.remove(lastIndex);
+        CardHolder currentHolder = mCardTrace.get(lastIndex - 1);
 
         // Create a new card fragment that restores the previous card info
         CardFragment preCard = new CardFragment();
@@ -224,7 +224,7 @@ public class CarouselActivity extends ActionBarActivity {
         preCard.setCardText(currentHolder.getItem().getFront());
         preCard.setMarked(currentHolder.getItem().getBookMark());
 
-        _currentCard = preCard;
+        mCurrentCard = preCard;
 
         String id = UUID.randomUUID().toString();
 
@@ -238,7 +238,7 @@ public class CarouselActivity extends ActionBarActivity {
                 .addToBackStack(id)
                 .commit();
 
-        _title.setText(currentHolder.getItem().getTitle());
+        mTitle.setText(currentHolder.getItem().getTitle());
 
 //        FragmentManager fm = getFragmentManager();
 //        FragmentTransaction ftransaction = fm.beginTransaction();

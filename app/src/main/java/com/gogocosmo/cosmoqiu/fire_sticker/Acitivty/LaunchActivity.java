@@ -28,7 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -60,30 +59,30 @@ public class LaunchActivity extends ActionBarActivity implements
     final private int VIEW_DETAILS_REQ = 2;
     final private int NEW_ITEM_REQ = 3;
 
-    private ImageButton _fireButton;
-    private Toolbar _toolbar;
+    private ImageButton mCarouselButton;
+    private Toolbar mToolbar;
 
     // Declaring Tab Views and Variables
-    private ViewPager _pager;
-    private ViewPagerAdapter _viewPagerAdapter;
-    private SlidingTabLayout _slidingTabsLayout;
+    private ViewPager mPager;
+    private ViewPagerAdapter mViewPagerAdapter;
+    private SlidingTabLayout mSlidingTabsLayout;
 
     // Declaring Drawer Views and Variables
-    private ActionBarDrawerToggle _drawerToggle;
-    private RecyclerView _drawerRecyclerView;
-    private RecyclerView.Adapter _drawerViewAdapter;
-    private RecyclerView.LayoutManager _drawerRecyclerViewLayoutManager;
-    private DrawerLayout _drawerLayout;
-    private String _activityTitle;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private RecyclerView mDrawerRecyclerView;
+    private RecyclerView.Adapter mDrawerViewAdapter;
+    private RecyclerView.LayoutManager mDrawerRecyclerViewLayoutManager;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
 
     // Action Mode and Variables
-    private Menu _menu;
-    private android.view.ActionMode _actionMode;
-    private ListView _activatedItemListView;
-    private int _activatedGroupId;
-    private ItemArrayAdapter _activatedItemArrayAdapter;
+    private Menu mMenu;
+    private android.view.ActionMode mActionMode;
+    private ListView mActivatedItemListView;
+    private int mActivatedGroupId;
+    private ItemArrayAdapter mActivatedItemArrayAdapter;
 
-    private int PROFILE = R.drawable.owl;
+    private int mProfile = R.drawable.owl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +95,10 @@ public class LaunchActivity extends ActionBarActivity implements
         ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
 
         // Toolbar Configurations
-        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        _toolbar.inflateMenu(R.menu.menu_launch);
-        setSupportActionBar(_toolbar);
-        _toolbar.setTitleTextColor(Color.WHITE);
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        mToolbar.inflateMenu(R.menu.menu_launch);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitleTextColor(Color.WHITE);
 
         // Setting up Database and tips/tutorials for the first run
         SharedPreferences mPreference = PreferenceManager.getDefaultSharedPreferences(this);
@@ -113,11 +112,11 @@ public class LaunchActivity extends ActionBarActivity implements
         }
 
         /*********************************  Tabs Configurations  **********************************/
-        _pager = (ViewPager) findViewById(R.id.pager);
-        _slidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mSlidingTabsLayout = (SlidingTabLayout) findViewById(R.id.tabs);
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
-        _slidingTabsLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+        mSlidingTabsLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
                 return getResources().getColor(R.color.tabsScrollColor);
@@ -127,8 +126,8 @@ public class LaunchActivity extends ActionBarActivity implements
         updateSlidingTabs();
 
         /*********************************  Button Configurations  ********************************/
-        _fireButton = (ImageButton) findViewById(R.id.FireButton);
-        _fireButton.setOnClickListener(new View.OnClickListener() {
+        mCarouselButton = (ImageButton) findViewById(R.id.FireButton);
+        mCarouselButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -136,12 +135,12 @@ public class LaunchActivity extends ActionBarActivity implements
                 v.startAnimation(buttonClick);
 
                 if (ItemFactory.getItemGroupObjectList().size() == 0) {
-                    Toast.makeText(LaunchActivity.this, "Please create a group first.", Toast.LENGTH_SHORT).show();
+                    CustomizedToast.showToast(LaunchActivity.this, "Please create a group first.");
                     return;
                 }
 
                 Intent intent = new Intent(LaunchActivity.this, CarouselActivity.class);
-                intent.putExtra("GROUP", _activatedGroupId);
+                intent.putExtra("GROUP", mActivatedGroupId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -149,14 +148,14 @@ public class LaunchActivity extends ActionBarActivity implements
 
         /*********************************  Drawer Configurations  *********************************/
 
-        _drawerRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
-        _drawerRecyclerView.setHasFixedSize(true);
+        mDrawerRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
+        mDrawerRecyclerView.setHasFixedSize(true);
 
-        _drawerRecyclerViewLayoutManager = new LinearLayoutManager(this);
-        _drawerRecyclerView.setLayoutManager(_drawerRecyclerViewLayoutManager);
+        mDrawerRecyclerViewLayoutManager = new LinearLayoutManager(this);
+        mDrawerRecyclerView.setLayoutManager(mDrawerRecyclerViewLayoutManager);
 
-        _activityTitle = getTitle().toString();
-        _drawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
+        mActivityTitle = getTitle().toString();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.DrawerLayout);
 
         updateDrawerItems();
         setupDrawer();
@@ -164,36 +163,36 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void updateSlidingTabs() {
 
-        _viewPagerAdapter = new ViewPagerAdapter(
+        mViewPagerAdapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
                 ItemFactory.getItemGroupObjectNameList(),
                 ItemFactory.getItemGroupObjectList().size());
-        _pager.setAdapter(_viewPagerAdapter);
+        mPager.setAdapter(mViewPagerAdapter);
 
         if (ItemFactory.getItemGroupObjectList().size() <= 3) {
-            // To make the Tabs Fixed set this true, This makes the _slidingTabsLayout Space Evenly
+            // To make the Tabs Fixed set this true, This makes the mSlidingTabsLayout Space Evenly
             // in Available width
-            _slidingTabsLayout.setDistributeEvenly(true);
+            mSlidingTabsLayout.setDistributeEvenly(true);
         } else {
-            _slidingTabsLayout.setDistributeEvenly(false);
+            mSlidingTabsLayout.setDistributeEvenly(false);
         }
 
-        _slidingTabsLayout.setViewPager(_pager); // Update the Tabs
+        mSlidingTabsLayout.setViewPager(mPager); // Update the Tabs
     }
 
     private void updateDrawerItems() {
 
         String[] osArray = ItemFactory.getItemGroupObjectNameList().toArray(
                 new String[ItemFactory.getItemGroupObjectNameList().size()]);
-        _drawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, "", "", PROFILE, this);
+        mDrawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, mProfile, this);
 
         // Setting the adapter to RecyclerView
-        _drawerRecyclerView.setAdapter(_drawerViewAdapter);
+        mDrawerRecyclerView.setAdapter(mDrawerViewAdapter);
     }
 
     private void setupDrawer() {
 
-        _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout, _toolbar,
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
                 R.string.drawer_open, R.string.drawer_close) {
 
             @Override
@@ -202,8 +201,8 @@ public class LaunchActivity extends ActionBarActivity implements
                 super.onDrawerSlide(drawerView, 0); // Disable hamburger/arrow animation
                 // code here will execute once the drawer is opened
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                if (_actionMode != null) {
-                    _actionMode.finish();
+                if (mActionMode != null) {
+                    mActionMode.finish();
                 }
             }
 
@@ -211,7 +210,7 @@ public class LaunchActivity extends ActionBarActivity implements
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 // Code here will execute once drawer is closed
-                getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle + "</b>"));
+                getSupportActionBar().setTitle(Html.fromHtml("<b>" + mActivityTitle + "</b>"));
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -224,17 +223,17 @@ public class LaunchActivity extends ActionBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        _drawerToggle.setDrawerIndicatorEnabled(true);
-        _drawerLayout.setDrawerListener(_drawerToggle); // Drawer Listener set to the Drawer toggle
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
     }
 
     private void deleteListItem() {
 
-        int toRemoveIndex = ItemFactory.getSelectedItemIndex(_activatedGroupId);
+        int toRemoveIndex = ItemFactory.getSelectedItemIndex(mActivatedGroupId);
 
         animateRemoval(
-                _activatedItemArrayAdapter,
-                _activatedItemListView,
+                mActivatedItemArrayAdapter,
+                mActivatedItemListView,
                 toRemoveIndex);
     }
 
@@ -248,9 +247,9 @@ public class LaunchActivity extends ActionBarActivity implements
         listView.setItemChecked(position, true);
 
         ItemFactory.setSelectedItemIndex(groupId, position);
-        _activatedItemArrayAdapter = adapter;
-        _activatedItemListView = listView;
-        _activatedGroupId = groupId;
+        mActivatedItemArrayAdapter = adapter;
+        mActivatedItemListView = listView;
+        mActivatedGroupId = groupId;
 
         startActionMode(this);
     }
@@ -262,7 +261,7 @@ public class LaunchActivity extends ActionBarActivity implements
                                   int groupId,
                                   int position) {
 
-        if (_actionMode != null) {
+        if (mActionMode != null) {
 
             ItemFactory.setSelectedItemIndex(groupId, position);
             return;
@@ -281,8 +280,8 @@ public class LaunchActivity extends ActionBarActivity implements
         switch (viewType) {
             case DrawerRecyclerViewAdapter.TYPE_ITEM:
                 // Set the new Tab as the current Tab
-                _slidingTabsLayout.setCurrentTab(position);
-                _drawerLayout.closeDrawers();
+                mSlidingTabsLayout.setCurrentTab(position);
+                mDrawerLayout.closeDrawers();
                 break;
             case DrawerRecyclerViewAdapter.TYPE_HEADER:
 
@@ -308,24 +307,24 @@ public class LaunchActivity extends ActionBarActivity implements
     @Override
     public void OnPageScrolled(int position) {
         // Called when clients scroll the page tab
-        if (_actionMode != null) {
-            _actionMode.finish();
+        if (mActionMode != null) {
+            mActionMode.finish();
         }
 
-        _activatedGroupId = position;
+        mActivatedGroupId = position;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_launch, menu);
-        _menu = menu;
+        mMenu = menu;
 
-        MenuItem itemAdd = _menu.findItem(R.id.action_add);
-        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemMoveToTop = _menu.findItem(R.id.action_move_to_top);
-//        MenuItem itemBack = _menu.findItem(R.id.action_back);
-        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
+        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
+        MenuItem itemMoveToTop = mMenu.findItem(R.id.action_move_to_top);
+//        MenuItem itemBack = mMenu.findItem(R.id.action_back);
+        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(true);
 //        itemBack.setVisible(false);
@@ -343,9 +342,9 @@ public class LaunchActivity extends ActionBarActivity implements
         // as you specify a parent activity in AndroidManifest.xml.
 
         // Activate the navigation drawer toggle
-        if (_drawerToggle.onOptionsItemSelected(item)) {
-            if (_actionMode != null) {
-                _actionMode.finish();
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            if (mActionMode != null) {
+                mActionMode.finish();
             }
             return true;
         }
@@ -354,33 +353,32 @@ public class LaunchActivity extends ActionBarActivity implements
             case R.id.action_delete:
 
                 deleteListItem();
-                if (_actionMode != null) {
-                    _actionMode.finish();
+                if (mActionMode != null) {
+                    mActionMode.finish();
                 }
                 return true;
             case R.id.action_add:
 
                 if (ItemFactory.getItemGroupObjectList().size() == 0) {
-                    Toast.makeText(this, "Please create a group first.", Toast.LENGTH_SHORT).show();
+                    CustomizedToast.showToast(this, "Please create a group first.");
                     return true;
                 }
 
                 Intent intent = new Intent(this, NewItemActivity.class);
-                intent.putExtra("CURRENT_TAB", _slidingTabsLayout.getCurrentTabPosition());
+                intent.putExtra("CURRENT_TAB", mSlidingTabsLayout.getCurrentTabPosition());
                 startActivityForResult(intent, NEW_ITEM_REQ);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.action_move_to_top:
 
                 moveToTop();
-                if (_actionMode != null) {
+                if (mActionMode != null) {
 
-                    _actionMode.finish();
+                    mActionMode.finish();
                 }
                 return true;
             default:
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -388,14 +386,14 @@ public class LaunchActivity extends ActionBarActivity implements
     protected void onPostCreate(Bundle savedInstanceState) {
 
         super.onPostCreate(savedInstanceState);
-        _drawerToggle.syncState();
+        mDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
 
         super.onConfigurationChanged(newConfig);
-        _drawerToggle.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -405,11 +403,11 @@ public class LaunchActivity extends ActionBarActivity implements
 //        inflater.inflate(R.menu.menu_launch, menu);
         getSupportActionBar().setTitle("");
 
-        MenuItem itemAdd = _menu.findItem(R.id.action_add);
-        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-        MenuItem itemMoveToTop = _menu.findItem(R.id.action_move_to_top);
-//        MenuItem itemBack = _menu.findItem(R.id.action_back);
-        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
+        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
+        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
+        MenuItem itemMoveToTop = mMenu.findItem(R.id.action_move_to_top);
+//        MenuItem itemBack = mMenu.findItem(R.id.action_back);
+        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(false);
 //        itemBack.setVisible(true);
@@ -417,8 +415,8 @@ public class LaunchActivity extends ActionBarActivity implements
         itemDelete.setVisible(true);
         itemSlash.setVisible(true);
 
-        _fireButton.setVisibility(View.INVISIBLE);
-        _actionMode = mode;
+        mCarouselButton.setVisibility(View.INVISIBLE);
+        mActionMode = mode;
 
         // Return false since we are using a fake Action Mode with a toolbar
         return false;
@@ -440,13 +438,13 @@ public class LaunchActivity extends ActionBarActivity implements
     public void onDestroyActionMode(android.view.ActionMode mode) {
         // We are using a fake Action Mode with a toolbar
 
-        getSupportActionBar().setTitle(Html.fromHtml("<b>" + _activityTitle + "</b>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<b>" + mActivityTitle + "</b>"));
 
-        MenuItem itemAdd = _menu.findItem(R.id.action_add);
-        MenuItem itemDelete = _menu.findItem(R.id.action_delete);
-//        MenuItem itemBack = _menu.findItem(R.id.action_back);
-        MenuItem itemSlash = _menu.findItem(R.id.action_blank);
-        MenuItem itemMoveToTop = _menu.findItem(R.id.action_move_to_top);
+        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
+        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
+//        MenuItem itemBack = mMenu.findItem(R.id.action_back);
+        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
+        MenuItem itemMoveToTop = mMenu.findItem(R.id.action_move_to_top);
 
         itemAdd.setVisible(true);
 //        itemBack.setVisible(false);
@@ -454,41 +452,41 @@ public class LaunchActivity extends ActionBarActivity implements
         itemMoveToTop.setVisible(false);
         itemSlash.setVisible(false);
 
-        _fireButton.setVisibility(View.VISIBLE);
-        _actionMode = null;
+        mCarouselButton.setVisibility(View.VISIBLE);
+        mActionMode = null;
 
-        if (_activatedItemListView != null) {
-            _activatedItemListView.setItemChecked(ItemFactory.getSelectedItemIndex(_activatedGroupId), false);
+        if (mActivatedItemListView != null) {
+            mActivatedItemListView.setItemChecked(ItemFactory.getSelectedItemIndex(mActivatedGroupId), false);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        _slidingTabsLayout.registerPageScrollListener(this);
+        mSlidingTabsLayout.registerPageScrollListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        _slidingTabsLayout.unregisterPageScrollListener(this);
+        mSlidingTabsLayout.unregisterPageScrollListener(this);
 
         // End the Action Mode when this Activity is no longer visible
-        if (_actionMode != null) {
-            _actionMode.finish();
-            _actionMode = null;
+        if (mActionMode != null) {
+            mActionMode.finish();
+            mActionMode = null;
         }
     }
 
     @Override
     public void onBackPressed() {
 
-        if (_actionMode != null) {
+        if (mActionMode != null) {
             // If the Action Mode is on, then pressing BACK should exit the Action Mode, instead of
             // exit the App.
-            _actionMode.finish();
-            _actionMode = null;
+            mActionMode.finish();
+            mActionMode = null;
             return;
         }
 
@@ -509,7 +507,7 @@ public class LaunchActivity extends ActionBarActivity implements
             if (resultCode == RESULT_OK) {
 
                 updateSlidingTabs();
-                _slidingTabsLayout.setCurrentTab(_activatedGroupId);
+                mSlidingTabsLayout.setCurrentTab(mActivatedGroupId);
             }
             if (resultCode == RESULT_CANCELED) {
 
@@ -519,7 +517,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
                 int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
                 updateSlidingTabs();
-                _slidingTabsLayout.setCurrentTab(updatedGroupId);
+                mSlidingTabsLayout.setCurrentTab(updatedGroupId);
             }
             if (resultCode == RESULT_CANCELED) {
 
@@ -531,11 +529,11 @@ public class LaunchActivity extends ActionBarActivity implements
     // and blink the first item view to notify the users.
     private void moveToTop() {
 
-        int toMoveToTopIndex = ItemFactory.getSelectedItemIndex(_activatedGroupId);
-        Item oldItem = ItemFactory.getItemList(_activatedGroupId).get(toMoveToTopIndex);
+        int toMoveToTopIndex = ItemFactory.getSelectedItemIndex(mActivatedGroupId);
+        Item oldItem = ItemFactory.getItemList(mActivatedGroupId).get(toMoveToTopIndex);
 
         Item newItem = ItemFactory.createItem(
-                _activatedGroupId,
+                mActivatedGroupId,
                 oldItem.getFront(),
                 oldItem.getBack(),
                 oldItem.getTitle(),
@@ -546,65 +544,67 @@ public class LaunchActivity extends ActionBarActivity implements
         // Interestingly, when adapter.remove() is called, the notifyDataSetChanged() method is
         // also called. Therefore, we don't need to call notifyDataSetChanged() method to notify
         // the adding of the new item.
-        _activatedItemArrayAdapter.remove(oldItem);
+        mActivatedItemArrayAdapter.remove(oldItem);
         ItemFactory.notifyItemDeletion(oldItem);
 
         // Set the listview to display to the top of the list. Refer to the following link to see
         // why I use a runnable().
-        _activatedItemListView.post(new Runnable() {
+        mActivatedItemListView.post(new Runnable() {
             @Override
             public void run() {
                 // https://groups.google.com/forum/#!topic/android-developers/EnyldBQDUwE
-                _activatedItemListView.setSelection(0);
+
+                // When scrolled to the top, blink the first item view
+                mActivatedItemListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+                    @Override
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                    }
+
+                    @Override
+                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                        // When the first visible view is the top view...
+                        boolean topOfFirst = mActivatedItemListView.getChildAt(0).getTop() == 0;
+                        if (topOfFirst) {
+
+                            final View v = mActivatedItemListView.getChildAt(0);
+                            Animation fadeOut = new AlphaAnimation(1.0f, 0.1f);
+                            fadeOut.setDuration(500);
+                            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    Animation fadeIn = new AlphaAnimation(0.1f, 1.0f);
+                                    fadeIn.setDuration(500);
+                                    v.startAnimation(fadeIn);
+                                }
+                            });
+
+                            v.startAnimation(fadeOut);
+
+                            // If the data set is large, the scrolling animation will make people fill dizzy
+                            // Scroll to the top
+                            // mActivatedItemListView.smoothScrollToPosition(0);
+
+                            // Cancel the OnScrollListener so that the top view won't blink during normal scroll
+                            mActivatedItemListView.setOnScrollListener(null);
+                        }
+                    }
+                });
+
+                mActivatedItemListView.setSelection(0);
             }
         });
 
-        // If the data set is large, the scrolling animation will make people fill dizzy
-        // Scroll to the top
-//        _activatedItemListView.smoothScrollToPosition(0);
-
-        // When scrolled to the top, blink the first item view
-        _activatedItemListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                // When the first visible view is the top view...
-                boolean topOfFirst = _activatedItemListView.getChildAt(0).getTop() == 0;
-                if (topOfFirst) {
-
-                    final View v = _activatedItemListView.getChildAt(0);
-                    Animation fadeOut = new AlphaAnimation(1.0f, 0.1f);
-                    fadeOut.setDuration(500);
-                    fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            Animation fadeIn = new AlphaAnimation(0.1f, 1.0f);
-                            fadeIn.setDuration(500);
-                            v.startAnimation(fadeIn);
-                        }
-                    });
-
-                    v.startAnimation(fadeOut);
-
-                    // Cancel the OnScrollListener so that the top view won't blink during normal scroll
-                    _activatedItemListView.setOnScrollListener(null);
-                }
-            }
-        });
     }
 
     // Adapted from Google I/O 2013

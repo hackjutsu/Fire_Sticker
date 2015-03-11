@@ -5,12 +5,9 @@ import android.graphics.Color;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by cosmoqiu on 2/8/15.
- */
 public class CardColor {
 
-    static public List<CardColor> CardList = Arrays.asList(
+    static public List<CardColor> COLOR_LIST = Arrays.asList(
             new CardColor("CHUNLYV", Color.rgb(227, 239, 209)),
             new CardColor("DANHUILYV", Color.rgb(174, 196, 183)),
             new CardColor("DANDONGSHI", Color.rgb(215, 193, 107)),
@@ -34,19 +31,19 @@ public class CardColor {
             new CardColor("GANCAOHUANG", Color.rgb(228, 207, 142))
             );
 
-    String _colorName;
-    int _colorInt;
+    private String mColorName;
+    private int mColorInt;
 
     public CardColor(String colorName, int colorInt) {
-        _colorName = colorName;
-        _colorInt = colorInt;
+        mColorName = colorName;
+        mColorInt = colorInt;
     }
 
     public String getColorName() {
-        return _colorName;
+        return mColorName;
     }
 
     public int getColorInt() {
-        return _colorInt;
+        return mColorInt;
     }
 }

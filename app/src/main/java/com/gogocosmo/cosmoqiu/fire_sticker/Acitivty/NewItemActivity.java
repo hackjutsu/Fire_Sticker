@@ -3,7 +3,6 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -15,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
@@ -31,14 +29,14 @@ public class NewItemActivity extends ActionBarActivity {
 
     final private String TAG = "MEMORY-ACC";
 
-    private Toolbar _toolbar;
+    private Toolbar mToolbar;
 
-    private EditText _frontSideEditText;
-    private EditText _backSideEditText;
-    private EditText _titleEditText;
-    private LinearLayout _cardsContainer;
+    private EditText mFrontSideEditText;
+    private EditText mBackSideEditText;
+    private EditText mTitleEditText;
+    private LinearLayout mCardsContainer;
 
-    private Spinner _spinner;
+    private Spinner mSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +44,10 @@ public class NewItemActivity extends ActionBarActivity {
         setContentView(R.layout.activity_new_item);
 
         // Toolbar Configurations
-        _toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        _toolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
         // DataBase Configurations
         ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
@@ -60,32 +58,32 @@ public class NewItemActivity extends ActionBarActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
 
-        _frontSideEditText = (EditText) findViewById(R.id.frontSide_input_EditText);
-        _frontSideEditText.setBackgroundColor(randomColor());
-        _frontSideEditText.setMinHeight(cardMinHeight);
+        mFrontSideEditText = (EditText) findViewById(R.id.frontSide_input_EditText);
+        mFrontSideEditText.setBackgroundColor(randomColor());
+        mFrontSideEditText.setMinHeight(cardMinHeight);
 
-        _backSideEditText = (EditText) findViewById(R.id.backSide_input_editText);
-        _backSideEditText.setBackgroundColor(randomColor());
-        _backSideEditText.setMinHeight(cardMinHeight);
+        mBackSideEditText = (EditText) findViewById(R.id.backSide_input_editText);
+        mBackSideEditText.setBackgroundColor(randomColor());
+        mBackSideEditText.setMinHeight(cardMinHeight);
 
-        _titleEditText = (EditText) findViewById(R.id.title_input_editText);
+        mTitleEditText = (EditText) findViewById(R.id.title_input_editText);
 
-        _spinner = (Spinner) findViewById(R.id.spinner);
+        mSpinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 R.layout.new_item_spinner_rowlayout, ItemFactory.getItemGroupObjectNameList());
         dataAdapter.setDropDownViewResource(R.layout.new_item_spinner_rowlayout);
-        _spinner.setAdapter(dataAdapter);
-        _spinner.setSelection(getIntent().getExtras().getInt("CURRENT_TAB"));
+        mSpinner.setAdapter(dataAdapter);
+        mSpinner.setSelection(getIntent().getExtras().getInt("CURRENT_TAB"));
 
         // Hide the soft keyboard when tapping the white boarders
-        _cardsContainer = (LinearLayout)findViewById(R.id.linear_cards_input);
-        _cardsContainer.setOnClickListener(new View.OnClickListener() {
+        mCardsContainer = (LinearLayout)findViewById(R.id.linear_cards_input);
+        mCardsContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(_frontSideEditText.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(_backSideEditText.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(_titleEditText.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mFrontSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(mBackSideEditText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(mTitleEditText.getWindowToken(), 0);
             }
         });
     }
@@ -93,8 +91,8 @@ public class NewItemActivity extends ActionBarActivity {
     private int randomColor() {
 
         Random r = new Random();
-        int randomColorIndex = r.nextInt(CardColor.CardList.size() - 1 - 0 + 1) + 0;
-        CardColor randomColor = CardColor.CardList.get(randomColorIndex);
+        int randomColorIndex = r.nextInt(CardColor.COLOR_LIST.size() - 1 - 0 + 1) + 0;
+        CardColor randomColor = CardColor.COLOR_LIST.get(randomColorIndex);
 
         return randomColor.getColorInt();
     }
@@ -122,7 +120,7 @@ public class NewItemActivity extends ActionBarActivity {
             case R.id.confirm_new_item:
                 addNewItem();
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("UPDATED_GROUP", _spinner.getSelectedItemPosition());
+                returnIntent.putExtra("UPDATED_GROUP", mSpinner.getSelectedItemPosition());
                 setResult(RESULT_OK, returnIntent);
                 finish();
                 CustomizedToast.showToast(this, "SAVE");
@@ -135,9 +133,9 @@ public class NewItemActivity extends ActionBarActivity {
     }
 
     private void addNewItem() {
-        String newFrontSide = _frontSideEditText.getText().toString();
-        String newBackSide = _backSideEditText.getText().toString();
-        String newTitle = _titleEditText.getText().toString();
+        String newFrontSide = mFrontSideEditText.getText().toString();
+        String newBackSide = mBackSideEditText.getText().toString();
+        String newTitle = mTitleEditText.getText().toString();
 
         if (newTitle.isEmpty()) {
             newTitle = "";
@@ -151,7 +149,7 @@ public class NewItemActivity extends ActionBarActivity {
             newBackSide = "";
         }
 
-        ItemFactory.createItem(_spinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, 0, 0);
+        ItemFactory.createItem(mSpinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, 0, 0);
     }
 
     @Override

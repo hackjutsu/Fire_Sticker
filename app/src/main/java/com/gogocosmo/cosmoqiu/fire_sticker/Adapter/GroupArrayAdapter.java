@@ -14,23 +14,24 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 import java.util.ArrayList;
 
-
 public class GroupArrayAdapter extends ArrayAdapter<Group> {
-    private final Context _context;
-    private final ArrayList<Group> _values;
+
     final private String TAG = "MEMORY-ACC";
 
+    private final Context mContext;
+    private final ArrayList<Group> mGroups;
 
     public class ViewHolder {
-        public TextView _groupName;
-        public TextView _groupSize;
-        public ProgressBar _progressBar;
+
+        public TextView mGroupName;
+        public TextView mGroupSize;
+        public ProgressBar mProgressBar;
     }
 
     public GroupArrayAdapter(Context context, ArrayList<Group> values) {
         super(context, R.layout.group_list_rowlayout_improved, values);
-        this._context = context;
-        this._values = values;
+        this.mContext = context;
+        this.mGroups = values;
     }
 
     @Override
@@ -40,29 +41,23 @@ public class GroupArrayAdapter extends ArrayAdapter<Group> {
         ViewHolder viewHolder;
         //reuse views
         if (rowView == null) {
-            LayoutInflater inflater = LayoutInflater.from(_context);
+            LayoutInflater inflater = LayoutInflater.from(mContext);
             rowView = inflater.inflate(R.layout.group_list_rowlayout_improved, null);
             // configure view holder
             viewHolder = new ViewHolder();
-            viewHolder._groupName = (TextView) rowView.findViewById(R.id.group_name);
-            viewHolder._groupSize = (TextView) rowView.findViewById(R.id.group_size);
-            viewHolder._progressBar = (ProgressBar) rowView.findViewById(R.id.progressBar);
+            viewHolder.mGroupName = (TextView) rowView.findViewById(R.id.group_name);
+            viewHolder.mGroupSize = (TextView) rowView.findViewById(R.id.group_size);
+            viewHolder.mProgressBar = (ProgressBar) rowView.findViewById(R.id.progressBar);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
         }
 
-//        if (position == ItemFactory.getSelectedItemIndex()) {
-//            LaunchActivity._selectedView = rowView;
-//        }
-
-        viewHolder._groupName.setText(_values.get(position).getGroupName());
-        viewHolder._groupSize.setText(String.valueOf(ItemFactory.getItemList(position).size()));
+        viewHolder.mGroupName.setText(mGroups.get(position).getGroupName());
+        viewHolder.mGroupSize.setText(String.valueOf(ItemFactory.getItemList(position).size()));
 
         int percentage = (int)((float)ItemFactory.getItemList(position).size()/50 * 100);
-//        int percentage = (int)((float)5/50 * 100);
-//        Log.d(TAG, String.valueOf(percentage));
-        viewHolder._progressBar.setProgress(percentage);
+        viewHolder.mProgressBar.setProgress(percentage);
 
         return rowView;
     }

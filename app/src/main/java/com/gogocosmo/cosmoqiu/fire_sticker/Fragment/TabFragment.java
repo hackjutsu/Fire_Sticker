@@ -20,11 +20,11 @@ public class TabFragment extends Fragment {
 
     final private String TAG = "MEMORY-ACC";
 
-    private ListView _listView;
-    private Context _context;
-    private OnTabListItemClickListener _tabListItemClickListener;
-    private ItemArrayAdapter _itemArrayAdapter;
-    private int _groupId;
+    private ListView mListView;
+    private Context mContext;
+    private OnTabListItemClickListener mTabListItemClickListener;
+    private ItemArrayAdapter mItemArrayAdapter;
+    private int mGroupId;
 
 
     public interface OnTabListItemClickListener {
@@ -49,15 +49,15 @@ public class TabFragment extends Fragment {
     @Override
     public void setArguments(Bundle args) {
         super.setArguments(args);
-        _groupId = args.getInt("GROUP");
+        mGroupId = args.getInt("GROUP");
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        _context = activity;
+        mContext = activity;
         if (activity instanceof OnTabListItemClickListener) {
-            _tabListItemClickListener = (OnTabListItemClickListener) activity;
+            mTabListItemClickListener = (OnTabListItemClickListener) activity;
         } else {
             throw new RuntimeException(
                     "Host Activity should implement " +
@@ -72,34 +72,34 @@ public class TabFragment extends Fragment {
         if (savedInstanceState!=null) {
 
             Bundle bundle = getArguments();
-            _groupId = bundle.getInt("GROUP");
+            mGroupId = bundle.getInt("GROUP");
         }
 
         View v = inflater.inflate(R.layout.item_list, container, false);
 
-        _listView = (ListView) v.findViewById(R.id.listview);
+        mListView = (ListView) v.findViewById(R.id.listview);
 
-        _itemArrayAdapter = new ItemArrayAdapter(_context,
-                ItemFactory.getItemList(_groupId));
-        _listView.setEmptyView(v.findViewById(R.id.emptyElement));
-        _listView.setAdapter(_itemArrayAdapter);
+        mItemArrayAdapter = new ItemArrayAdapter(mContext,
+                ItemFactory.getItemList(mGroupId));
+        mListView.setEmptyView(v.findViewById(R.id.emptyElement));
+        mListView.setAdapter(mItemArrayAdapter);
 
 
 
-        _listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemLongClicked(_itemArrayAdapter ,_listView, view, _groupId ,position);
+                mTabListItemClickListener.OnListItemLongClicked(mItemArrayAdapter, mListView, view, mGroupId, position);
                 return true;
             }
         });
 
-        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                _tabListItemClickListener.OnListItemClicked(_itemArrayAdapter, _listView, view, _groupId ,position);
+                mTabListItemClickListener.OnListItemClicked(mItemArrayAdapter, mListView, view, mGroupId, position);
             }
         });
         return v;
@@ -108,7 +108,7 @@ public class TabFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        outState.putInt("GROUP", _groupId);
+        outState.putInt("GROUP", mGroupId);
         super.onSaveInstanceState(outState);
     }
 }

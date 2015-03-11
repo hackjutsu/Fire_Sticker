@@ -9,25 +9,20 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
 
 import java.util.ArrayList;
 
-/**
- * Created by cosmoqiu on 2/10/15.
- */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     final private String TAG = "MEMORY-ACC";
 
-    CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
-    int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
-    ArrayList<String> _titles;
-    private ArrayList<TabFragment> _tabList;
+    private CharSequence mTitles[]; // This will Store the mTitles of the Tabs which are Going to be passed when ViewPagerAdapter is created
+    private int mNumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
+    private ArrayList<String> mTitleArray;
 
     public ViewPagerAdapter(FragmentManager fm, ArrayList<String> titles, int mNumbOfTabsumb) {
         super(fm);
 
-        this._titles = titles;
-        this.Titles = _titles.toArray(new CharSequence[_titles.size()]);
-        this.NumbOfTabs = mNumbOfTabsumb;
-        _tabList = new ArrayList<>();
+        this.mTitleArray = titles;
+        this.mTitles = mTitleArray.toArray(new CharSequence[mTitleArray.size()]);
+        this.mNumbOfTabs = mNumbOfTabsumb;
     }
 
     //This method return the fragment for the every position in the View Pager
@@ -35,27 +30,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         //TODO:Add Support for Recycled Tabs
 
-        TabFragment tabFragment = null;
-//
-//        if (position < 0 || position > _tabList.size()) {
-//
-//            Log.d(TAG, "Invalid Tab ID!" + String.valueOf(position));
-//        } else if (position == _tabList.size()) {
-//
-//            tabFragment = new TabFragment();
-//            tabFragment.setGrouId(position);
-//            _tabList.add(tabFragment);
-//        } else {
-//
-//            tabFragment = _tabList.get(position);
-//        }
-
-        tabFragment = new TabFragment();
+        TabFragment tabFragment = new TabFragment();
 
         Bundle args = new Bundle();
         args.putInt("GROUP", position);
         tabFragment.setArguments(args);
-//        tabFragment.setGrouId(position);
 
         return tabFragment;
     }
@@ -63,12 +42,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     // This method return the titles for the Tabs in the Tab Strip
     @Override
     public CharSequence getPageTitle(int position) {
-        return Titles[position];
+        return mTitles[position];
     }
 
     // This method return the Number of tabs for the tabs Strip
     @Override
     public int getCount() {
-        return NumbOfTabs;
+        return mNumbOfTabs;
     }
 }

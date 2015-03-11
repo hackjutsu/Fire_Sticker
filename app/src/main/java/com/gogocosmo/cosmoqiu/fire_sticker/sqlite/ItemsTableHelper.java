@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
@@ -14,14 +12,13 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class ItemsTableHelper extends SQLiteOpenHelper {
 
     final private String TAG = "MEMORY-ACC";
 
     // Database Name
-    private static final String DATABASE_NAME = "ItemDB";
+    private static final String sDatabaseName = "ItemDB";
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -73,7 +70,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
 
 
     public ItemsTableHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, sDatabaseName, null, DATABASE_VERSION);
     }
 
     @Override
