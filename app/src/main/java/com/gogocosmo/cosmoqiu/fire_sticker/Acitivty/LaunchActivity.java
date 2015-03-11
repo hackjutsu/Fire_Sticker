@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -19,7 +18,6 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -27,12 +25,7 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
-import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.Target;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ViewPagerAdapter;
@@ -40,6 +33,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Fragment.TabFragment;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedShowcase;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
@@ -105,7 +99,9 @@ public class LaunchActivity extends ActionBarActivity implements
         boolean isFirstRun = mPreference.getBoolean("NOTEIT_FIRST_RUN", true);
         if (isFirstRun == true) {
             // Code to run once
-            LoadDefaultData();
+            CustomizedShowcase.loadDefaultDataForFirstInstallation();
+            CustomizedShowcase.displayLaunchActivtyShowcaseViewZero(this);
+
             SharedPreferences.Editor editor = mPreference.edit();
             editor.putBoolean("NOTEIT_FIRST_RUN", false);
             editor.commit();
@@ -231,7 +227,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         int toRemoveIndex = ItemFactory.getSelectedItemIndex(mActivatedGroupId);
 
-        animateRemoval(
+        animatedRemoval(
                 mActivatedItemArrayAdapter,
                 mActivatedItemListView,
                 toRemoveIndex);
@@ -314,103 +310,20 @@ public class LaunchActivity extends ActionBarActivity implements
         mActivatedGroupId = position;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_launch, menu);
-        mMenu = menu;
-
-        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
-        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
-        MenuItem itemMoveToTop = mMenu.findItem(R.id.action_move_to_top);
-//        MenuItem itemBack = mMenu.findItem(R.id.action_back);
-        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
-
-        itemAdd.setVisible(true);
-//        itemBack.setVisible(false);
-        itemMoveToTop.setVisible(false);
-        itemDelete.setVisible(false);
-        itemSlash.setVisible(false);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        // Activate the navigation drawer toggle
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            if (mActionMode != null) {
-                mActionMode.finish();
-            }
-            return true;
-        }
-
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-
-                deleteListItem();
-                if (mActionMode != null) {
-                    mActionMode.finish();
-                }
-                return true;
-            case R.id.action_add:
-
-                if (ItemFactory.getItemGroupObjectList().size() == 0) {
-                    CustomizedToast.showToast(this, "Please create a group first.");
-                    return true;
-                }
-
-                Intent intent = new Intent(this, NewItemActivity.class);
-                intent.putExtra("CURRENT_TAB", mSlidingTabsLayout.getCurrentTabPosition());
-                startActivityForResult(intent, NEW_ITEM_REQ);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.action_move_to_top:
-
-                moveToTop();
-                if (mActionMode != null) {
-
-                    mActionMode.finish();
-                }
-                return true;
-            default:
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
+    /* Action Mode Methods */
     @Override
     public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
 
-//        MenuInflater inflater = mode.getMenuInflater();
-//        inflater.inflate(R.menu.menu_launch, menu);
+        // MenuInflater inflater = mode.getMenuInflater();
+        // inflater.inflate(R.menu.menu_launch, menu);
         getSupportActionBar().setTitle("");
 
         MenuItem itemAdd = mMenu.findItem(R.id.action_add);
         MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
         MenuItem itemMoveToTop = mMenu.findItem(R.id.action_move_to_top);
-//        MenuItem itemBack = mMenu.findItem(R.id.action_back);
         MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
 
         itemAdd.setVisible(false);
-//        itemBack.setVisible(true);
         itemMoveToTop.setVisible(true);
         itemDelete.setVisible(true);
         itemSlash.setVisible(true);
@@ -460,74 +373,9 @@ public class LaunchActivity extends ActionBarActivity implements
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mSlidingTabsLayout.registerPageScrollListener(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        mSlidingTabsLayout.unregisterPageScrollListener(this);
-
-        // End the Action Mode when this Activity is no longer visible
-        if (mActionMode != null) {
-            mActionMode.finish();
-            mActionMode = null;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        if (mActionMode != null) {
-            // If the Action Mode is on, then pressing BACK should exit the Action Mode, instead of
-            // exit the App.
-            mActionMode.finish();
-            mActionMode = null;
-            return;
-        }
-
-        super.onBackPressed();
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == EDIT_GROUP_REQ) {
-            if (resultCode == RESULT_OK) {
-                updateDrawerItems();
-                updateSlidingTabs();
-            }
-            if (resultCode == RESULT_CANCELED) {
-
-            }
-        } else if (requestCode == VIEW_DETAILS_REQ) {
-            if (resultCode == RESULT_OK) {
-
-                updateSlidingTabs();
-                mSlidingTabsLayout.setCurrentTab(mActivatedGroupId);
-            }
-            if (resultCode == RESULT_CANCELED) {
-
-            }
-        } else if (requestCode == NEW_ITEM_REQ) {
-            if (resultCode == RESULT_OK) {
-
-                int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
-                updateSlidingTabs();
-                mSlidingTabsLayout.setCurrentTab(updatedGroupId);
-            }
-            if (resultCode == RESULT_CANCELED) {
-
-            }
-        }
-    }//onActivityResult
-
     // Move the selected item to the top of the list. The list will automatically scroll to the top,
     // and blink the first item view to notify the users.
-    private void moveToTop() {
+    private void animatedSendToTop() {
 
         int toMoveToTopIndex = ItemFactory.getSelectedItemIndex(mActivatedGroupId);
         Item oldItem = ItemFactory.getItemList(mActivatedGroupId).get(toMoveToTopIndex);
@@ -608,9 +456,9 @@ public class LaunchActivity extends ActionBarActivity implements
     }
 
     // Adapted from Google I/O 2013
-    public void animateRemoval(final ArrayAdapter adapter,
-                               final ListView listview,
-                               int position) {
+    public void animatedRemoval(final ArrayAdapter adapter,
+                                final ListView listview,
+                                int position) {
 
         final HashMap<Long, Integer> mItemIdTopMap = new HashMap<>();
 
@@ -686,210 +534,156 @@ public class LaunchActivity extends ActionBarActivity implements
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_launch, menu);
+        mMenu = menu;
+
+        MenuItem itemAdd = mMenu.findItem(R.id.action_add);
+        MenuItem itemDelete = mMenu.findItem(R.id.action_delete);
+        MenuItem itemMoveToTop = mMenu.findItem(R.id.action_move_to_top);
+//        MenuItem itemBack = mMenu.findItem(R.id.action_back);
+        MenuItem itemSlash = mMenu.findItem(R.id.action_blank);
+
+        itemAdd.setVisible(true);
+//        itemBack.setVisible(false);
+        itemMoveToTop.setVisible(false);
+        itemDelete.setVisible(false);
+        itemSlash.setVisible(false);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        // Activate the navigation drawer toggle
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            if (mActionMode != null) {
+                mActionMode.finish();
+            }
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+
+                deleteListItem();
+                if (mActionMode != null) {
+                    mActionMode.finish();
+                }
+                return true;
+            case R.id.action_add:
+
+                if (ItemFactory.getItemGroupObjectList().size() == 0) {
+                    CustomizedToast.showToast(this, "Please create a group first.");
+                    return true;
+                }
+
+                Intent intent = new Intent(this, NewItemActivity.class);
+                intent.putExtra("CURRENT_TAB", mSlidingTabsLayout.getCurrentTabPosition());
+                startActivityForResult(intent, NEW_ITEM_REQ);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                return true;
+            case R.id.action_move_to_top:
+
+                animatedSendToTop();
+                if (mActionMode != null) {
+
+                    mActionMode.finish();
+                }
+                return true;
+            default:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (mActionMode != null) {
+            // If the Action Mode is on, then pressing BACK should exit the Action Mode, instead of
+            // exit the App.
+            mActionMode.finish();
+            mActionMode = null;
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSlidingTabsLayout.registerPageScrollListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mSlidingTabsLayout.unregisterPageScrollListener(this);
+
+        // End the Action Mode when this Activity is no longer visible
+        if (mActionMode != null) {
+            mActionMode.finish();
+            mActionMode = null;
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         ItemFactory.closeAllDatabase();
         super.onDestroy();
     }
 
-    private void LoadDefaultData() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        ItemFactory.createGroup("Welcome!");
-        ItemFactory.createGroup("Great Ideas");
-        ItemFactory.createGroup("To-Do List");
+        if (requestCode == EDIT_GROUP_REQ) {
+            if (resultCode == RESULT_OK) {
+                updateDrawerItems();
+                updateSlidingTabs();
+            }
+            if (resultCode == RESULT_CANCELED) {
 
-        // Add default items to group "Welcome!"
-        ItemFactory.createItem(0, "Bookmark the important notes", "", "BookMark", 1, 0);
-        ItemFactory.createItem(0, "Try to edit this note ^_^", "Stamp it when the task is finished", "Edit Notes", 0, 1);
-        ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to Delete", 1, 1);
-        ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two colorful sides.",
-                "You can write down the notes on the front and add hint on the back. " +
-                        "Or just write the question on the front, and solutions on the back",
-                "Welcome to Note it!", 1, 0);
+            }
+        } else if (requestCode == VIEW_DETAILS_REQ) {
+            if (resultCode == RESULT_OK) {
 
-        // Add default items to group "Great ideas"
-        ItemFactory.createItem(1, "Change the world!", "Less pollution.", "Awesome Idea", 1, 0);
-        ItemFactory.createItem(1, "Do meditate. Don't stay up all night. ",
-                "Studies show that those who meditate daily for at least 30 minutes" +
-                        "have better focus", "Ready, Meditate", 0, 1);
-        ItemFactory.createItem(1, "Do trust yourself. Don't go it alone.",
-                "When people believe they can grow their brainpower," +
-                        "they become more curious and more open-minded.", "Ready, Trust", 1, 1);
-        ItemFactory.createItem(1, "Do model the great. Don't be a sheep.",
-                "Think, what are smart people doing, and what can that teach me?", "Ready, Model", 0, 0);
-        ItemFactory.createItem(1, "Do pay attention. Don't just pass judgement.",
-                "Listen closely. Be observant and informed. Be patient and in the moment", "Ready, Attentions", 0, 0);
+                updateSlidingTabs();
+                mSlidingTabsLayout.setCurrentTab(mActivatedGroupId);
+            }
+            if (resultCode == RESULT_CANCELED) {
 
-        // Add default items to group "To-Do List"
-        ItemFactory.createItem(2, "Read the Wiki about Scotland History in 19 century.", "Watch the documentary.", "Investigate Scotland History", 1, 1);
-        ItemFactory.createItem(2, "Everyone is talking about it. It must be interesting.", "Order it online!", "Order The Lean Startup", 0, 0);
-        ItemFactory.createItem(2, "Egg, Milk, Onions, Cheese", "Maybe some pens.", "Target Shopping", 0, 1);
-        ItemFactory.createItem(2, "Just do it!", "Keep running!", "30 minutes' Running", 1, 0);
+            }
+        } else if (requestCode == NEW_ITEM_REQ) {
+            if (resultCode == RESULT_OK) {
 
-        displayShowcaseViewZero();
-    }
+                int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
+                updateSlidingTabs();
+                mSlidingTabsLayout.setCurrentTab(updatedGroupId);
+            }
+            if (resultCode == RESULT_CANCELED) {
 
-    private void displayShowcaseViewZero() {
-
-        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lps.addRule(RelativeLayout.CENTER_IN_PARENT);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 8);
-
-        } else {
-            lps.setMargins(margin, margin, margin, margin * 8);
+            }
         }
-
-        ShowcaseView sv;
-        sv = new ShowcaseView.Builder(this)
-                .setContentTitle(Html.fromHtml("<b>" + "Note it!" + "</b>"))
-                .setContentText("A quick guide within 15 seconds.")
-                .setTarget(Target.NONE)
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-
-                    @Override
-                    public void onShowcaseViewShow(final ShowcaseView scv) {
-                    }
-
-                    @Override
-                    public void onShowcaseViewHide(final ShowcaseView scv) {
-                        displayShowcaseViewOne();
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
-                    }
-
-                }).build();
-        sv.setButtonPosition(lps);
-    }
-
-    private void displayShowcaseViewOne() {
-
-        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 5);
-
-        } else {
-            lps.setMargins(margin, margin, margin, margin);
-        }
-
-        ShowcaseView sv;
-        sv = new ShowcaseView.Builder(this)
-                .setContentTitle("New Note")
-                .setContentText("Click here to create your note.")
-                .setTarget(new ViewTarget(R.id.showCasePoint_Add, this))
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-
-                    @Override
-                    public void onShowcaseViewShow(final ShowcaseView scv) {
-                    }
-
-                    @Override
-                    public void onShowcaseViewHide(final ShowcaseView scv) {
-                        showOverlayTutorialTwo();
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
-                    }
-
-                }).build();
-        sv.setButtonPosition(lps);
-    }
-
-    public void showOverlayTutorialTwo() {
-
-        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 5);
-
-        } else {
-            lps.setMargins(margin, margin, margin, margin);
-        }
-
-        ShowcaseView sv;
-        sv = new ShowcaseView.Builder(this)
-                .setContentTitle("Group Navigation")
-                .setContentText("Tap on the group name for navigation or ... Just swipe!")
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setTarget(new ViewTarget(R.id.showCasePoint_Tab, this))
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-
-                    @Override
-                    public void onShowcaseViewShow(final ShowcaseView scv) {
-                    }
-
-                    @Override
-                    public void onShowcaseViewHide(final ShowcaseView scv) {
-                        showOverlayTutorialThree();
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
-                    }
-
-                })
-                .build();
-        sv.setButtonPosition(lps);
-    }
-
-    public void showOverlayTutorialThree() {
-
-        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 5);
-
-        } else {
-            lps.setMargins(margin, margin, margin, margin);
-        }
-
-        ShowcaseView sv;
-        sv = new ShowcaseView.Builder(this)
-                .setContentTitle("Quick Overview")
-                .setContentText("Take a quick look through the notes in the selected group.")
-                .setStyle(R.style.CustomShowcaseThemeEnd)
-                .setTarget(new ViewTarget(R.id.FireButton, this))
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-
-                    @Override
-                    public void onShowcaseViewShow(final ShowcaseView scv) {
-                    }
-
-                    @Override
-                    public void onShowcaseViewHide(final ShowcaseView scv) {
-                        scv.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(final ShowcaseView scv) {
-                    }
-
-                })
-                .build();
-
-        sv.setButtonPosition(lps);
-    }
+    }//onActivityResult
 }
-
