@@ -2,8 +2,12 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -15,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
@@ -24,7 +29,13 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 public class ViewActivity extends ActionBarActivity {
@@ -185,6 +196,24 @@ public class ViewActivity extends ActionBarActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
 
+            case R.id.action_share_view:
+
+                mFrontSideEditText.setCursorVisible(false);
+                mBackSideEditText.setCursorVisible(false);
+
+                final ScrollView iv = (ScrollView) findViewById(R.id.scrollView_display);
+                Bitmap bitmap = Bitmap.createBitmap(
+                        iv.getChildAt(0).getWidth(),
+                        iv.getChildAt(0).getHeight(),
+                        Bitmap.Config.ARGB_8888);
+                Canvas c = new Canvas(bitmap);
+                iv.getChildAt(0).draw(c);
+                saveBitmap(bitmap);
+
+                mFrontSideEditText.setCursorVisible(true);
+                mBackSideEditText.setCursorVisible(true);
+                return true;
+
             case R.id.action_flag_view:
                 if (mItem.getBookMark() == 1) {
 
@@ -244,5 +273,37 @@ public class ViewActivity extends ActionBarActivity {
         setResult(RESULT_OK, returnIntent);
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void shareNote(String path) {
+
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        shareIntent.setType("image/png");
+        Uri myUri = Uri.parse("file://" + path);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, myUri);
+        startActivity(Intent.createChooser(shareIntent, "Share Notes..."));
+    }
+
+    private void saveBitmap(Bitmap bitmap) {
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timeStamp = df.format(Calendar.getInstance().getTime());
+
+        String filePath = Environment.getExternalStorageDirectory()
+                + File.separator + "Pictures/NotesScreenShot-" + timeStamp +".png";
+        File imagePath = new File(filePath);
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(imagePath);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            shareNote(filePath);
+        } catch (FileNotFoundException e) {
+//            Log.e(TAG, e.getMessage(), e);
+        } catch (IOException e) {
+//            Log.e(TAG, e.getMessage(), e);
+        }
     }
 }

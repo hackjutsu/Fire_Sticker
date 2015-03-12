@@ -22,6 +22,7 @@
             android:id="@+id/linear_cards_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/PURE_WHITE"
             android:orientation="vertical">
 
             <FrameLayout
