@@ -1,7 +1,10 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +38,7 @@ public class AboutAppActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+                AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
                 v.startAnimation(buttonClick);
                 sendFeedBackByMail();
             }
@@ -44,10 +47,26 @@ public class AboutAppActivity extends ActionBarActivity {
 
     protected void sendFeedBackByMail() {
 
+        PackageInfo pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String versionName = pInfo.versionName;
+
         Intent intent = new Intent(Intent.ACTION_SENDTO,
                 Uri.fromParts("mailto", "gogocosmo1989@gmail.com", null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, "My Mail");
-        intent.putExtra(Intent.EXTRA_TEXT, "My Message");
+        intent.putExtra(Intent.EXTRA_SUBJECT,
+                "Note it! " + " FEEDBACK" );
+
+        String release = Build.VERSION.RELEASE;
+        int sdkVersion = Build.VERSION.SDK_INT;
+        String deviceInfo =  "Android SDK: " + sdkVersion + " (" + release +")";
+
+        intent.putExtra(Intent.EXTRA_TEXT,
+                deviceInfo + "\n" +
+                "App verion: " + versionName+ "\n\n");
 
         try {
             startActivity(Intent.createChooser(intent, "We value your feedback..."));
@@ -78,5 +97,12 @@ public class AboutAppActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

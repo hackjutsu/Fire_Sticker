@@ -23,7 +23,7 @@ public class CustomizedShowcase {
         ItemFactory.createGroup("To-Do List");
 
         // Add default items to group "Welcome!"
-        ItemFactory.createItem(0, "Bookmark the important notes", "", "BookMark", 1, 0);
+        ItemFactory.createItem(0, "Bookmark the important notes", "", "Bookmark", 1, 0);
         ItemFactory.createItem(0, "Try to edit this note ^_^", "Stamp it when the task is finished", "Edit Notes", 0, 1);
         ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press to Delete", 1, 1);
         ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two colorful sides.",
@@ -37,7 +37,7 @@ public class CustomizedShowcase {
                 "Studies show that those who meditate daily for at least 30 minutes" +
                         "have better focus", "Ready, Meditate", 0, 1);
         ItemFactory.createItem(1, "Do trust yourself. Don't go it alone.",
-                "When people believe they can grow their brainpower," +
+                "When people believe they can grow their brainpower, " +
                         "they become more curious and more open-minded.", "Ready, Trust", 1, 1);
         ItemFactory.createItem(1, "Do model the great. Don't be a sheep.",
                 "Think, what are smart people doing, and what can that teach me?", "Ready, Model", 0, 0);
