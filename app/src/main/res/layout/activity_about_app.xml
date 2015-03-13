@@ -34,7 +34,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -47,16 +48,28 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/app_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="25dp"
                     android:gravity="center"
-                    android:text="version 1.1"
                     android:textSize="18sp"
                     android:textStyle="normal" />
 
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/rateButton"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/PURE_WHITE"
+                android:src="@drawable/thumbup_action" />
         </LinearLayout>
 
         <FrameLayout
@@ -65,7 +78,7 @@
             android:layout_marginTop="-3dp"
             android:layout_marginLeft="123dp"
             android:layout_marginRight="20dp"
-            android:background="@color/FANQIEHONG"/>
+            android:background="@color/FANQIEHONG" />
 
         <TextView
             android:layout_width="match_parent"
@@ -127,19 +140,35 @@
             android:fontFamily="normal"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/feedbackButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Feedback"
-            android:textSize="20sp"
-            android:textColor="@color/NOTE_TITLE_COLOR"
-            android:background="@drawable/boardered_button"/>
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
 
+            <Button
+                android:id="@+id/feedbackButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Feedback"
+                android:textSize="20sp"
+                android:textColor="@color/NOTE_TITLE_COLOR"
+                android:background="@drawable/boardered_button" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/rateAppLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:text="Rate this app?"
+            android:textSize="15sp"
+            android:textStyle="italic"/>
     </LinearLayout>
 </FrameLayout>

@@ -92,7 +92,7 @@ public class ViewActivity extends ActionBarActivity {
         mStampFront = (ImageView) findViewById(R.id.item_card_front_done);
         mStampBack = (ImageView) findViewById(R.id.item_card_back_done);
 
-        if (mItem.getBookMark() == 0) {
+        if (mItem.getBookmark() == 0) {
             mBookmark.setVisibility(View.INVISIBLE);
         }
 
@@ -198,9 +198,12 @@ public class ViewActivity extends ActionBarActivity {
 
             case R.id.action_share_view:
 
+                // Hide the cursors when taking a "screen shot"
                 mFrontSideEditText.setCursorVisible(false);
                 mBackSideEditText.setCursorVisible(false);
 
+                // To draw a ScrollView, we need to draw the whole view instead of the visible part,
+                // which means we cannot simply catch a screen shot.
                 final ScrollView iv = (ScrollView) findViewById(R.id.scrollView_display);
                 Bitmap bitmap = Bitmap.createBitmap(
                         iv.getChildAt(0).getWidth(),
@@ -210,19 +213,20 @@ public class ViewActivity extends ActionBarActivity {
                 iv.getChildAt(0).draw(c);
                 saveBitmap(bitmap);
 
+                // Show the hidden cursors
                 mFrontSideEditText.setCursorVisible(true);
                 mBackSideEditText.setCursorVisible(true);
                 return true;
 
             case R.id.action_flag_view:
-                if (mItem.getBookMark() == 1) {
+                if (mItem.getBookmark() == 1) {
 
-                    mItem.setBookMark(0);
+                    mItem.setBookmark(0);
                     mBookmark.setVisibility(View.INVISIBLE);
                     CustomizedToast.showToast(this, "Clear Bookmarks");
                 } else {
 
-                    mItem.setBookMark(1);
+                    mItem.setBookmark(1);
                     mBookmark.setVisibility(View.VISIBLE);
                     CustomizedToast.showToast(this, "Bookmarked");
                 }
@@ -262,19 +266,6 @@ public class ViewActivity extends ActionBarActivity {
         ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
     }
 
-    @Override
-    public void onBackPressed() {
-
-        confirmEdits();
-        CustomizedToast.showToast(this, "SAVE");
-
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("GROUP", mGroupId);
-        setResult(RESULT_OK, returnIntent);
-        finish();
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
     private void shareNote(String path) {
 
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -287,6 +278,7 @@ public class ViewActivity extends ActionBarActivity {
 
     private void saveBitmap(Bitmap bitmap) {
 
+        // Using the time stamp as the unique name for saved image
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         String timeStamp = df.format(Calendar.getInstance().getTime());
 
@@ -305,5 +297,18 @@ public class ViewActivity extends ActionBarActivity {
         } catch (IOException e) {
 //            Log.e(TAG, e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        confirmEdits();
+        CustomizedToast.showToast(this, "SAVE");
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("GROUP", mGroupId);
+        setResult(RESULT_OK, returnIntent);
+        finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

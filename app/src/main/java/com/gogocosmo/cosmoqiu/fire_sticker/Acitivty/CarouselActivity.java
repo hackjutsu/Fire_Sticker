@@ -1,8 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -152,7 +150,6 @@ public class CarouselActivity extends ActionBarActivity {
         return randomColor.getColorInt();
     }
 
-
     private void nextCard() {
 
         mItemIndex++;
@@ -172,7 +169,7 @@ public class CarouselActivity extends ActionBarActivity {
         int cardColor = randomColor();
         newCard.setCardColor(cardColor);
         newCard.setCardText(item.getFront());
-        newCard.setMarked(item.getBookMark());
+        newCard.setMarked(item.getBookmark());
         newCard.setStamp(item.getStamp());
 
         // Add this new card info to card trace
@@ -222,7 +219,7 @@ public class CarouselActivity extends ActionBarActivity {
         CardFragment preCard = new CardFragment();
         preCard.setCardColor(currentHolder.getColor());
         preCard.setCardText(currentHolder.getItem().getFront());
-        preCard.setMarked(currentHolder.getItem().getBookMark());
+        preCard.setMarked(currentHolder.getItem().getBookmark());
 
         mCurrentCard = preCard;
 
@@ -239,33 +236,16 @@ public class CarouselActivity extends ActionBarActivity {
                 .commit();
 
         mTitle.setText(currentHolder.getItem().getTitle());
-
-//        FragmentManager fm = getFragmentManager();
-//        FragmentTransaction ftransaction = fm.beginTransaction();
-//
-//        if (fm.getBackStackEntryCount() > 1) {
-//            fm.popBackStack();
-//            ftransaction.commit();
-//        }
-    }
-
-    private Fragment getCurrentFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
-//        Log.d(TAG, "fragmentTag = " + fragmentTag);
-//        Log.d(TAG, "BackStackEntryCount() = " + fragmentManager.getBackStackEntryCount());
-        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
-        return currentFragment;
-    }
-
-    @Override
-    public void onBackPressed() {
-        finishCarousel();
     }
 
     private void finishCarousel() {
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishCarousel();
     }
 
     @Override

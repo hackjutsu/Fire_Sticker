@@ -61,10 +61,10 @@ public class CustomizedShowcase {
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 8);
+            lps.setMargins(margin, margin, margin, margin * 7);
 
         } else {
-            lps.setMargins(margin, margin, margin, margin * 8);
+            lps.setMargins(margin, margin, margin, margin * 7);
         }
 
         ShowcaseView sv;
@@ -101,7 +101,7 @@ public class CustomizedShowcase {
         int margin = ((Number) (activity.getResources().getDisplayMetrics().density * 12)).intValue();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 5);
+            lps.setMargins(margin * 2, margin, margin, margin * 7);
 
         } else {
             lps.setMargins(margin, margin, margin, margin);
@@ -141,7 +141,7 @@ public class CustomizedShowcase {
         int margin = ((Number) (activity.getResources().getDisplayMetrics().density * 12)).intValue();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 5);
+            lps.setMargins(margin * 2, margin, margin, margin * 7);
 
         } else {
             lps.setMargins(margin, margin, margin, margin);
@@ -182,7 +182,7 @@ public class CustomizedShowcase {
         int margin = ((Number) (activity.getResources().getDisplayMetrics().density * 12)).intValue();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // only for lollipop and newer versions
-            lps.setMargins(margin, margin, margin, margin * 5);
+            lps.setMargins(margin * 2, margin, margin, margin * 7);
 
         } else {
             lps.setMargins(margin, margin, margin, margin);

@@ -385,7 +385,7 @@ public class LaunchActivity extends ActionBarActivity implements
                 oldItem.getFront(),
                 oldItem.getBack(),
                 oldItem.getTitle(),
-                oldItem.getBookMark(),
+                oldItem.getBookmark(),
                 oldItem.getStamp()
         );
 

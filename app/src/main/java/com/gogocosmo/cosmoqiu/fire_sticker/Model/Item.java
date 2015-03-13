@@ -60,7 +60,7 @@ public class Item {
         this.mTitle = title;
     }
 
-    public void setBookMark(int bookMark) {
+    public void setBookmark(int bookMark) {
         mBookmark = bookMark;
     }
 
@@ -80,7 +80,7 @@ public class Item {
         return mTitle;
     }
 
-    public int getBookMark() {
+    public int getBookmark() {
         return mBookmark;
     }
 

@@ -66,7 +66,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         String frontStr = mValues.get(position).getFront();
         String backStr = mValues.get(position).getBack();
-        int bookMark = mValues.get(position).getBookMark();
+        int bookMark = mValues.get(position).getBookmark();
         int stamp = mValues.get(position).getStamp();
 
         if (frontStr.isEmpty()) {

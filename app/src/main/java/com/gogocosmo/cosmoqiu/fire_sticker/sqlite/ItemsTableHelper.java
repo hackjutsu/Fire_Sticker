@@ -133,7 +133,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         values.put(KEY_TITLE, item.getTitle()); // get title
         values.put(KEY_FRONT, item.getFront()); // get front
         values.put(KEY_BACK, item.getBack()); // get back
-        values.put(KEY_BOOKMARK, item.getBookMark()); // get bookMark
+        values.put(KEY_BOOKMARK, item.getBookmark()); // get bookMark
         values.put(KEY_STAMP, item.getStamp()); // get Stamp
 
         // 3. insert
@@ -172,7 +172,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         item.setTitle(cursor.getString(4));
         item.setFront(cursor.getString(5));
         item.setBack(cursor.getString(6));
-        item.setBookMark(cursor.getInt(7));
+        item.setBookmark(cursor.getInt(7));
         item.setStamp(cursor.getInt(8));
 
 //        Log.d(TAG, "getItem(" + id + ")" + item.toString());
@@ -209,7 +209,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
                 item.setTitle(cursor.getString(4));
                 item.setFront(cursor.getString(5));
                 item.setBack(cursor.getString(6));
-                item.setBookMark(cursor.getInt(7));
+                item.setBookmark(cursor.getInt(7));
                 item.setStamp(cursor.getInt(8));
 
                 // Add item to items
@@ -246,7 +246,7 @@ public class ItemsTableHelper extends SQLiteOpenHelper {
         values.put("title", item.getTitle()); // get title
         values.put("front", item.getFront()); // get front
         values.put("back", item.getBack()); // get back
-        values.put("bookMark", item.getBookMark()); // get bookMark
+        values.put("bookMark", item.getBookmark()); // get bookMark
         values.put("stamp", item.getStamp()); // get Stamp
 
         // 3. updating row
