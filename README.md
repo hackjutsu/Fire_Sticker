@@ -7,5 +7,4 @@
 **Amazon App Store:** [Link to App](http://www.amazon.com/Renaissance-Studio-Note-it/dp/B00UE9JHUQ/ref=sr_1_1?ie=UTF8&qid=1426146416&sr=8-1&keywords=Note+it)  
 
 #### Quick Overview
-
-![alt text](https://github.com/registercosmo/Fire_Sticker/blob/master/screenshots%26icons/ScreenShots(Framed)/Drawer_framed.png "")
+![Alt text](screenshots%26icons/ScreenShots(Framed)/Drawer_framed.png "Drawer View")
