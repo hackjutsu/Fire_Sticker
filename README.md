@@ -6,13 +6,9 @@ It is simple to create, edit and delete a note just as how you do with the stick
 
 **Key Features**  
 ######• Stay Organized  
-Organize your notes in different groups and keep track of your ideas.   
 ######• BookMark and Stamp  
-Mark you special notes the way you like!  
 ######• Quick Shuffle  
-An quick overview of notes in a group.  
 ######• Share With Friends  
-Share your great ideas through Facebook, Google+, Twitter, Dropbox, Evernote, Email and many others!  
 ######• Themed by Material Design  
 
 **Acknowledgement**  
