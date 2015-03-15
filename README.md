@@ -5,15 +5,15 @@ Inspired by sticky notes, every note here has two colorful sides.
 It is simple to create, edit and delete a note just as how you do with the sticky notes in the real life.
 
 **Key Features**  
-*• Stay Organized*  
+######• Stay Organized  
         Organize your notes in different groups and keep track of your ideas.   
-*• BookMark and Stamp*  
+######• BookMark and Stamp  
         Mark you special notes the way you like!  
-*• Quick Shuffle*  
+######• Quick Shuffle  
         An quick overview of notes in a group.  
-*• Share With Friends*  
+######• Share With Friends  
         Share your great ideas through Facebook, Google+, Twitter, Dropbox, Evernote, Email and many others!  
-*• Themed by Material Design*  
+######• Themed by Material Design  
 
 **Acknowledgement**  
 Part of icons and images are designed by these respected websites:   
