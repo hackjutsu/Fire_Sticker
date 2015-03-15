@@ -1,7 +1,7 @@
 #### Release Notes:
 [version 1.2](https://www.evernote.com/l/AaRW11w0CERO_4NM__z2UHkWdiUrT2wytQs)  
-[version 1.3](https://www.evernote.com/l/AaThd3GgladOOYSnSGClB7B8JAf4ShvOKQc)
-[version 1.4](https://www.evernote.com/l/AaRptTyyUr9CMIrk7h8OEeCycShd0DbdV2E)    
+[version 1.3](https://www.evernote.com/l/AaThd3GgladOOYSnSGClB7B8JAf4ShvOKQc)  
+[version 1.4](https://www.evernote.com/l/AaRptTyyUr9CMIrk7h8OEeCycShd0DbdV2E)      
 
 #### Downloads:
 *Google Play:* [Link to App](https://play.google.com/store/apps/details?id=com.gogocosmo.cosmoqiu.fire_sticker)  
