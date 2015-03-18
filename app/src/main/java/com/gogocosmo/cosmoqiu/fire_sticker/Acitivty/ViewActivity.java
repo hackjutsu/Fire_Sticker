@@ -288,7 +288,7 @@ public class ViewActivity extends ActionBarActivity {
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(imagePath);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
             shareNote(filePath);

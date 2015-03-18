@@ -64,6 +64,7 @@
                     android:scrollbars="none"
                     android:maxLines="1000"
                     android:gravity="center"
+                    android:fontFamily="sans-serif-condensed"
                     android:textSize="20sp"
                     android:padding="10dp"
                     android:hint="   Front Side   " />
@@ -85,6 +86,7 @@
                     android:scrollbars="none"
                     android:maxLines="1000"
                     android:gravity="center"
+                    android:fontFamily="sans-serif-condensed"
                     android:textSize="20sp"
                     android:padding="10dp"
                     android:hint="  (Optional) Back Side   " />
@@ -101,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif"
                     android:textSize="25sp"
                     android:text="Title: "
                     android:textStyle="italic" />
@@ -114,6 +117,7 @@
                     android:layout_marginRight="25dp"
                     android:gravity="center"
                     android:hint="   Optional   "
+                    android:fontFamily="sans-serif"
                     android:textColor="@color/NOTE_TITLE_COLOR"
                     android:textSize="18sp"
                     android:textStyle="italic" />

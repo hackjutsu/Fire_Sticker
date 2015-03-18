@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +21,6 @@ import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
-
-import org.w3c.dom.Text;
 
 public class AboutAppActivity extends ActionBarActivity {
 
