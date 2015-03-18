@@ -13,7 +13,8 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:fontFamily="sans-serif"
-        android:textSize="25sp"
+        android:textColor="@color/PURE_BLACK"
+        android:textSize="22sp"
         android:gravity="center"/>
 
     <ImageView

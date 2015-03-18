@@ -19,8 +19,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 
 import java.util.Random;
 
@@ -50,8 +49,7 @@ public class NewItemActivity extends ActionBarActivity {
         mToolbar.setTitleTextColor(getResources().getColor(R.color.PURE_WHITE));
 
         // DataBase Configurations
-        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
-        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+        ItemFactory.setItemsTableHelper(DatabaseHelper.getInstance(this));
 
         // Get the width of the Windows and set it as the minHeight of the card
         DisplayMetrics displaymetrics = new DisplayMetrics();

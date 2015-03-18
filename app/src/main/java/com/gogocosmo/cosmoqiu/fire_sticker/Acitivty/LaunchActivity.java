@@ -35,8 +35,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedShowcase;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
 import java.util.HashMap;
@@ -85,8 +84,7 @@ public class LaunchActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_launch);
 
         /*********************************  DataBase Configurations  **********************************/
-        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
-        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+        ItemFactory.setItemsTableHelper(DatabaseHelper.getInstance(this));
 
         // Toolbar Configurations
         mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object

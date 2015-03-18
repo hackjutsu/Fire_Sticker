@@ -23,8 +23,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.GroupArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 
 public class EditGroupActivity extends ActionBarActivity implements
         android.view.ActionMode.Callback {
@@ -47,8 +46,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_edit_group);
 
         // DataBase Configurations
-        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
-        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+        ItemFactory.setItemsTableHelper(DatabaseHelper.getInstance(this));
 
         // Toolbar Configurations
         mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object

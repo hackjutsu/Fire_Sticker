@@ -1,7 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,21 +14,15 @@ public class ItemFactory {
     private static ArrayList<Group> mItemGroupObjectList = null;
     private static ArrayList<Integer> mSelectedItemIndexes = null;
 
-    private static ItemsTableHelper mItemsTableHelper;
-    private static GroupsTableHelper mGroupsTableHelper;
+    private static DatabaseHelper mDatabaseHelper;
 
-    public static void setItemsTableHelper(ItemsTableHelper itemsTableHelper) {
-        mItemsTableHelper = itemsTableHelper;
-    }
-
-    public static void setGroupsTableHelper(GroupsTableHelper groupsTableHelper) {
-        mGroupsTableHelper = groupsTableHelper;
+    public static void setItemsTableHelper(DatabaseHelper databaseHelper) {
+        mDatabaseHelper = databaseHelper;
     }
 
     public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark, int stamp) {
 
         if (groupId < 0 || groupId >= mItemLists.size()) {
-//            Log.d(TAG, "Invalid group Id!");
             return null;
         }
 
@@ -86,20 +79,16 @@ public class ItemFactory {
     public static ArrayList<ArrayList<Item>> getItemLists() {
 
         if (mItemLists == null) {
-//            Log.d(TAG, "mItemLists retrieve data from dataBase");
-            mItemLists = new ArrayList<ArrayList<Item>>();
+            mItemLists = new ArrayList<>();
             mItemGroupObjectList = getItemGroupObjectList();
 
             for (int i = 0; i < mItemGroupObjectList.size(); ++i) {
 
                 String groupUUID = mItemGroupObjectList.get(i).getUuid();
-                ArrayList<Item> newItemList = mItemsTableHelper.getItemList(groupUUID);
+                ArrayList<Item> newItemList = mDatabaseHelper.getItemList(groupUUID);
                 mItemLists.add(newItemList);
-//                Log.d(TAG, mItemGroupObjectList.get(i).getGroupName() + ": " + newItemList.size());
-
             }
         }
-
         return mItemLists;
     }
 
@@ -131,12 +120,9 @@ public class ItemFactory {
 
             for (int i = 0; i < mItemGroupObjectList.size(); ++i) {
                 mSelectedItemIndexes.add(-1);
-//                Log.d(TAG, String.valueOf(i));
             }
 
         }
-
-//        Log.d(TAG, "mSelectedItemIndexes.size() = " + String.valueOf(mSelectedItemIndexes.size()));
         return mSelectedItemIndexes;
     }
 
@@ -149,7 +135,6 @@ public class ItemFactory {
 //            Log.d(TAG, "mItemLists.size() " + String.valueOf(mItemLists.size()));
 
         }
-
         return mItemLists.get(groupId);
     }
 
@@ -160,17 +145,14 @@ public class ItemFactory {
         if (groupId < 0 || groupId >= mSelectedItemIndexes.size()) {
 //            Log.d(TAG, "Invalid group Id!");
         }
-
         return mSelectedItemIndexes.get(groupId);
     }
 
     public static ArrayList<Group> getItemGroupObjectList() {
 
         if (mItemGroupObjectList == null) {
-            mItemGroupObjectList = mGroupsTableHelper.getAllGroups();
-//            Log.d(TAG, "Retrieve Group List from DataBase: " + mItemGroupObjectList.size());
+            mItemGroupObjectList = mDatabaseHelper.getAllGroups();
         }
-
         return mItemGroupObjectList;
     }
 
@@ -183,7 +165,6 @@ public class ItemFactory {
         for (int i = 0; i < mItemGroupObjectList.size(); ++i) {
             groupNameArray.add(mItemGroupObjectList.get(i).getGroupName());
         }
-
         return groupNameArray;
     }
 
@@ -202,97 +183,42 @@ public class ItemFactory {
     public static void notifyItemCreation(final Group group, final Item newItem) {
 
 //        Log.d(TAG, "notifyItemCreation");
-        mItemsTableHelper.addItem(group, newItem);
-
-//        Runnable runnable = new Runnable() {
-//            public void run() {
-//                mItemsTableHelper.addItem(group, newItem);
-//            }
-//        };
-//        Thread mythread = new Thread(runnable);
-//        mythread.start();
-
+        mDatabaseHelper.addItem(group, newItem);
     }
 
     public static void notifyItemUpdate(final Group group, final Item item) {
 
 //        Log.d(TAG, "notifyItemUpdate");
-        mItemsTableHelper.updateItem(group, item);
-
-
-//        Runnable runnable = new Runnable() {
-//            public void run() {
-//                mItemsTableHelper.updateItem(group, item);
-//            }
-//        };
-//        Thread mythread = new Thread(runnable);
-//        mythread.start();
-
+        mDatabaseHelper.updateItem(group, item);
     }
 
     public static void notifyItemDeletion(final Item item) {
 
 //        Log.d(TAG, "notifyItemDeletion");
-        mItemsTableHelper.deleteItem(item);
-
-//        Runnable runnable = new Runnable() {
-//            public void run() {
-//                mItemsTableHelper.deleteItem(item);
-//            }
-//        };
-//        Thread mythread = new Thread(runnable);
-//        mythread.start();
-//
+        mDatabaseHelper.deleteItem(item);
     }
 
     public static void notifyGroupCreation(final Group newGroup) {
 
-//        mGroupsTableHelper.addGroup(new Group(newGroupName));
 //        Log.d(TAG, "notifyGroupCreation: " + newGroup.getUuid() + ", " + newGroup.getGroupName());
-        mGroupsTableHelper.addGroup(newGroup);
-
-
-//        Runnable runnable = new Runnable() {
-//            public void run() {
-//                mGroupsTableHelper.addGroup(newGroup);
-//            }
-//        };
-//        Thread mythread = new Thread(runnable);
-//        mythread.start();
+        mDatabaseHelper.addGroup(newGroup);
     }
 
     public static void notifyGroupUpdate(final Group updatedGroup) {
+
 //        Log.d(TAG, "notifyGroupUpdate: " + updatedGroup.getUuid() + ", " + updatedGroup.getGroupName());
-
-        mGroupsTableHelper.updateGroup(updatedGroup);
-
-//        Runnable runnable = new Runnable() {
-//            public void run() {
-//            }
-//        };
-//        Thread mythread = new Thread(runnable);
-//        mythread.start();
-
+        mDatabaseHelper.updateGroup(updatedGroup);
     }
 
     public static void notifyGroupDeletion(final String uuid) {
-//        Log.d(TAG, "notifyGroupDeletion: " + uuid);
-        mGroupsTableHelper.deleteGroup(uuid);
-        mItemsTableHelper.deleteGroupItems(uuid);
 
-//        Runnable runnable = new Runnable() {
-//            public void run() {
-//                mGroupsTableHelper.deleteGroup(uuid);
-//                mItemsTableHelper.deleteGroupItems(uuid);
-//            }
-//        };
-//        Thread mythread = new Thread(runnable);
-//        mythread.start();
+//        Log.d(TAG, "notifyGroupDeletion: " + uuid);
+        mDatabaseHelper.deleteGroup(uuid);
+        mDatabaseHelper.deleteGroupItems(uuid);
     }
 
     public static void closeAllDatabase() {
-//        Log.d(TAG, "XX--closeAllDatabase--XX");
-//        mGroupsTableHelper.close();
-//        mItemsTableHelper.close();
+
+//        mDatabaseHelper.close();
     }
 }

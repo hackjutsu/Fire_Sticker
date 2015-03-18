@@ -7,19 +7,25 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class GroupsTableHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private final String TAG = "MEMORY-ACC";
+    final private String TAG = "MEMORY-ACC";
 
     // Database Name
     private static final String sDatabaseName = "ItemDB";
 
-    public GroupsTableHelper(Context context) {
-        super(context, sDatabaseName, null, DATABASE_VERSION);
-    }
+    // Database Version
+    private static final int DATABASE_VERSION = 1;
+
+    // Items table name
+    public static final String TABLE_ITEMS = "items";
+    // Groups table name
+    public static final String TABLE_GROUPS = "Groups";
 
     // Items Table Columns names
     public static final String KEY_ROW_ID = "_id";
@@ -32,37 +38,43 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
     public static final String KEY_BOOKMARK = "bookMark";
     public static final String KEY_STAMP = "stamp";
 
-    // Items table name
-    public static final String TABLE_ITEMS = "items";
-    // Groups table name
-    public static final String TABLE_GROUPS = "Groups";
-
-    // Database Version
-    private static final int DATABASE_VERSION = 1;
-
     // Groups Table Columns names
     public static final String KEY_GROUP_ROW_ID = "_id";
     public static final String KEY_GROUP_UUID = "uuid";
     public static final String KEY_GROUP_NAME = "groupName";
+
+    private static final String[] COLUMNS_OF_TABLE_ITEMS = {
+            KEY_ROW_ID,
+            KEY_GROUP,
+            KEY_ITEMGROUP_UUID,
+            KEY_ITEM_UUID,
+            KEY_TITLE,
+            KEY_FRONT,
+            KEY_BACK,
+            KEY_BOOKMARK,
+            KEY_STAMP};
 
     private static final String[] COLUMNS_OF_TABLE_GROUPS = {
             KEY_GROUP_ROW_ID,
             KEY_GROUP_UUID,
             KEY_GROUP_NAME};
 
-    private static GroupsTableHelper sInstance;
+    private static DatabaseHelper sInstance;
 
-    public static GroupsTableHelper getInstance(Context context) {
+    public static DatabaseHelper getInstance(Context context) {
 
         // Use the application context, which will ensure that you
         // don't accidentally leak an Activity's context.
         // See this article for more information: http://bit.ly/6LRzfx
         if (sInstance == null) {
-            sInstance = new GroupsTableHelper(context.getApplicationContext());
+            sInstance = new DatabaseHelper(context.getApplicationContext());
         }
         return sInstance;
     }
 
+    public DatabaseHelper(Context context) {
+        super(context, sDatabaseName, null, DATABASE_VERSION);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -78,11 +90,9 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
                 + KEY_BOOKMARK + "  integer  , "
                 + KEY_STAMP + "  integer  ) ";
 
-
         // create items table
         db.execSQL(CREATE_ITEM_TABLE);
 
-//        Log.d(TAG, "CREATE_GROUP_TABLE");
         String CREATE_GROUP_TABLE = "create table " + TABLE_GROUPS + " ( "
                 + KEY_GROUP_ROW_ID + " integer primary key autoincrement , "
                 + KEY_GROUP_UUID + " text , "
@@ -90,21 +100,148 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
 
         // create groups table
         db.execSQL(CREATE_GROUP_TABLE);
-
-//        Log.d(TAG, "GroupsTableHelper onCreate Called");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older books table if existed
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_GROUPS);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLE_ITEMS);
 
         // create fresh books table
         this.onCreate(db);
     }
     //---------------------------------------------------------------------
+
     /**
-     * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
+     * CRUD operations on Item Table
+     */
+    // Add a new Item
+    public void addItem(Group group, Item item) {
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put(KEY_GROUP, group.getGroupName()); // get groupId
+        values.put(KEY_ITEMGROUP_UUID, group.getUuid()); // get groupUUID
+        values.put(KEY_ITEM_UUID, item.getUuid()); // get itemUUID
+        values.put(KEY_TITLE, item.getTitle()); // get title
+        values.put(KEY_FRONT, item.getFront()); // get front
+        values.put(KEY_BACK, item.getBack()); // get back
+        values.put(KEY_BOOKMARK, item.getBookmark()); // get bookMark
+        values.put(KEY_STAMP, item.getStamp()); // get Stamp
+
+        // 3. insert
+        db.insert(TABLE_ITEMS,
+                null,
+                values);
+
+        // 4. close
+        db.close();
+    }
+
+    // Get All Items
+    public ArrayList<Item> getItemList(String groupUUID) {
+        ArrayList<Item> items = new ArrayList<Item>();
+
+        //get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor =
+                db.query(TABLE_ITEMS, // a. table
+                        COLUMNS_OF_TABLE_ITEMS, // b. column names
+                        KEY_ITEMGROUP_UUID + " = ?", // c. selections
+                        new String[]{groupUUID}, // d. selections args
+                        null, // e. group by
+                        null, // f. having
+                        null, // g. order by
+                        null); // h. limit
+
+        // 3. go over each row, build item and add it to list
+        Item item = null;
+        if (cursor.moveToFirst()) {
+            do {
+                item = new Item();
+                item.setId(Integer.parseInt(cursor.getString(0)));
+                item.setUuid(cursor.getString(3));
+                item.setTitle(cursor.getString(4));
+                item.setFront(cursor.getString(5));
+                item.setBack(cursor.getString(6));
+                item.setBookmark(cursor.getInt(7));
+                item.setStamp(cursor.getInt(8));
+
+                // Add item to items
+                items.add(item);
+
+            } while (cursor.moveToNext());
+        }
+
+        // return items
+        Collections.reverse(items);
+        return items;
+    }
+
+    // Updating a single item
+    public int updateItem(Group group, Item item) {
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put("groupId", group.getGroupName()); // get groupName
+        values.put("groupUUID", group.getUuid()); // get groupUUID
+        values.put("itemUUID", item.getUuid()); // get itemUUID
+        values.put("title", item.getTitle()); // get title
+        values.put("front", item.getFront()); // get front
+        values.put("back", item.getBack()); // get back
+        values.put("bookMark", item.getBookmark()); // get bookMark
+        values.put("stamp", item.getStamp()); // get Stamp
+
+        // 3. updating row
+        int i = db.update(TABLE_ITEMS, //table
+                values, // column/value
+                KEY_ITEM_UUID + " = ?", // selections
+                new String[]{item.getUuid()}); //selection args
+
+        // 4. close
+        db.close();
+
+        return i;
+    }
+
+    // Deleting a single item
+    public void deleteItem(Item item) {
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. delete
+        db.delete(TABLE_ITEMS,
+                KEY_ITEM_UUID + " = ?",
+                new String[]{item.getUuid()});
+
+        // 3. close
+        db.close();
+    }
+
+    // Deleting all items in a specific group
+    public void deleteGroupItems(String uuid) {
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. delete
+        db.delete(TABLE_ITEMS,
+                KEY_ITEMGROUP_UUID + " = ?",
+                new String[]{uuid});
+
+        // 3. close
+        db.close();
+    }
+
+    /**
+     * CRUD operations on Group Table
      */
     public void addGroup(Group group) {
 
@@ -184,15 +321,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         return groups;
     }
 
-    public Cursor getAllGroupsCursor() {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT  * FROM " + TABLE_GROUPS;
-        Cursor cursor = db.rawQuery(query, null);
-        return cursor;
-    }
-
-    // Updating single group
+    // Updating a single group
     public int updateGroup(Group group) {
 
         // 1. get reference to writable DB
@@ -215,7 +344,7 @@ public class GroupsTableHelper extends SQLiteOpenHelper {
         return i;
     }
 
-    // Deleting single group
+    // Deleting a single group
     public void deleteGroup(String uuid) {
 
         // 1. get reference to writable DB

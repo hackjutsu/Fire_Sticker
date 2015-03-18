@@ -19,8 +19,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.GroupsTableHelper;
-import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.ItemsTableHelper;
+import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -45,8 +44,7 @@ public class CarouselActivity extends ActionBarActivity {
         setContentView(R.layout.activity_carousel);
 
         // DataBase Configurations
-        ItemFactory.setItemsTableHelper(ItemsTableHelper.getInstance(this));
-        ItemFactory.setGroupsTableHelper(GroupsTableHelper.getInstance(this));
+        ItemFactory.setItemsTableHelper(DatabaseHelper.getInstance(this));
 
         mGroupId = getIntent().getExtras().getInt("GROUP");
 

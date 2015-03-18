@@ -40,7 +40,7 @@
             android:layout_marginBottom="9dp"
             android:progress="80"
             android:id="@+id/progressBar"
-            android:progressDrawable="@drawable/custom_progressbar"/>
+            android:progressDrawable="@drawable/custom_progressbar" />
 
     </LinearLayout>
 
