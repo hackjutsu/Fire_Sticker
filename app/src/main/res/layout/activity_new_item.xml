@@ -66,7 +66,7 @@
                     android:gravity="center"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="20sp"
-                    android:padding="10dp"
+                    android:padding="13dp"
                     android:hint="   Front Side   " />
             </FrameLayout>
 
@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="20sp"
-                    android:padding="10dp"
+                    android:padding="13dp"
                     android:hint="  (Optional) Back Side   " />
             </FrameLayout>
 

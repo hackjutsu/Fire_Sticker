@@ -2,6 +2,7 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,14 @@ public class EditGroupActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
+
+        // Set the status bar color
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(R.color.STATUS_BAR_BACKGROUND));
+        }
 
         // DataBase Configurations
         ItemFactory.setItemsTableHelper(DatabaseHelper.getInstance(this));

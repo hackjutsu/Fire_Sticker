@@ -102,7 +102,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
         // Special condition for ListView's EmptyView. In this case, mValues is empty and we cannot
         // get item by calling getItem(id), which will return null pointer
-        if (position == 0 && mIdMap.size() != 0 && mValues.size() == 0) {
+        if (position == 0 && mValues.size() == 0) {
             return 0;
         }
 

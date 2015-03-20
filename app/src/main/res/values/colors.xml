@@ -11,6 +11,9 @@
     <!-- Activity Carousel -->
     <color name="ACTIVITY_CAROUSEL_BACKGROUND">@color/WHITE</color>
 
+    <!-- status_barr-->
+    <color name="STATUS_BAR_BACKGROUND">@color/ZAOHONG</color>
+
     <!-- tool_bar -->
     <color name="TOOL_BAR_BACKGROUND">@color/RED</color>
 
@@ -42,6 +45,7 @@
     <!-- Colors Source -->
     <color name="YANZHI">#952e3a</color>
     <color name="FANQIEHONG">#c4473d</color>
+    <color name="ZAOHONG">#89303f</color>
     <color name="XUESE">#fffafa</color>
     <color name="HAILAN">#17507d</color>
     <color name="ORANGE">#FF9800</color>

@@ -13,6 +13,8 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -25,11 +27,20 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 public class AboutAppActivity extends ActionBarActivity {
 
     private Toolbar mToolbar;
+    private boolean isGooglePlay=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_app);
+
+        // Set the status bar color
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(R.color.STATUS_BAR_BACKGROUND));
+        }
 
         // Toolbar Configurations
         mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
@@ -71,7 +82,7 @@ public class AboutAppActivity extends ActionBarActivity {
 
                 AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
                 v.startAnimation(buttonClick);
-                rateMyApp(true);
+                rateMyApp(isGooglePlay);
             }
         });
 
@@ -103,7 +114,7 @@ public class AboutAppActivity extends ActionBarActivity {
         rateAppLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rateMyApp(true);
+                rateMyApp(isGooglePlay);
             }
         });
     }
