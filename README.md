@@ -25,11 +25,6 @@ It is simple to create, edit and delete a note just as how you do with the stick
 * [version 1.4](https://www.evernote.com/l/AaRptTyyUr9CMIrk7h8OEeCycShd0DbdV2E)      
 
 
-### Downloads
-* *Google Play:* [Link to App](https://play.google.com/store/apps/details?id=com.gogocosmo.cosmoqiu.fire_sticker)  
-* *Amazon App Store:* [Link to App](http://www.amazon.com/Renaissance-Studio-Note-it/dp/B00UE9JHUQ/ref=sr_1_1?ie=UTF8&qid=1426146416&sr=8-1&keywords=Note+it)  
-
-
 ### Acknowledgement 
 Part of icons and images are designed by these respected websites:   
 * http://www.icons4android.com/  
