@@ -1,6 +1,8 @@
-Note it!
-=========================
-
+<a href="https://play.google.com/store/apps/details?id=com.gogocosmo.cosmoqiu.fire_sticker">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
+</a>
+#Note it!  
 ### Introduction
 **Note it!** is a lean and elegant notebook aimed for quick idea collections.
 
