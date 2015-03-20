@@ -1,8 +1,4 @@
-<a href="https://play.google.com/store/apps/details?id=com.gogocosmo.cosmoqiu.fire_sticker">
-  <img alt="Get it on Google Play"
-       src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
-</a>
-#Note it!  
+# Note it!  
 ### Introduction
 **Note it!** is a lean and elegant notebook aimed for quick idea collections.
 
@@ -15,7 +11,12 @@ It is simple to create, edit and delete a note just as how you do with the stick
 * BookMark and Stamp  
 * Quick Shuffle  
 * Share With Friends  
-* Themed by Material Design  
+* Themed by Material Design 
+ 
+<a href="https://play.google.com/store/apps/details?id=com.gogocosmo.cosmoqiu.fire_sticker">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
+</a>
 
 
 ### Release Notes
