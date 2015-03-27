@@ -22,8 +22,9 @@ It is simple to create, edit and delete a note just as how you do with the stick
 ### Release Notes
 * [version 1.2](https://www.evernote.com/l/AaRW11w0CERO_4NM__z2UHkWdiUrT2wytQs)  
 * [version 1.3](https://www.evernote.com/l/AaThd3GgladOOYSnSGClB7B8JAf4ShvOKQc)  
-* [version 1.4](https://www.evernote.com/l/AaRptTyyUr9CMIrk7h8OEeCycShd0DbdV2E)      
-
+* [version 1.4](https://www.evernote.com/l/AaRptTyyUr9CMIrk7h8OEeCycShd0DbdV2E)   
+* [version 2.0](https://www.evernote.com/l/AaT_olTAmL9FILOK1AwcR6DpFe5ho2TYXew) 
+ 
 
 ### Acknowledgement 
 Part of icons and images are designed by these respected websites:   
