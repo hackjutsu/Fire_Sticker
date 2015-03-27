@@ -3,6 +3,7 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class CardFragment extends Fragment {
         mCard = (TextView) view.findViewById(R.id.card);
         mCard.setBackgroundColor(mColor);
         mCard.setText(mText);
+//        adjustCardTextFormat();
 
         int cardPadding = 50;
         mCard.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
@@ -110,5 +112,23 @@ public class CardFragment extends Fragment {
 
     public void setStamp(int stamp) {
         mStamp = stamp;
+    }
+
+    private void adjustCardTextFormat() {
+        // If the line count in an EditText more than two, the texts should start from left;
+        // else we put it in the center.
+
+        mCard.post(new Runnable() {
+            @Override
+            public void run() {
+                int lineCountFront = mCard.getLineCount();
+
+                if (lineCountFront <= 1) {
+                    mCard.setGravity(Gravity.CENTER);
+                } else {
+                    mCard.setGravity(Gravity.CENTER_VERTICAL);
+                }
+            }
+        });
     }
 }

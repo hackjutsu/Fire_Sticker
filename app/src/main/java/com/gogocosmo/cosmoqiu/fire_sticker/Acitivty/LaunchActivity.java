@@ -57,6 +57,7 @@ public class LaunchActivity extends ActionBarActivity implements
     final private int EDIT_GROUP_REQ = 1;
     final private int VIEW_DETAILS_REQ = 2;
     final private int NEW_ITEM_REQ = 3;
+    final private int SETTINGS_REQ = 4;
 
     private ImageButton mCarouselButton;
     private Toolbar mToolbar;
@@ -82,7 +83,7 @@ public class LaunchActivity extends ActionBarActivity implements
     public int mActivatedGroupId;
     private ArrayAdapter mActivatedItemArrayAdapter;
 
-    private int mProfile = R.drawable.owl;
+    private int mProfile = R.drawable.owl_small;
     private SharedPreferences mPreference;
 
     @Override
@@ -121,11 +122,6 @@ public class LaunchActivity extends ActionBarActivity implements
             editor.putBoolean("NOTEIT_FIRST_RUN", false);
             editor.commit();
         }
-
-        //TODO: For testing, set the VIEWMODE
-        SharedPreferences.Editor editor1 = mPreference.edit();
-        editor1.putInt("VIEWMODE", 1);
-        editor1.commit();
 
         /*********************************  Tabs Configurations  **********************************/
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -356,10 +352,17 @@ public class LaunchActivity extends ActionBarActivity implements
             case DrawerRecyclerViewAdapter.TYPE_HEADER:
 
                 break;
-            case DrawerRecyclerViewAdapter.TYPE_EDIT:
+            case DrawerRecyclerViewAdapter.TYPE_EDIT_GROUPS:
 
                 Intent intentEdit = new Intent(this, EditGroupActivity.class);
                 startActivityForResult(intentEdit, EDIT_GROUP_REQ);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                break;
+            case DrawerRecyclerViewAdapter.TYPE_SETTINGS:
+
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                startActivityForResult(intentSettings, SETTINGS_REQ);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
                 break;
@@ -770,6 +773,14 @@ public class LaunchActivity extends ActionBarActivity implements
                 int updatedGroupId = data.getExtras().getInt("UPDATED_GROUP");
                 updateSlidingTabs();
                 mSlidingTabsLayout.setCurrentTab(updatedGroupId);
+            }
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        } else if (requestCode == SETTINGS_REQ) {
+            if (resultCode == RESULT_OK) {
+
+                updateSlidingTabs();
             }
             if (resultCode == RESULT_CANCELED) {
 

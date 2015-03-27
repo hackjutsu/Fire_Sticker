@@ -1,0 +1,15 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/label_question"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:gravity="center"
+    android:textSize="20sp"
+    android:textStyle="normal"
+    android:singleLine="true"
+    android:ellipsize="marquee"
+    android:background="@color/PURE_WHITE"/>
+

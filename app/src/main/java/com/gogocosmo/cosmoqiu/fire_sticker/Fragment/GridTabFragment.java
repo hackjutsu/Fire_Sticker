@@ -63,7 +63,7 @@ public class GridTabFragment extends Fragment {
         } else {
             throw new RuntimeException(
                     "Host Activity should implement " +
-                            "ListTabFragment.OnListItemLongClickListener interface.");
+                            "GridTabFragment.OnListItemLongClickListener interface.");
         }
     }
 
@@ -85,8 +85,6 @@ public class GridTabFragment extends Fragment {
                 ItemFactory.getItemList(mGroupId), mGroupId);
         mGridView.setEmptyView(v.findViewById(R.id.emptyElement));
         mGridView.setAdapter(mItemArrayAdapterGrid);
-
-
 
         mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

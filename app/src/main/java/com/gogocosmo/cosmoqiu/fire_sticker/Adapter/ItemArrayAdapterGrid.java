@@ -1,6 +1,8 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,33 +97,45 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
             viewHolder.mStamp.setVisibility(View.INVISIBLE);
         }
 
-        int pokerType = position % 4;
-        int pokerResourceTop;
-        int pokerResourceBottom;
-        switch (pokerType) {
-            case 0:
-                pokerResourceTop = R.drawable.black_spade_k_top;
-                pokerResourceBottom = R.drawable.black_spade_k_upsidedown;
-                break;
-            case 1:
-                pokerResourceTop = R.drawable.red_heart_a_top;
-                pokerResourceBottom = R.drawable.red_heart_a_upsidedown;
-                break;
-            case 2:
-                pokerResourceTop = R.drawable.red_diamond_3_top;
-                pokerResourceBottom = R.drawable.red_diamond_3_upsidedown;
-                break;
-            case 3:
-                pokerResourceTop = R.drawable.black_club_six_top;
-                pokerResourceBottom = R.drawable.black_club_six_upsidedown;
-                break;
-            default:
-                pokerResourceTop = R.drawable.black_spade_k_top;
-                pokerResourceBottom = R.drawable.black_spade_k_upsidedown;
-        }
-        viewHolder.mPokerTop.setImageResource(pokerResourceTop);
-        viewHolder.mPokerBottom.setImageResource(pokerResourceBottom);
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(mContext);
+        boolean pokerPattern = preference.getBoolean("POKER", true);
 
+        if (pokerPattern) {
+
+            viewHolder.mPokerTop.setVisibility(View.VISIBLE);
+            viewHolder.mPokerBottom.setVisibility(View.VISIBLE);
+
+            int pokerType = position % 4;
+            int pokerResourceTop;
+            int pokerResourceBottom;
+            switch (pokerType) {
+                case 0:
+                    pokerResourceTop = R.drawable.black_spade_k_top;
+                    pokerResourceBottom = R.drawable.black_spade_k_upsidedown;
+                    break;
+                case 1:
+                    pokerResourceTop = R.drawable.red_heart_a_top;
+                    pokerResourceBottom = R.drawable.red_heart_a_upsidedown;
+                    break;
+                case 2:
+                    pokerResourceTop = R.drawable.red_diamond_3_top;
+                    pokerResourceBottom = R.drawable.red_diamond_3_upsidedown;
+                    break;
+                case 3:
+                    pokerResourceTop = R.drawable.black_club_six_top;
+                    pokerResourceBottom = R.drawable.black_club_six_upsidedown;
+                    break;
+                default:
+                    pokerResourceTop = R.drawable.black_spade_k_top;
+                    pokerResourceBottom = R.drawable.black_spade_k_upsidedown;
+            }
+            viewHolder.mPokerTop.setImageResource(pokerResourceTop);
+            viewHolder.mPokerBottom.setImageResource(pokerResourceBottom);
+        } else {
+
+            viewHolder.mPokerTop.setVisibility(View.INVISIBLE);
+            viewHolder.mPokerBottom.setVisibility(View.INVISIBLE);
+        }
 //        if (position == ItemFactory.getSelectedItemIndex(mGroupId)) {
 //            rowView.setBackgroundColor(mContext.getResources().getColor(R.color.FANQIEHONG));
 //        } else {

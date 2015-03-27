@@ -13,7 +13,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
-        android:src="@drawable/owl"
+        android:src="@drawable/owl_small"
         android:layout_marginTop="5dip"
         android:layout_marginBottom="5dip"
         android:layout_centerHorizontal="true"

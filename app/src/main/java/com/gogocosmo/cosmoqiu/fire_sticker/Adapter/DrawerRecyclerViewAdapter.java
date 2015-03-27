@@ -16,8 +16,9 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     final static private String TAG = "MEMORY-ACC";
     final static public int TYPE_HEADER = 0;
     final static public int TYPE_ITEM = 1;
-    final static public int TYPE_EDIT = 2;
-    final static public int TYPE_ABOUTAPP = 3;
+    final static public int TYPE_EDIT_GROUPS = 2;
+    final static public int TYPE_SETTINGS = 3;
+    final static public int TYPE_ABOUTAPP = 4;
 
     private String mNavTitles[];
     private int mProfile;
@@ -59,7 +60,11 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
 
                 mProfileImage = (ImageView) itemView.findViewById(R.id.circleView);
                 // Header doesn't need a ClickedListener
-            } else if (ViewType == TYPE_EDIT) {
+            } else if (ViewType == TYPE_EDIT_GROUPS) {
+
+                mTextField = (TextView) itemView.findViewById(R.id.rowText);
+                itemView.setOnClickListener(this);
+            } else if (ViewType == TYPE_SETTINGS) {
 
                 mTextField = (TextView) itemView.findViewById(R.id.rowText);
                 itemView.setOnClickListener(this);
@@ -123,16 +128,29 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             });
             return vhHeader;
 
-        } else if (viewType == TYPE_EDIT) {
+        } else if (viewType == TYPE_EDIT_GROUPS) {
 
             View v = LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.drawer_recyclerview_edit, parent, false);
+                    parent.getContext()).inflate(R.layout.drawer_recyclerview_edit_groups, parent, false);
 
             ViewHolder vhEnd = new ViewHolder(v, viewType, new ViewHolder.IViewHolderClickListener() {
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_EDIT);
+                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_EDIT_GROUPS);
+                }
+            });
+            return vhEnd;
+        } else if (viewType == TYPE_SETTINGS) {
+
+            View v = LayoutInflater.from(
+                    parent.getContext()).inflate(R.layout.drawer_recycleview_settings, parent, false);
+
+            ViewHolder vhEnd = new ViewHolder(v, viewType, new ViewHolder.IViewHolderClickListener() {
+                @Override
+                public void onClickedEvent(View v, int position) {
+
+                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_SETTINGS);
                 }
             });
             return vhEnd;
@@ -167,9 +185,13 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             holder.mProfileImage.setImageResource(mProfile);
             holder.mViewHolderPosition = position;
             //holder._email.setText(_email);
-        } else if (holder.mViewType == TYPE_EDIT) {
+        } else if (holder.mViewType == TYPE_EDIT_GROUPS) {
 
             holder.mTextField.setText("Edit Group List");
+            holder.mViewHolderPosition = position;
+        } else if (holder.mViewType == TYPE_SETTINGS) {
+
+            holder.mTextField.setText("Settings");
             holder.mViewHolderPosition = position;
         } else if (holder.mViewType == TYPE_ABOUTAPP) {
 
@@ -180,8 +202,8 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
 
     @Override
     public int getItemCount() {
-        // Including the header and the edit section
-        return mNavTitles.length + 3;
+        // Including the header/edit/settings/about section
+        return mNavTitles.length + 4;
     }
 
     @Override
@@ -190,7 +212,9 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
         if (isPositionHeader(position)) {
             return TYPE_HEADER;
         } else if (isPositionEditSection(position)) {
-            return TYPE_EDIT;
+            return TYPE_EDIT_GROUPS;
+        } else if (isPositionSettingsSection(position)) {
+            return TYPE_SETTINGS;
         } else if (isPositionAboutSection(position)) {
             return TYPE_ABOUTAPP;
         }
@@ -202,6 +226,10 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     }
 
     private boolean isPositionEditSection(int position) {
+        return position == getItemCount() - 3;
+    }
+
+    private boolean isPositionSettingsSection(int position) {
         return position == getItemCount() - 2;
     }
 

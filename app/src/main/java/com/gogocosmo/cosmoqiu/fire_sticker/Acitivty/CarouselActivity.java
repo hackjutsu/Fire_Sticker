@@ -167,7 +167,7 @@ public class CarouselActivity extends ActionBarActivity {
         if (mItemIndex >= ItemFactory.getItemList(mGroupId).size()) {
             mItemIndex--;
 
-            Toast.makeText(this, "This is the last card ~", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "This is the last note ~", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -214,7 +214,7 @@ public class CarouselActivity extends ActionBarActivity {
         // Return if the array size is 0 or 1
         if (lastIndex <= 0) {
 
-            Toast.makeText(this, "This is the first card ~", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "This is the first note ~", Toast.LENGTH_SHORT).show();
             return;
         }
 
