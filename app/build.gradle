@@ -9,14 +9,14 @@ android {
             storePassword '******'
         }
     }
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId "com.gogocosmo.cosmoqiu.fire_sticker"
         minSdkVersion 14
-        targetSdkVersion 21
-        versionCode 8
-        versionName "1.4.3"
+        targetSdkVersion 22
+        versionCode 9
+        versionName "2.0.0"
     }
     buildTypes {
         release {

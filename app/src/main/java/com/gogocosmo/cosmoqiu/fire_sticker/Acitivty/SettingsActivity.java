@@ -32,7 +32,7 @@ public class SettingsActivity extends ActionBarActivity {
     private SharedPreferences mPreference;
     private Spinner mViewModeSpinner;
     private LinearLayout mPokerPanel;
-    private Switch mPokerSwitch;
+    private android.support.v7.widget.SwitchCompat mPokerSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class SettingsActivity extends ActionBarActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
 
         mPokerPanel = (LinearLayout) findViewById(R.id.pokerPanel);
-        mPokerSwitch = (Switch) findViewById(R.id.pokerSwitch);
+        mPokerSwitch = (android.support.v7.widget.SwitchCompat) findViewById(R.id.pokerSwitch);
         Boolean pokerPattern = mPreference.getBoolean("POKER", true);
         if (pokerPattern) {
             mPokerSwitch.setChecked(true);
