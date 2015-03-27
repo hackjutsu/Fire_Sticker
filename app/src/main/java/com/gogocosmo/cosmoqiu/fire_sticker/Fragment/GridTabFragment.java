@@ -9,40 +9,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
+import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapterGrid;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 
-public class TabFragment extends Fragment {
+public class GridTabFragment extends Fragment {
 
     final private String TAG = "MEMORY-ACC";
 
-    private ListView mListView;
+    private GridView mGridView;
     private Context mContext;
     private OnTabListItemClickListener mTabListItemClickListener;
-    private ItemArrayAdapter mItemArrayAdapter;
+    private ItemArrayAdapterGrid mItemArrayAdapterGrid;
     private int mGroupId;
 
 
     public interface OnTabListItemClickListener {
 
-        void OnListItemLongClicked(ItemArrayAdapter adapter,
-                                   ListView listView,
+        void OnListItemLongClicked(ArrayAdapter adapter,
+                                   GridView listView,
                                    View view,
                                    int groupId,
                                    int position);
 
-        void OnListItemClicked(ItemArrayAdapter adapter,
-                               ListView listView,
+        void OnListItemClicked(ArrayAdapter adapter,
+                               GridView listView,
                                View view,
                                int groupId,
                                int position);
     }
 
-    public TabFragment() {
+    public GridTabFragment() {
 
     }
 
@@ -61,7 +63,7 @@ public class TabFragment extends Fragment {
         } else {
             throw new RuntimeException(
                     "Host Activity should implement " +
-                            "TabFragment.OnListItemLongClickListener interface.");
+                            "ListTabFragment.OnListItemLongClickListener interface.");
         }
     }
 
@@ -75,31 +77,31 @@ public class TabFragment extends Fragment {
             mGroupId = bundle.getInt("GROUP");
         }
 
-        View v = inflater.inflate(R.layout.item_list, container, false);
+        View v = inflater.inflate(R.layout.item_grid, container, false);
 
-        mListView = (ListView) v.findViewById(R.id.listview);
+        mGridView = (GridView) v.findViewById(R.id.gridView1);
 
-        mItemArrayAdapter = new ItemArrayAdapter(mContext,
-                ItemFactory.getItemList(mGroupId));
-        mListView.setEmptyView(v.findViewById(R.id.emptyElement));
-        mListView.setAdapter(mItemArrayAdapter);
+        mItemArrayAdapterGrid = new ItemArrayAdapterGrid(mContext,
+                ItemFactory.getItemList(mGroupId), mGroupId);
+        mGridView.setEmptyView(v.findViewById(R.id.emptyElement));
+        mGridView.setAdapter(mItemArrayAdapterGrid);
 
 
 
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                mTabListItemClickListener.OnListItemLongClicked(mItemArrayAdapter, mListView, view, mGroupId, position);
+                mTabListItemClickListener.OnListItemLongClicked(mItemArrayAdapterGrid, mGridView, view, mGroupId, position);
                 return true;
             }
         });
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                mTabListItemClickListener.OnListItemClicked(mItemArrayAdapter, mListView, view, mGroupId, position);
+                mTabListItemClickListener.OnListItemClicked(mItemArrayAdapterGrid, mGridView, view, mGroupId, position);
             }
         });
         return v;
@@ -112,3 +114,4 @@ public class TabFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 }
+

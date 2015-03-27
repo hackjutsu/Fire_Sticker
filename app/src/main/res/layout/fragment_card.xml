@@ -15,7 +15,7 @@
         android:fontFamily="sans-serif"
         android:textColor="@color/PURE_BLACK"
         android:textSize="22sp"
-        android:gravity="center"/>
+        android:gravity="center_vertical" />
 
     <ImageView
         android:layout_width="50dp"
@@ -34,6 +34,6 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/item_card_done"
         android:src="@drawable/done"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside" />
 
 </FrameLayout>

@@ -12,7 +12,7 @@
     <color name="ACTIVITY_CAROUSEL_BACKGROUND">@color/WHITE</color>
 
     <!-- status_barr-->
-    <color name="STATUS_BAR_BACKGROUND">@color/ZAOHONG</color>
+    <color name="STATUS_BAR_BACKGROUND">@color/WINERED_DARK</color>
 
     <!-- tool_bar -->
     <color name="TOOL_BAR_BACKGROUND">@color/RED</color>
@@ -21,7 +21,7 @@
     <color name="FRAGMENT_TOP_BACKGROUND">@color/BLUE</color>
     <color name="FRAGMENT_TOP_TEXT">@color/WHITE</color>
 
-    <!-- Item List in TabFragment -->
+    <!-- Item List in ListTabFragment -->
     <color name="ITEMLIST_SIDE_BAR">@color/FANQIEHONG</color>
     <color name="ITEMLIST_BACKGROUND">@color/PURE_WHITE</color>
     <color name="ITEMLIST_ROW_TEXT">@color/PURE_BLACK</color>
@@ -35,20 +35,25 @@
     <color name="NOTE_TITLE_COLOR">@color/GREY</color>
 
     <!-- Frequently Used Colors -->
-    <color name="RED">@color/YANZHI</color>
+    <color name="RED">@color/WINERED</color>
     <color name="BLUE">@color/HAILAN</color>
     <color name="WHITE">@color/XUESE</color>
     <color name="GREY">@color/GREY900</color>
+    <color name="YELLOW">@color/YELLOW700</color>
     <color name="PURE_WHITE">@android:color/white</color>
     <color name="PURE_BLACK">@android:color/black</color>
 
     <!-- Colors Source -->
+    <color name="WINERED">#AE1833</color>
+    <color name="WINERED_DARK">#9D162E</color>
+    <color name="RED900">#B71C1C</color>
     <color name="YANZHI">#952e3a</color>
     <color name="FANQIEHONG">#c4473d</color>
     <color name="ZAOHONG">#89303f</color>
     <color name="XUESE">#fffafa</color>
     <color name="HAILAN">#17507d</color>
     <color name="ORANGE">#FF9800</color>
+    <color name="YELLOW700">#FBC02D</color>
     <color name="GREY900">#424242</color>
 
 

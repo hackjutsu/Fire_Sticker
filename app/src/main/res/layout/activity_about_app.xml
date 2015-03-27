@@ -156,7 +156,7 @@
                 android:text="Feedback"
                 android:textSize="20sp"
                 android:textColor="@color/NOTE_TITLE_COLOR"
-                android:background="@drawable/bordered_view" />
+                android:background="@drawable/red_bordered_view" />
 
         </LinearLayout>
 
