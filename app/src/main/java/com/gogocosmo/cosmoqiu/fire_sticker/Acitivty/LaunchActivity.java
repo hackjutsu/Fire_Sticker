@@ -781,6 +781,7 @@ public class LaunchActivity extends ActionBarActivity implements
             if (resultCode == RESULT_OK) {
 
                 updateSlidingTabs();
+                updateDrawerItems();
             }
             if (resultCode == RESULT_CANCELED) {
 

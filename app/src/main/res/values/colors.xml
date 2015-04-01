@@ -55,6 +55,7 @@
     <color name="ORANGE">#FF9800</color>
     <color name="YELLOW700">#FBC02D</color>
     <color name="GREY900">#424242</color>
+    <color name="GREYBACKGROUD">#EDEDED</color>
 
 
 </resources>

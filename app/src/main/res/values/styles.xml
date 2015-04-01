@@ -63,6 +63,5 @@
         <item name="android:textColor">#FFFF</item>
         <item name="android:textSize">18sp</item>
     </style>
-
 </resources>
 

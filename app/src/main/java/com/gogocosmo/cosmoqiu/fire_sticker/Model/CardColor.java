@@ -27,14 +27,13 @@ public class CardColor {
             new CardColor("FEIHONG", Color.rgb(195, 86, 85)),
             new CardColor("ZONGCHA", Color.rgb(184, 132, 79)),
             new CardColor("001", Color.rgb(102, 179, 149)),
-            new CardColor("002", Color.rgb(118, 168, 210)),
             new CardColor("003", Color.rgb(112, 197, 189)),
             new CardColor("004", Color.rgb(233, 202, 90)),
             new CardColor("005", Color.rgb(68, 191, 237)),
             new CardColor("006", Color.rgb(237, 161, 117)),
             new CardColor("007", Color.rgb(228, 207, 142)),
             new CardColor("008", Color.rgb(243, 243, 243)),
-            new CardColor("008", Color.rgb(85, 151, 161))
+            new CardColor("009", Color.rgb(85, 151, 161))
     );
 
     private String mColorName;

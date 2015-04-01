@@ -180,6 +180,12 @@ public class ItemFactory {
         mSelectedItemIndexes.set(groupId, selectedItemIndex);
     }
 
+    public static void notifyDBRestore() {
+        mItemLists = null;
+        mItemGroupObjectList = null;
+        mSelectedItemIndexes = null;
+    }
+
     public static void notifyItemCreation(final Group group, final Item newItem) {
 
 //        Log.d(TAG, "notifyItemCreation");
