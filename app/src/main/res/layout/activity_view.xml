@@ -31,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
                 android:background="@android:drawable/dialog_holo_light_frame">
 
                 <EditText
@@ -44,7 +44,7 @@
                     android:gravity="center_vertical"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="20sp"
-                    android:padding="13dp" />
+                    android:padding="25dp" />
 
                 <ImageView
                     android:layout_width="50dp"
@@ -64,15 +64,27 @@
                     android:id="@+id/item_card_front_done"
                     android:src="@drawable/done"
                     android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/frontSide_time_updated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:padding="8dp"
+                    android:scrollbars="none"
+                    android:gravity="center_vertical"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="italic"
+                    android:textSize="16sp"/>
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/backSide_display_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
                 android:background="@android:drawable/dialog_holo_light_frame">
 
                 <EditText
@@ -84,7 +96,7 @@
                     android:gravity="center_vertical"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="20sp"
-                    android:padding="13dp" />
+                    android:padding="25dp" />
 
                 <ImageView
                     android:layout_width="120dp"
@@ -95,6 +107,18 @@
                     android:id="@+id/item_card_back_done"
                     android:src="@drawable/done"
                     android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/backSide_time_updated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:padding="8dp"
+                    android:scrollbars="none"
+                    android:gravity="center_vertical"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="italic"
+                    android:textSize="16sp"/>
             </FrameLayout>
 
             <LinearLayout
@@ -109,7 +133,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="0dp"
                     android:textSize="22sp"
                     android:text="Title: "
                     android:fontFamily="sans-serif"
@@ -119,7 +143,7 @@
                     android:id="@+id/title_display_editText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="25dp"
                     android:gravity="center"

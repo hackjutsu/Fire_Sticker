@@ -10,7 +10,7 @@
         android:layout_height="200dp"
         android:elevation="3dp"
         android:background="@drawable/whiterounded_view"
-        android:layout_margin="3dp">
+        android:layout_margin="4dp">
 
 
         <LinearLayout
@@ -26,12 +26,13 @@
                 android:text="Happy Titile"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif"
-                android:textColor="@color/GREY900"
-                android:textSize="18sp"
-                android:paddingTop="15dp"
+                android:textColor="@color/GREY800"
+                android:textSize="17sp"
+                android:paddingTop="20dp"
                 android:paddingBottom="7dp"
-                android:paddingLeft="22dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:gravity="start"
                 android:singleLine="true"
                 android:ellipsize="marquee" />
 
@@ -41,9 +42,9 @@
                 android:layout_height="wrap_content"
                 android:text="I'm an awesome question demo."
                 android:fontFamily="sans-serif"
-                android:textColor="@color/PURE_BLACK"
+                android:textColor="@color/GREY700"
                 android:textSize="12sp"
-                android:paddingLeft="22dp"
+                android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:layout_marginBottom="-4dp"
                 android:maxLines="4"
@@ -55,9 +56,9 @@
                 android:layout_height="wrap_content"
                 android:text="I'm an exciting answer demo."
                 android:fontFamily="sans-serif"
-                android:textColor="@color/PURE_BLACK"
+                android:textColor="@color/GREY700"
                 android:textSize="12sp"
-                android:paddingLeft="22dp"
+                android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="12sp"
                 android:paddingBottom="5dp"
@@ -82,6 +83,15 @@
             android:layout_marginLeft="30dp"
             android:id="@+id/item_done"
             android:src="@drawable/done"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_margin="12dp"
+            android:id="@+id/item_lock"
+            android:src="@drawable/lock"
             android:scaleType="centerInside" />
 
         <ImageView

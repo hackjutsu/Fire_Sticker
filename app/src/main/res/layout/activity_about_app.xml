@@ -161,13 +161,13 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/rateAppLink"
+            android:id="@+id/rate_app_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
-            android:text="Rate this app?"
+            android:text="Follow us on Twitter"
             android:textSize="15sp"
             android:textStyle="italic"/>
     </LinearLayout>

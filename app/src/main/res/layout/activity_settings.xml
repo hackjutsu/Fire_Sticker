@@ -100,6 +100,90 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:elevation="2dp"
+            android:background="@drawable/whiterounded_view"
+            android:orientation="vertical">
+
+            <!--<LinearLayout-->
+                <!--android:visibility="visible"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="80dp"-->
+                <!--android:layout_marginTop="0dp"-->
+                <!--android:layout_marginBottom="0dp"-->
+                <!--android:layout_marginLeft="0dp"-->
+                <!--android:layout_marginRight="0dp"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginRight="0dp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:text="PASSWORD" />-->
+
+                <!--<android.support.v7.widget.SwitchCompat-->
+                    <!--android:id="@+id/passwordSwitch"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="right|center_vertical"-->
+                    <!--android:layout_marginRight="20dp" />-->
+            <!--</LinearLayout>-->
+
+            <!--<FrameLayout-->
+                <!--android:id="@+id/layout_divider_passwordPanel"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="2dp"-->
+                <!--android:layout_marginLeft="25dp"-->
+                <!--android:layout_marginRight="25dp"-->
+                <!--android:background="@color/GREYBACKGROUD"/>-->
+
+            <LinearLayout
+                android:id="@+id/passwordPanel"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="0dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="PASSWORD" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="80dp"

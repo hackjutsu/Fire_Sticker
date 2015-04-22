@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gogocosmo.cosmoqiu.fire_sticker"
-    android:versionCode="9"
-    android:versionName="2.0.0" >
+    android:versionCode="10"
+    android:versionName="2.1" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -54,6 +54,10 @@
         <activity
             android:name=".Acitivty.SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".Acitivty.PasswordActivity"
+            android:label="@string/title_activity_password" >
         </activity>
     </application>
 

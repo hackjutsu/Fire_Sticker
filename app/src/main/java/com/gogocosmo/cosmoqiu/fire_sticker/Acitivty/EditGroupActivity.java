@@ -1,6 +1,8 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.GroupArrayAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
+import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
@@ -117,8 +120,8 @@ public class EditGroupActivity extends ActionBarActivity implements
 
         dialog.setCanceledOnTouchOutside(false);
 
-        ImageView cancelImage = (ImageView) dialog.findViewById(R.id.cancel_dialog);
-        ImageView confirmImage = (ImageView) dialog.findViewById(R.id.confirm_dialog);
+        TextView cancelButton = (TextView) dialog.findViewById(R.id.cancel_dialog);
+        TextView confirmButton = (TextView) dialog.findViewById(R.id.confirm_dialog);
         final EditText groupName = (EditText) dialog.findViewById(R.id.editText_groupName);
 
         String originalTitle = ItemFactory.getItemGroupObjectList().get(mSelectedIndex).getGroupName();
@@ -129,18 +132,18 @@ public class EditGroupActivity extends ActionBarActivity implements
         Editable etext = groupName.getText();
         Selection.setSelection(etext, position);
 
-        cancelImage.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        confirmImage.setOnClickListener(new View.OnClickListener() {
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String newTitle = groupName.getText().toString();
-                Group updatedGroup =  ItemFactory.getItemGroupObjectList().get(mSelectedIndex);
+                Group updatedGroup = ItemFactory.getItemGroupObjectList().get(mSelectedIndex);
                 updatedGroup.setGroupName(newTitle);
                 mAdapter.notifyDataSetChanged();
                 updateTotalStickerNum();
@@ -165,8 +168,8 @@ public class EditGroupActivity extends ActionBarActivity implements
 
         dialog.setCanceledOnTouchOutside(false);
 
-        ImageView cancelImage = (ImageView) dialog.findViewById(R.id.cancel_dialog);
-        ImageView confirmImage = (ImageView) dialog.findViewById(R.id.confirm_dialog);
+        TextView cancelImage = (TextView) dialog.findViewById(R.id.cancel_dialog);
+        TextView confirmImage = (TextView) dialog.findViewById(R.id.confirm_dialog);
         final EditText groupName = (EditText) dialog.findViewById(R.id.editText_groupName);
 
         groupName.setText("");
@@ -174,6 +177,7 @@ public class EditGroupActivity extends ActionBarActivity implements
         cancelImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });
@@ -206,6 +210,40 @@ public class EditGroupActivity extends ActionBarActivity implements
         paramsWindow.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(paramsWindow);
     }
+
+    private void showDeleteGroupDialog() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set title
+        alertDialogBuilder.setTitle("Delete");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Do you want to delete the selected group?")
+                .setCancelable(false)
+                .setPositiveButton("DELETE",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                        deleteGroup();
+                    }
+                })
+                .setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                        mAdapter.notifyDataSetChanged();
+                        mActionMode.finish();
+                        dialog.dismiss();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
 
     private void deleteGroup() {
 
@@ -270,7 +308,7 @@ public class EditGroupActivity extends ActionBarActivity implements
                 return true;
             case R.id.action_delete:
 
-                deleteGroup();
+                showDeleteGroupDialog();
                 mListView.setItemChecked(mSelectedIndex, false);
                 return true;
             default:

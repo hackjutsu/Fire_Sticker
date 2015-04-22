@@ -1,7 +1,10 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +12,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -23,13 +28,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedTime;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,9 +61,17 @@ public class ViewActivity extends ActionBarActivity {
     private ImageView mStampFront;
     private ImageView mStampBack;
     private LinearLayout mCardsContainer;
+    private MenuItem mLock;
+    private MenuItem mLocked;
 
     private Item mItem;
     private int mGroupId;
+
+    private String mOriginFront;
+    private String mOriginBack;
+    private String mOriginTitle;
+
+    private SharedPreferences mPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +105,7 @@ public class ViewActivity extends ActionBarActivity {
         // Get the width of the Windows and set it as the minHeight of the card
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
+        int cardMinHeight = displaymetrics.widthPixels;
 
         int cardPadding = 50;
 
@@ -96,6 +113,7 @@ public class ViewActivity extends ActionBarActivity {
         mFrontSideEditText.setBackgroundColor(randomColor());
         mFrontSideEditText.setMinHeight(cardMinHeight);
         mFrontSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
+        mOriginFront = mItem.getFront();
 
         mBookmark = (ImageView) findViewById(R.id.item_display_bookmark);
         mStampFront = (ImageView) findViewById(R.id.item_card_front_done);
@@ -114,9 +132,10 @@ public class ViewActivity extends ActionBarActivity {
         mBackSideEditText.setBackgroundColor(randomColor());
         mBackSideEditText.setMinHeight(cardMinHeight);
         mBackSideEditText.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
-
+        mOriginBack = mItem.getBack();
 
         mTitleEditText = (EditText) findViewById(R.id.title_display_editText);
+        mOriginTitle = mItem.getTitle();
 
         mFrontSideEditText.setText(mItem.getFront());
         mBackSideEditText.setText(mItem.getBack());
@@ -135,6 +154,17 @@ public class ViewActivity extends ActionBarActivity {
                 imm.hideSoftInputFromWindow(mTitleEditText.getWindowToken(), 0);
             }
         });
+
+        if (!mItem.getDateUpdate().isEmpty()) {
+            TextView lastUpdatedDateFront = (TextView) findViewById(R.id.frontSide_time_updated);
+            lastUpdatedDateFront.setText("Updated: " + mItem.getDateUpdate());
+
+            TextView lastUpdatedDateBack = (TextView) findViewById(R.id.backSide_time_updated);
+            lastUpdatedDateBack.setText("Updated: " + mItem.getDateUpdate());
+        }
+
+        mPreference = PreferenceManager.getDefaultSharedPreferences(this);
+
     }
 
     private int randomColor() {
@@ -181,6 +211,18 @@ public class ViewActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_view, menu);
+
+        mLock = menu.findItem(R.id.action_lock_view);
+        mLocked = menu.findItem(R.id.action_locked_view);
+
+        if (mItem.getLock() == 1) {
+            mLocked.setVisible(true);
+            mLock.setVisible(false);
+        } else {
+            mLocked.setVisible(false);
+            mLock.setVisible(true);
+        }
+
         return true;
     }
 
@@ -261,18 +303,78 @@ public class ViewActivity extends ActionBarActivity {
                 ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
                 return true;
 
+            case R.id.action_lock_view:
+
+                if (mPreference.getBoolean("PASSWORD_PROCTECTION", false)) {
+                    mLocked.setVisible(true);
+                    mLock.setVisible(false);
+                    mItem.setLock(1);
+                    CustomizedToast.showToast(this, "Locked");
+                    ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
+                } else {
+                    showRequirePasswordSetupDialog();
+                }
+                return true;
+
+            case R.id.action_locked_view:
+
+                mLocked.setVisible(false);
+                mLock.setVisible(true);
+                mItem.setLock(0);
+                CustomizedToast.showToast(this, "Unlocked");
+                ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
+                return true;
+
             default:
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void showRequirePasswordSetupDialog() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set title
+        alertDialogBuilder.setTitle("Password");
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setMessage("Please set up your password first: Settings -> PASSWORD")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+    }
+
     private void confirmEdits() {
 
-        mItem.setFront(mFrontSideEditText.getText().toString());
-        mItem.setBack(mBackSideEditText.getText().toString());
-        mItem.setTitle(mTitleEditText.getText().toString());
+        String newFront = mFrontSideEditText.getText().toString();
+        String newBack = mBackSideEditText.getText().toString();
+        String newTitle = mTitleEditText.getText().toString();
 
-        ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
+        if (!mOriginFront.equals(newFront) ||
+                !mOriginBack.equals(newBack) ||
+                !mOriginTitle.equals(newTitle)) {
+
+            mItem.setFront(newFront);
+            mItem.setBack(newBack);
+            mItem.setTitle(newTitle);
+            CustomizedToast.showToast(this, "SAVE");
+
+            mItem.setDateUpdate(CustomizedTime.getTimeStamp());
+            ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
+        }
+
+
     }
 
     private void shareNote(String path) {
@@ -312,7 +414,6 @@ public class ViewActivity extends ActionBarActivity {
     public void onBackPressed() {
 
         confirmEdits();
-        CustomizedToast.showToast(this, "SAVE");
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("GROUP", mGroupId);

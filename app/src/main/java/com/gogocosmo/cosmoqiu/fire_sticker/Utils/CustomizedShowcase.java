@@ -23,32 +23,32 @@ public class CustomizedShowcase {
         ItemFactory.createGroup("To-Do List");
 
         // Add default items to group "Welcome!"
-        ItemFactory.createItem(0, "Bookmark the important notes", "", "Bookmark", 1, 0);
-        ItemFactory.createItem(0, "Try to edit this note ^_^", "Stamp it when the task is finished", "Edit Notes", 0, 1);
-        ItemFactory.createItem(0, "You can bookmark and stamp at the same time", "Awesome note", "Long Press", 1, 1);
+        ItemFactory.createItem(0, "Bookmark the important notes.", "", "Bookmark", 1, 0, 0);
+        ItemFactory.createItem(0, "Try to edit this note ^_^", "Stamp it when the task is finished", "Edit Notes", 0, 1, 0);
+        ItemFactory.createItem(0, "You can bookmark and stamp at the same time.", "Awesome note", "Long Press", 1, 1, 0);
         ItemFactory.createItem(0, "Welcome to Note it! Here, every note has two colorful sides.",
                 "You can write down the notes on the front and add hint on the back. " +
                         "Or just write the question on the front, and solutions on the back.",
-                "Welcome!", 1, 0);
+                "Welcome!", 1, 0, 0);
 
         // Add default items to group "Great ideas"
-        ItemFactory.createItem(1, "Change the world!", "Less pollution.", "Awesome Idea", 1, 0);
+        ItemFactory.createItem(1, "Change the world!", "Less pollution.", "Awesome Idea", 1, 0, 0);
         ItemFactory.createItem(1, "Do meditate. Don't stay up all night. ",
                 "Studies show that those who meditate daily for at least 30 minutes" +
-                        "have better focus.", "Meditate", 0, 1);
+                        "have better focus.", "Meditate", 0, 1, 0);
         ItemFactory.createItem(1, "Do trust yourself. Don't go it alone.",
                 "When people believe they can grow their brainpower, " +
-                        "they become more curious and more open-minded.", "Trust", 1, 1);
+                        "they become more curious and more open-minded.", "Trust", 1, 1, 0);
         ItemFactory.createItem(1, "Do model the great. Don't be a sheep.",
-                "Think, what are smart people doing, and what can that teach me?", "Model", 0, 0);
+                "Think, what are smart people doing, and what can that teach me?", "Model", 0, 0, 0);
         ItemFactory.createItem(1, "Do pay attention. Don't just pass judgement.",
-                "Listen closely. Be observant and informed. Be patient and in the moment.", "Attentions", 0, 0);
+                "Listen closely. Be observant and informed. Be patient and in the moment.", "Attentions", 0, 0, 0);
 
         // Add default items to group "To-Do List"
-        ItemFactory.createItem(2, "Read the Wiki about Scotland History in 19 century.", "Watch the documentary.", "Scotland History", 1, 1);
-        ItemFactory.createItem(2, "Everyone is talking about it. It must be interesting.", "Order it online!", "Order The Lean Startup", 0, 0);
-        ItemFactory.createItem(2, "Egg, Milk, Onions, Cheese", "Maybe some pens.", "Target Shopping", 0, 1);
-        ItemFactory.createItem(2, "Just do it!", "Keep running!", "30 minutes' Running", 1, 0);
+        ItemFactory.createItem(2, "Read the Wiki about Scotland History in 19 century.", "Watch the documentary.", "Scotland History", 1, 1, 0);
+        ItemFactory.createItem(2, "Everyone is talking about it. It must be interesting.", "Order it online!", "Order The Lean Startup", 0, 0, 0);
+        ItemFactory.createItem(2, "Egg, Milk, Onions, Cheese", "Maybe some pens.", "Target Shopping", 0, 1, 0);
+        ItemFactory.createItem(2, "Just do it!", "Keep running!", "30 minutes' Running", 1, 0, 0);
     }
 
     static public void displayLaunchActivtyShowcaseViewZero(final Activity activity) {

@@ -4,23 +4,37 @@
     tools:context="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.ViewActivity">
 
     <item
-        android:id="@+id/action_share_view"
-        android:orderInCategory="150"
-        android:title="BookMark"
-        android:icon="@drawable/share_action"
+        android:id="@+id/action_lock_view"
+        android:orderInCategory="100"
+        android:title="Lock"
+        android:icon="@drawable/lock_action"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_locked_view"
+        android:orderInCategory="100"
+        android:title="Lock"
+        android:icon="@drawable/locked_action"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_stamp_view"
         android:orderInCategory="200"
-        android:title="BookMark"
+        android:title="Stamp"
         android:icon="@drawable/stamp_action"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_flag_view"
         android:orderInCategory="250"
-        android:title="BookMark"
+        android:title="Bookmark"
         android:icon="@drawable/flag_action"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_share_view"
+        android:orderInCategory="300"
+        android:title="Share"
+        android:icon="@drawable/share_action"
         app:showAsAction="ifRoom" />
 </menu>

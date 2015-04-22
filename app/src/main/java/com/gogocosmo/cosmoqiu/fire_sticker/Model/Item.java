@@ -11,6 +11,10 @@ public class Item {
     private String mTitle = null;
     private int mBookmark = 0;
     private int mStamp = 0;
+    private int mLock = 0;
+    private String mDateCreation = "";
+    private String mDateUpdate = "";
+
 
     public Item() {
 
@@ -23,13 +27,16 @@ public class Item {
         mUuid = UUID.randomUUID().toString();
     }
 
-    public Item(String front, String back, String title, int bookMark, int stamp) {
+    public Item(String front, String back, String title, int bookMark, int stamp, int lock) {
         mFront = front;
         mBack = back;
         mTitle = title;
         mBookmark = bookMark;
         mStamp = stamp;
         mUuid = UUID.randomUUID().toString();
+        mLock = lock;
+        mDateCreation="";
+        mDateUpdate="";
     }
 
     public int getId() {
@@ -68,6 +75,18 @@ public class Item {
         this.mStamp = stamp;
     }
 
+    public void setLock(int lock) {
+        this.mLock = lock;
+    }
+
+    public void setDateCreation(String DateCreation) {
+        this.mDateCreation = DateCreation;
+    }
+
+    public void setDateUpdate(String DateUpdate) {
+        this.mDateUpdate = DateUpdate;
+    }
+
     public String getFront() {
         return mFront;
     }
@@ -86,6 +105,19 @@ public class Item {
 
     public int getStamp() {
         return mStamp;
+    }
+
+    public int getLock() {
+        return mLock;
+    }
+
+    public String getDateCreation() {
+        return mDateCreation;
+    }
+
+    public String getDateUpdate() {
+
+        return mDateUpdate==null? "" : mDateUpdate;
     }
 
     public String toString() {

@@ -33,6 +33,7 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
         public TextView mTitle;
         public ImageView mBookMark;
         public ImageView mStamp;
+        public ImageView mLock;
         public ImageView mPokerTop;
         public ImageView mPokerBottom;
     }
@@ -65,12 +66,15 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
             viewHolder.mTitle = (TextView) rowView.findViewById(R.id.item_title);
             viewHolder.mBookMark = (ImageView) rowView.findViewById(R.id.item_bookmark);
             viewHolder.mStamp = (ImageView) rowView.findViewById(R.id.item_done);
+            viewHolder.mLock = (ImageView) rowView.findViewById(R.id.item_lock);
             viewHolder.mPokerTop = (ImageView) rowView.findViewById(R.id.item_poker_top);
             viewHolder.mPokerBottom = (ImageView) rowView.findViewById(R.id.item_poker_bottom);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
         }
+
+        viewHolder.mTitle.setText(mValues.get(position).getTitle());
 
         String frontStr = mValues.get(position).getFront();
         String backStr = mValues.get(position).getBack();
@@ -89,12 +93,6 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
             viewHolder.mBookMark.setVisibility(View.VISIBLE);
         } else {
             viewHolder.mBookMark.setVisibility(View.INVISIBLE);
-        }
-
-        if (stamp == 1) {
-            viewHolder.mStamp.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.mStamp.setVisibility(View.INVISIBLE);
         }
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -136,16 +134,30 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
             viewHolder.mPokerTop.setVisibility(View.INVISIBLE);
             viewHolder.mPokerBottom.setVisibility(View.INVISIBLE);
         }
-//        if (position == ItemFactory.getSelectedItemIndex(mGroupId)) {
-//            rowView.setBackgroundColor(mContext.getResources().getColor(R.color.FANQIEHONG));
-//        } else {
-//            rowView.setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
-//        };
+
+        if (mValues.get(position).getLock() == 1) {
+
+            // If the note is locked, return rowView with lock stamp
+            viewHolder.mFrontSide.setText("");
+            viewHolder.mBackSide.setText(mValues.get(position).getFront());
+            viewHolder.mStamp.setVisibility(View.INVISIBLE);
+            viewHolder.mLock.setVisibility(View.VISIBLE);
+
+            return rowView;
+        } else {
+
+            viewHolder.mLock.setVisibility(View.INVISIBLE);
+        }
+
+        if (stamp == 1) {
+            viewHolder.mStamp.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.mStamp.setVisibility(View.INVISIBLE);
+        }
 
         // Replace multiple spaces to single space while displaying in item cell.
         viewHolder.mFrontSide.setText(frontStr.trim().replaceAll(" +", " "));
         viewHolder.mBackSide.setText(backStr.trim().replaceAll(" +", " "));
-        viewHolder.mTitle.setText(mValues.get(position).getTitle());
 
         return rowView;
     }

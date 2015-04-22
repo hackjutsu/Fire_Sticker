@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.PasswordManager;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 
 import java.io.File;
@@ -45,6 +46,9 @@ public class SettingsActivity extends ActionBarActivity {
     private TextView mRestore;
     private TextView mBackup;
     private FrameLayout mLayoutDivider;
+    private LinearLayout mCreateReset;
+    private Boolean mPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +146,7 @@ public class SettingsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                restoreFromBackupDialog();
+                showRestoreFromBackupDialog();
             }
         });
 
@@ -155,9 +159,23 @@ public class SettingsActivity extends ActionBarActivity {
             }
         });
 
+        // Set up Create/Reset Panel
+        mCreateReset = (LinearLayout) findViewById(R.id.passwordPanel);
+
+        mCreateReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mPreference.getBoolean("PASSWORD_PROCTECTION", false)) {
+                    PasswordManager.showResetPasswordDialog(SettingsActivity.this);
+                } else {
+                    PasswordManager.showCreatePasswordDialog(SettingsActivity.this);
+                }
+            }
+        });
     }
 
-    private void restoreFromBackupDialog() {
+    private void showRestoreFromBackupDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         // set title

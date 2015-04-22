@@ -26,14 +26,15 @@ public class CardColor {
             new CardColor("BEIJINGMAOLAN", Color.rgb(39, 104, 147)),
             new CardColor("FEIHONG", Color.rgb(195, 86, 85)),
             new CardColor("ZONGCHA", Color.rgb(184, 132, 79)),
-            new CardColor("001", Color.rgb(102, 179, 149)),
-            new CardColor("003", Color.rgb(112, 197, 189)),
-            new CardColor("004", Color.rgb(233, 202, 90)),
-            new CardColor("005", Color.rgb(68, 191, 237)),
-            new CardColor("006", Color.rgb(237, 161, 117)),
-            new CardColor("007", Color.rgb(228, 207, 142)),
-            new CardColor("008", Color.rgb(243, 243, 243)),
-            new CardColor("009", Color.rgb(85, 151, 161))
+            new CardColor("QINGSE1", Color.rgb(102, 179, 149)),
+            new CardColor("QINGSE2", Color.rgb(112, 197, 189)),
+            new CardColor("SHIHUANG", Color.rgb(233, 202, 90)),
+            new CardColor("QIANSHIHUANG", Color.rgb(228, 207, 142)),
+            new CardColor("TAIKONGHUI", Color.rgb(243, 243, 243)), //1
+            new CardColor("TAIKONGHUI", Color.rgb(243, 243, 243)), //2
+            new CardColor("TAIKONGHUI", Color.rgb(243, 243, 243)), //3
+            new CardColor("TAIKONGHUI", Color.rgb(243, 243, 243)), //4
+            new CardColor("WANGQING", Color.rgb(85, 151, 161))
     );
 
     private String mColorName;

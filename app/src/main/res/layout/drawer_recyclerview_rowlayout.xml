@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingLeft="12dp"
-        android:textSize="20sp"
+        android:textSize="19sp"
         android:text="Medium Text"
         android:gravity="center_vertical"
         android:id="@+id/rowText" />

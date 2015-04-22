@@ -109,8 +109,8 @@ public class AboutAppActivity extends ActionBarActivity {
         rateAppButton.startAnimation(fadeOut);
 
         // Rate app link
-        TextView rateAppLink = (TextView) findViewById(R.id.rateAppLink);
-        rateAppLink.setText(Html.fromHtml("<u>Rate this app?</u>"));
+        TextView rateAppLink = (TextView) findViewById(R.id.rate_app_link);
+        rateAppLink.setText(Html.fromHtml("<u>Rate this App?</u>"));
         rateAppLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

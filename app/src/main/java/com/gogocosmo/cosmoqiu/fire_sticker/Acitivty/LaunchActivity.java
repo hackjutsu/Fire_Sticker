@@ -1,5 +1,8 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -16,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.ActionMode;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +28,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.DrawerRecyclerViewAdapter;
 import com.gogocosmo.cosmoqiu.fire_sticker.Adapter.ItemArrayAdapter;
@@ -85,6 +92,8 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private int mProfile = R.drawable.owl_small;
     private SharedPreferences mPreference;
+
+    private boolean mAuthenticated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,24 +251,50 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void deleteListItem() {
 
-        int toRemoveIndex = ItemFactory.getSelectedItemIndex(mActivatedGroupId);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-        int ViewMode = mPreference.getInt("VIEWMODE", 1);
+        // set title
+        alertDialogBuilder.setTitle("Delete");
 
-        if (ViewMode == 1) { // GridView Mode
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Do you want to delete the selected note?")
+                .setCancelable(false)
+                .setPositiveButton("DELETE",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
 
-            // Delete the item from the adapter
-            Item toDeleteItem = (Item) mActivatedItemArrayAdapter.getItem(toRemoveIndex);
-            mActivatedItemArrayAdapter.remove(toDeleteItem);
-            // Notify Database the Deletion
-            ItemFactory.notifyItemDeletion(toDeleteItem);
-        } else if (ViewMode == 2) { // ListView Removal
+                        int toRemoveIndex = ItemFactory.getSelectedItemIndex(mActivatedGroupId);
 
-            animatedRemoval(
-                    mActivatedItemArrayAdapter,
-                    mActivatedItemListView,
-                    toRemoveIndex);
-        }
+                        int ViewMode = mPreference.getInt("VIEWMODE", 1);
+
+                        if (ViewMode == 1) { // GridView Mode
+
+                            // Delete the item from the adapter
+                            Item toDeleteItem = (Item) mActivatedItemArrayAdapter.getItem(toRemoveIndex);
+                            mActivatedItemArrayAdapter.remove(toDeleteItem);
+                            // Notify Database the Deletion
+                            ItemFactory.notifyItemDeletion(toDeleteItem);
+                        } else if (ViewMode == 2) { // ListView Removal
+
+                            animatedRemoval(
+                                    mActivatedItemArrayAdapter,
+                                    mActivatedItemListView,
+                                    toRemoveIndex);
+                        }
+                    }
+                })
+                .setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 
     // ListView item long click
@@ -297,6 +332,12 @@ public class LaunchActivity extends ActionBarActivity implements
         Intent intent = new Intent(this, ViewActivity.class);
         intent.putExtra("POSITION", position);
         intent.putExtra("GROUP", groupId);
+
+        if (ItemFactory.getItemList(groupId).get(position).getLock() == 1) {
+
+
+        }
+
         startActivityForResult(intent, VIEW_DETAILS_REQ);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
@@ -336,8 +377,110 @@ public class LaunchActivity extends ActionBarActivity implements
         Intent intent = new Intent(this, ViewActivity.class);
         intent.putExtra("POSITION", position);
         intent.putExtra("GROUP", groupId);
+
+        if (ItemFactory.getItemList(groupId).get(position).getLock() == 1) {
+
+            showStartAuthDialog(intent);
+            return;
+        }
+
         startActivityForResult(intent, VIEW_DETAILS_REQ);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void showStartAuthDialog(final Intent intent) {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_authentication);
+
+        dialog.setCanceledOnTouchOutside(false);
+
+        TextView cancelButton = (TextView) dialog.findViewById(R.id.cancel_dialog_auth);
+        TextView confirmButton = (TextView) dialog.findViewById(R.id.confirm_dialog_auth);
+        final EditText passwordBox = (EditText) dialog.findViewById(R.id.editText_password_auth);
+        passwordBox.setText("");
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                updateSlidingTabs();
+                mSlidingTabsLayout.setCurrentTab(mActivatedGroupId);
+                dialog.dismiss();
+            }
+        });
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String password = passwordBox.getText().toString();
+                if (password.equals(mPreference.getString("Credentials", "1989"))) {
+
+                    dialog.dismiss();
+                    startActivityForResult(intent, VIEW_DETAILS_REQ);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                } else {
+                    CustomizedToast.showToast(LaunchActivity.this, "Please try again :)");
+                    passwordBox.setText("");
+                }
+            }
+        });
+
+        passwordBox.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
+                        || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    //Do your action
+                    String password = passwordBox.getText().toString();
+
+                    if (password.equals(mPreference.getString("Credentials", "1989"))) {
+
+                        startActivityForResult(intent, VIEW_DETAILS_REQ);
+                        //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        dialog.dismiss();
+                    } else {
+
+                        CustomizedToast.showToast(LaunchActivity.this, "Please try again :)");
+                        passwordBox.setText("");
+                    }
+                }
+                return false;
+            }
+        });
+
+        dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                    updateSlidingTabs();
+                    mSlidingTabsLayout.setCurrentTab(mActivatedGroupId);
+                    dialog.dismiss();
+                    return true;
+
+                }
+                return false;
+            }
+        });
+
+        dialog.setCancelable(false);
+        dialog.getWindow().clearFlags(
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
+        // Automatically pop up the keyboard
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        passwordBox.requestFocus();
+
+        dialog.show();
     }
 
     @Override
@@ -467,7 +610,8 @@ public class LaunchActivity extends ActionBarActivity implements
                 oldItem.getBack(),
                 oldItem.getTitle(),
                 oldItem.getBookmark(),
-                oldItem.getStamp()
+                oldItem.getStamp(),
+                oldItem.getLock()
         );
 
         // Interestingly, when adapter.remove() is called, the notifyDataSetChanged() method is

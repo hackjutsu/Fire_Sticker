@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Group;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.Item;
@@ -20,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String sDatabaseName = "ItemDB";
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Items table name
     public static final String TABLE_ITEMS = "items";
@@ -37,6 +38,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_BACK = "back";
     public static final String KEY_BOOKMARK = "bookMark";
     public static final String KEY_STAMP = "stamp";
+    public static final String KEY_PROTECTION = "protection";
+    public static final String KEY_FEATURE_INT_0 = "featureInteger0";
+    public static final String KEY_FEATURE_INT_1 = "featureInteger1";
+    public static final String KEY_DATECREATION = "dateCreation";
+    public static final String KEY_DATEUPDATE = "dateUpdate";
+    public static final String KEY_FEATURE_TEXT_0 = "featureText0";
+    public static final String KEY_FEATURE_TEXT_1 = "featureText1";
+
 
     // Groups Table Columns names
     public static final String KEY_GROUP_ROW_ID = "_id";
@@ -52,7 +61,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_FRONT,
             KEY_BACK,
             KEY_BOOKMARK,
-            KEY_STAMP};
+            KEY_STAMP,
+            KEY_PROTECTION,
+            KEY_FEATURE_INT_0,
+            KEY_FEATURE_INT_1,
+            KEY_DATECREATION,
+            KEY_DATEUPDATE,
+            KEY_FEATURE_TEXT_0,
+            KEY_FEATURE_TEXT_1
+    };
 
     private static final String[] COLUMNS_OF_TABLE_GROUPS = {
             KEY_GROUP_ROW_ID,
@@ -88,7 +105,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + KEY_FRONT + "  text  , "
                 + KEY_BACK + "  text  , "
                 + KEY_BOOKMARK + "  integer  , "
-                + KEY_STAMP + "  integer  ) ";
+                + KEY_STAMP + "  integer  ,"
+                + KEY_PROTECTION + "  integer  ,"
+                + KEY_FEATURE_INT_0 + "  integer  ,"
+                + KEY_FEATURE_INT_1 + "  integer  ,"
+                + KEY_DATECREATION + "  text  ,"
+                + KEY_DATEUPDATE + "  text  ,"
+                + KEY_FEATURE_TEXT_0 + "  text  ,"
+                + KEY_FEATURE_TEXT_1 + "  text ) ";
 
         // create items table
         db.execSQL(CREATE_ITEM_TABLE);
@@ -104,11 +128,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older books table if existed
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_ITEMS);
 
-        // create fresh books table
-        this.onCreate(db);
+        if (oldVersion == 1 && newVersion == 2) {
+
+            String addColumnProtection =
+                    "ALTER TABLE " + TABLE_ITEMS + " ADD COLUMN " + KEY_PROTECTION + " integer DEFAULT 0";
+            String addColumnFeatureInt0 =
+                    "ALTER TABLE " + TABLE_ITEMS + " ADD COLUMN " + KEY_FEATURE_INT_0 + " integer DEFAULT 0";
+            String addColumnFeatureInt1 =
+                    "ALTER TABLE " + TABLE_ITEMS + " ADD COLUMN " + KEY_FEATURE_INT_1 + " integer DEFAULT 0";
+            String addColumnDateCreation =
+                    "ALTER TABLE " + TABLE_ITEMS + " ADD COLUMN " + KEY_DATECREATION + " text NOT NULL DEFAULT ''";
+            String addColumnDateUpdate =
+                    "ALTER TABLE " + TABLE_ITEMS + " ADD COLUMN " + KEY_DATEUPDATE + " text NOT NULL DEFAULT ''";
+            String addColumnFeatureText0 =
+                    "ALTER TABLE " + TABLE_ITEMS + " ADD COLUMN " + KEY_FEATURE_TEXT_0 + " text NOT NULL DEFAULT ''";
+            String addColumnFeatureText1 =
+                    "ALTER TABLE " + TABLE_ITEMS + " ADD COLUMN " + KEY_FEATURE_TEXT_1 + " text NOT NULL DEFAULT ''";
+
+            db.execSQL(addColumnProtection);
+            db.execSQL(addColumnFeatureInt0);
+            db.execSQL(addColumnFeatureInt1);
+            db.execSQL(addColumnDateCreation);
+            db.execSQL(addColumnDateUpdate);
+            db.execSQL(addColumnFeatureText0);
+            db.execSQL(addColumnFeatureText1);
+
+            Log.d(TAG, "Database is upgraded from " +
+                    String.valueOf(oldVersion) +
+                    " to " +
+                    String.valueOf(newVersion));
+        }
     }
     //---------------------------------------------------------------------
 
@@ -130,6 +180,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_BACK, item.getBack()); // get back
         values.put(KEY_BOOKMARK, item.getBookmark()); // get bookMark
         values.put(KEY_STAMP, item.getStamp()); // get Stamp
+        values.put(KEY_PROTECTION, item.getLock()); // get Lock
+        values.put(KEY_FEATURE_INT_0, 0); // get feature_int_0
+        values.put(KEY_FEATURE_INT_1, 0); // get feature_int_1
+        values.put(KEY_DATECREATION, item.getDateCreation()); // get date creation
+        values.put(KEY_DATEUPDATE, item.getDateUpdate()); // get date update
+        values.put(KEY_FEATURE_TEXT_0, ""); // get feature_text_0
+        values.put(KEY_FEATURE_TEXT_1, ""); // get feature_text_1
 
         // 3. insert
         db.insert(TABLE_ITEMS,
@@ -169,6 +226,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 item.setBack(cursor.getString(6));
                 item.setBookmark(cursor.getInt(7));
                 item.setStamp(cursor.getInt(8));
+                item.setLock(cursor.getInt(9));
+                //item.setFeatureInt0(cursor.getInt(10));
+                //item.setFeatureInt1(cursor.getInt(11));
+                item.setDateCreation(cursor.getString(12));
+                item.setDateUpdate(cursor.getString(13));
+                //item.setFeatureText0(cursor.getString(14));
+                //item.setFeatureText1(cursor.getString(15));
 
                 // Add item to items
                 items.add(item);
@@ -189,14 +253,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put("groupId", group.getGroupName()); // get groupName
-        values.put("groupUUID", group.getUuid()); // get groupUUID
-        values.put("itemUUID", item.getUuid()); // get itemUUID
-        values.put("title", item.getTitle()); // get title
-        values.put("front", item.getFront()); // get front
-        values.put("back", item.getBack()); // get back
-        values.put("bookMark", item.getBookmark()); // get bookMark
-        values.put("stamp", item.getStamp()); // get Stamp
+        values.put(KEY_GROUP, group.getGroupName()); // get groupName
+        values.put(KEY_ITEMGROUP_UUID, group.getUuid()); // get groupUUID
+        values.put(KEY_ITEM_UUID, item.getUuid()); // get itemUUID
+        values.put(KEY_TITLE, item.getTitle()); // get title
+        values.put(KEY_FRONT, item.getFront()); // get front
+        values.put(KEY_BACK, item.getBack()); // get back
+        values.put(KEY_BOOKMARK, item.getBookmark()); // get bookMark
+        values.put(KEY_STAMP, item.getStamp()); // get Stamp
+        values.put(KEY_PROTECTION, item.getLock()); // get Lock
+        values.put(KEY_DATECREATION, item.getDateCreation()); // get Date Creation
+        values.put(KEY_DATEUPDATE, item.getDateUpdate()); // get Date Update
 
         // 3. updating row
         int i = db.update(TABLE_ITEMS, //table

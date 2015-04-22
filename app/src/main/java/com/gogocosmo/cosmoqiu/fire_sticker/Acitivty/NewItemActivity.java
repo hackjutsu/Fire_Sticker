@@ -65,7 +65,7 @@ public class NewItemActivity extends ActionBarActivity {
         // Get the width of the Windows and set it as the minHeight of the card
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int cardMinHeight = displaymetrics.widthPixels - 100; // The number 100 includes the card's margins
+        int cardMinHeight = displaymetrics.widthPixels;
 
         mFrontSideEditText = (EditText) findViewById(R.id.frontSide_input_EditText);
         mFrontSideEditText.setBackgroundColor(randomColor());
@@ -158,7 +158,7 @@ public class NewItemActivity extends ActionBarActivity {
             newBackSide = "";
         }
 
-        ItemFactory.createItem(mSpinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, 0, 0);
+        ItemFactory.createItem(mSpinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, 0, 0, 0);
     }
 
     @Override

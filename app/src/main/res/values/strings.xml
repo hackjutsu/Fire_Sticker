@@ -15,5 +15,6 @@
     <string name="title_activity_about_app">About App</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_password">PasswordActivity</string>
 
 </resources>

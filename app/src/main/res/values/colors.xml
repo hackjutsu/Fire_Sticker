@@ -38,7 +38,7 @@
     <color name="RED">@color/WINERED</color>
     <color name="BLUE">@color/HAILAN</color>
     <color name="WHITE">@color/XUESE</color>
-    <color name="GREY">@color/GREY900</color>
+    <color name="GREY">@color/GREY800</color>
     <color name="YELLOW">@color/YELLOW700</color>
     <color name="PURE_WHITE">@android:color/white</color>
     <color name="PURE_BLACK">@android:color/black</color>
@@ -54,7 +54,8 @@
     <color name="HAILAN">#17507d</color>
     <color name="ORANGE">#FF9800</color>
     <color name="YELLOW700">#FBC02D</color>
-    <color name="GREY900">#424242</color>
+    <color name="GREY800">#424242</color>
+    <color name="GREY700">#616161</color>
     <color name="GREYBACKGROUD">#EDEDED</color>
 
 

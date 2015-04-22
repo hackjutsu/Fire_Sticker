@@ -1,5 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Model;
 
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedTime;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +21,7 @@ public class ItemFactory {
         mDatabaseHelper = databaseHelper;
     }
 
-    public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark, int stamp) {
+    public static Item createItem(int groupId, String frontSide, String backSide, String title, int bookMark, int stamp, int lock) {
 
         if (groupId < 0 || groupId >= mItemLists.size()) {
             return null;
@@ -33,29 +34,29 @@ public class ItemFactory {
 
             Calendar c = Calendar.getInstance();
             int day = c.get(Calendar.DAY_OF_WEEK);
-            String weekDay = "Sunday";
+            String weekDay = "Sun";
 
             switch (day) {
                 case Calendar.SUNDAY:
-                    weekDay = "Sunday";
+                    weekDay = "Sun";
                     break;
                 case Calendar.MONDAY:
-                    weekDay = "Monday";
+                    weekDay = "Mon";
                     break;
                 case Calendar.TUESDAY:
-                    weekDay = "Tuesday";
+                    weekDay = "Tue";
                     break;
                 case Calendar.WEDNESDAY:
-                    weekDay = "Wednesday";
+                    weekDay = "Wed";
                     break;
                 case Calendar.THURSDAY:
-                    weekDay = "Thursday";
+                    weekDay = "Thur";
                     break;
                 case Calendar.FRIDAY:
-                    weekDay = "Friday";
+                    weekDay = "Fri";
                     break;
                 case Calendar.SATURDAY:
-                    weekDay = "Saturday";
+                    weekDay = "Sat";
                     break;
                 default:
             }
@@ -66,8 +67,9 @@ public class ItemFactory {
             realTitle = weekDay + ", " + formattedDate;
         }
 
-
-        Item newItem = new Item(frontSide, backSide, realTitle, bookMark, stamp);
+        Item newItem = new Item(frontSide, backSide, realTitle, bookMark, stamp, lock);
+        newItem.setDateCreation(CustomizedTime.getTimeStamp());
+        newItem.setDateUpdate(CustomizedTime.getTimeStamp());
         itemList.add(0, newItem);
 
         // Notify Database the item creation
