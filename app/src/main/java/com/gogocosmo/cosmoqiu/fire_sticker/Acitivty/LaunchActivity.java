@@ -2,6 +2,7 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +49,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedShowcase;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.PasswordManager;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.ProfilePicker;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
@@ -91,7 +93,7 @@ public class LaunchActivity extends ActionBarActivity implements
     public int mActivatedGroupId;
     private ArrayAdapter mActivatedItemArrayAdapter;
 
-    private int mProfile = R.drawable.owl_small;
+    private int mProfile = R.drawable.profile_lion;
     private SharedPreferences mPreference;
 
     @Override
@@ -205,7 +207,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
         String[] osArray = ItemFactory.getItemGroupObjectNameList().toArray(
                 new String[ItemFactory.getItemGroupObjectNameList().size()]);
-        mDrawerViewAdapter = new DrawerRecyclerViewAdapter(osArray, mProfile, this);
+        mDrawerViewAdapter = new DrawerRecyclerViewAdapter(this, osArray, mProfile, this);
 
         // Setting the adapter to RecyclerView
         mDrawerRecyclerView.setAdapter(mDrawerViewAdapter);
@@ -493,7 +495,9 @@ public class LaunchActivity extends ActionBarActivity implements
                 mDrawerLayout.closeDrawers();
                 break;
             case DrawerRecyclerViewAdapter.TYPE_HEADER:
-
+                showPickerDialog();
+                updateDrawerItems();
+                updateSlidingTabs();
                 break;
             case DrawerRecyclerViewAdapter.TYPE_EDIT_GROUPS:
 
@@ -767,6 +771,93 @@ public class LaunchActivity extends ActionBarActivity implements
                 return true;
             }
         });
+    }
+
+    private void showPickerDialog() {
+
+        final CharSequence[] items = {
+                "Owls",
+                "Fox",
+                "Zebra",
+                "Lion",
+                "Panda",
+                "Monkey",
+                "Puppy",
+                "Kitty",
+                "Penguin",
+                "Chicken",
+                "Pig",
+                "Tiger"
+        };
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle("Pick up a profile:)");
+        builderSingle.setNegativeButton("cancel",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Do something with the selection
+                switch (item) {
+                    case 0:
+                        setProfile(R.drawable.profile_owl);
+                        break;
+                    case 1:
+                        setProfile(R.drawable.profile_fox);
+                        break;
+                    case 2:
+                        setProfile(R.drawable.profile_zebra);
+                        break;
+                    case 3:
+                        setProfile(R.drawable.profile_lion);
+                        break;
+                    case 4:
+                        setProfile(R.drawable.profile_panda);
+                        break;
+                    case 5:
+                        setProfile(R.drawable.profile_monkey);
+                        break;
+                    case 6:
+                        setProfile(R.drawable.profile_dog);
+                        break;
+                    case 7:
+                        setProfile(R.drawable.profile_cat);
+                        break;
+                    case 8:
+                        setProfile(R.drawable.profile_penguin);
+                        break;
+                    case 9:
+                        setProfile(R.drawable.profile_chicken);
+                        break;
+                    case 10:
+                        setProfile(R.drawable.profile_pig);
+                        break;
+                    case 11:
+                        setProfile(R.drawable.profile_tiger);
+                        break;
+                    default:
+                        setProfile(R.drawable.profile_owl);
+                }
+                dialog.dismiss();
+            }
+        });
+        builderSingle.show();
+    }
+
+    private void setProfile(final int profile) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preference.edit();
+        editor.putInt("PROFILE_IMAGE", profile);
+        editor.commit();
+
+        updateDrawerItems();
     }
 
     @Override

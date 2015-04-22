@@ -1,5 +1,6 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.ProfilePicker;
 
 
 public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecyclerViewAdapter.ViewHolder> {
@@ -21,6 +23,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     final static public int TYPE_ABOUTAPP = 4;
 
     private String mNavTitles[];
+    private Context mContext;
     private int mProfile;
     private IDrawerListItemClickListener mDrawerItemClickListener;
 
@@ -59,6 +62,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             } else if (ViewType == TYPE_HEADER) {
 
                 mProfileImage = (ImageView) itemView.findViewById(R.id.circleView);
+                mProfileImage.setOnClickListener(this);
                 // Header doesn't need a ClickedListener
             } else if (ViewType == TYPE_EDIT_GROUPS) {
 
@@ -88,10 +92,12 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
     }
 
     public DrawerRecyclerViewAdapter(
+            Context context,
             String Titles[],
             int profile,
             IDrawerListItemClickListener drawerItemClickListener) {
 
+        mContext = context;
         mNavTitles = Titles;
         mProfile = profile;
         mDrawerItemClickListener = drawerItemClickListener;
@@ -123,7 +129,7 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
                 @Override
                 public void onClickedEvent(View v, int position) {
 
-//                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_HEADER);
+                    mDrawerItemClickListener.onDrawerItemClicked(v, position - 1, TYPE_HEADER);
                 }
             });
             return vhHeader;
@@ -181,6 +187,8 @@ public class DrawerRecyclerViewAdapter extends RecyclerView.Adapter<DrawerRecycl
             holder.mViewHolderPosition = position;
 
         } else if (holder.mViewType == TYPE_HEADER) {
+
+            mProfile = ProfilePicker.getProfile(mContext);
 
             holder.mProfileImage.setImageResource(mProfile);
             holder.mViewHolderPosition = position;

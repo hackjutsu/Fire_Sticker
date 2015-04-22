@@ -1,0 +1,12 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/label_profile"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="45dp"
+    android:paddingRight="45dp"
+    android:textSize="22sp"
+    android:textStyle="normal"
+    android:singleLine="true"
+    android:ellipsize="marquee" />
