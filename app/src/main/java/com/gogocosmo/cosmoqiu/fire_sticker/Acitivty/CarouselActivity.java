@@ -180,6 +180,7 @@ public class CarouselActivity extends ActionBarActivity {
         newCard.setCardText(item.getFront());
         newCard.setMarked(item.getBookmark());
         newCard.setStamp(item.getStamp());
+        newCard.setLock(item.getLock());
 
         // Add this new card info to card trace
         mCardTrace.add(new CardHolder(cardColor, item));
@@ -229,6 +230,7 @@ public class CarouselActivity extends ActionBarActivity {
         preCard.setCardColor(currentHolder.getColor());
         preCard.setCardText(currentHolder.getItem().getFront());
         preCard.setMarked(currentHolder.getItem().getBookmark());
+        preCard.setLock(currentHolder.getItem().getLock());
 
         mCurrentCard = preCard;
 

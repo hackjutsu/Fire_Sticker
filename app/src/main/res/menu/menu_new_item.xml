@@ -2,10 +2,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.gogocosmo.cosmoqiu.fire_sticker.Acitivty.NewItemActivity">
+
+    <item
+        android:id="@+id/action_lock_view"
+        android:orderInCategory="100"
+        android:title="Lock"
+        android:icon="@drawable/lock_action"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_locked_view"
+        android:orderInCategory="100"
+        android:title="Lock"
+        android:icon="@drawable/locked_action"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/confirm_new_item"
         android:title="Confirm"
         android:icon="@drawable/confirm_action"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         app:showAsAction="always" />
 </menu>

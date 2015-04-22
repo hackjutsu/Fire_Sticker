@@ -31,6 +31,7 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
         public TextView mFrontSide;
         public TextView mBackSide;
         public TextView mTitle;
+        public TextView mUpdatedDate;
         public ImageView mBookMark;
         public ImageView mStamp;
         public ImageView mLock;
@@ -64,6 +65,7 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
             viewHolder.mFrontSide = (TextView) rowView.findViewById(R.id.item_question);
             viewHolder.mBackSide = (TextView) rowView.findViewById(R.id.item_answer);
             viewHolder.mTitle = (TextView) rowView.findViewById(R.id.item_title);
+            viewHolder.mUpdatedDate = (TextView) rowView.findViewById(R.id.item_update_date);
             viewHolder.mBookMark = (ImageView) rowView.findViewById(R.id.item_bookmark);
             viewHolder.mStamp = (ImageView) rowView.findViewById(R.id.item_done);
             viewHolder.mLock = (ImageView) rowView.findViewById(R.id.item_lock);
@@ -75,6 +77,7 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
         }
 
         viewHolder.mTitle.setText(mValues.get(position).getTitle());
+        viewHolder.mUpdatedDate.setText("Edited " + mValues.get(position).getDateUpdate());
 
         String frontStr = mValues.get(position).getFront();
         String backStr = mValues.get(position).getBack();

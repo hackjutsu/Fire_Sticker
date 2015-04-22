@@ -22,6 +22,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.CardColor;
 import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.PasswordManager;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 
 import java.util.Random;
@@ -39,6 +40,10 @@ public class NewItemActivity extends ActionBarActivity {
     private LinearLayout mCardsContainer;
 
     private Spinner mSpinner;
+    private MenuItem mLock;
+    private MenuItem mLocked;
+
+    private int mLockIndicator = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +90,7 @@ public class NewItemActivity extends ActionBarActivity {
         mSpinner.setSelection(getIntent().getExtras().getInt("CURRENT_TAB"));
 
         // Hide the soft keyboard when tapping the white boarders
-        mCardsContainer = (LinearLayout)findViewById(R.id.linear_cards_input);
+        mCardsContainer = (LinearLayout) findViewById(R.id.linear_cards_input);
         mCardsContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +115,13 @@ public class NewItemActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_new_item, menu);
+
+        mLock = menu.findItem(R.id.action_lock_view);
+        mLocked = menu.findItem(R.id.action_locked_view);
+
+        mLocked.setVisible(false);
+        mLock.setVisible(true);
+
         return true;
     }
 
@@ -135,6 +147,20 @@ public class NewItemActivity extends ActionBarActivity {
                 CustomizedToast.showToast(this, "SAVE");
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
+            case R.id.action_lock_view:
+                if (!PasswordManager.isPasswordTurnedOn(this)) {
+                    PasswordManager.showRequirePasswordSetupDialog(this);
+                    return false;
+                }
+                mLocked.setVisible(true);
+                mLock.setVisible(false);
+                mLockIndicator = 1;
+                return true;
+            case R.id.action_locked_view:
+                mLocked.setVisible(false);
+                mLock.setVisible(true);
+                mLockIndicator = 0;
+                return true;
             default:
         }
 
@@ -158,7 +184,14 @@ public class NewItemActivity extends ActionBarActivity {
             newBackSide = "";
         }
 
-        ItemFactory.createItem(mSpinner.getSelectedItemPosition(), newFrontSide, newBackSide, newTitle, 0, 0, 0);
+        ItemFactory.createItem(
+                mSpinner.getSelectedItemPosition(),
+                newFrontSide,
+                newBackSide,
+                newTitle,
+                0,
+                0,
+                mLockIndicator);
     }
 
     @Override

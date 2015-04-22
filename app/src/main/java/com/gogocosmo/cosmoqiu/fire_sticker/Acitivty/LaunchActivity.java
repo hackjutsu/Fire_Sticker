@@ -47,6 +47,7 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedShowcase;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.PasswordManager;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
 import com.gogocosmo.cosmoqiu.slidingtablibrary.SlidingTabLayout;
 
@@ -92,8 +93,6 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private int mProfile = R.drawable.owl_small;
     private SharedPreferences mPreference;
-
-    private boolean mAuthenticated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -335,7 +334,8 @@ public class LaunchActivity extends ActionBarActivity implements
 
         if (ItemFactory.getItemList(groupId).get(position).getLock() == 1) {
 
-
+            showStartAuthDialog(intent);
+            return;
         }
 
         startActivityForResult(intent, VIEW_DETAILS_REQ);
@@ -416,7 +416,7 @@ public class LaunchActivity extends ActionBarActivity implements
             public void onClick(View v) {
 
                 String password = passwordBox.getText().toString();
-                if (password.equals(mPreference.getString("Credentials", "1989"))) {
+                if (PasswordManager.isAuthenticated(LaunchActivity.this, password)) {
 
                     dialog.dismiss();
                     startActivityForResult(intent, VIEW_DETAILS_REQ);
@@ -438,7 +438,7 @@ public class LaunchActivity extends ActionBarActivity implements
                     //Do your action
                     String password = passwordBox.getText().toString();
 
-                    if (password.equals(mPreference.getString("Credentials", "1989"))) {
+                    if (PasswordManager.isAuthenticated(LaunchActivity.this, password)) {
 
                         startActivityForResult(intent, VIEW_DETAILS_REQ);
                         //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

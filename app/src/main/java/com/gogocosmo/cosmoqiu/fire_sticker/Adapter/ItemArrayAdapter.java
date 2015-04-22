@@ -30,6 +30,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         public TextView mTitle;
         public ImageView mBookMark;
         public ImageView mStamp;
+        public ImageView mLock;
     }
 
     public ItemArrayAdapter(Context context, ArrayList<Item> values) {
@@ -59,6 +60,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             viewHolder.mTitle = (TextView) rowView.findViewById(R.id.item_title);
             viewHolder.mBookMark = (ImageView) rowView.findViewById(R.id.item_bookmark);
             viewHolder.mStamp = (ImageView) rowView.findViewById(R.id.item_done);
+            viewHolder.mLock = (ImageView) rowView.findViewById(R.id.item_lock);
             rowView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) rowView.getTag();
@@ -68,6 +70,21 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
         String backStr = mValues.get(position).getBack();
         int bookMark = mValues.get(position).getBookmark();
         int stamp = mValues.get(position).getStamp();
+
+        if (mValues.get(position).getLock() == 1) {
+            if (bookMark == 1) {
+                viewHolder.mBookMark.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.mBookMark.setVisibility(View.INVISIBLE);
+            }
+            viewHolder.mStamp.setVisibility(View.INVISIBLE);
+            viewHolder.mTitle.setText(mValues.get(position).getTitle());
+            viewHolder.mFrontSide.setText("Secrets should be kept;)");
+            viewHolder.mBackSide.setText("");
+            return rowView;
+        } else {
+            viewHolder.mLock.setVisibility(View.INVISIBLE);
+        }
 
         if (frontStr.isEmpty()) {
             frontStr = "Blank Front Side";

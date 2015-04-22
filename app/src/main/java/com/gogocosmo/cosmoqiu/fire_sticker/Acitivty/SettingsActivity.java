@@ -47,8 +47,6 @@ public class SettingsActivity extends ActionBarActivity {
     private TextView mBackup;
     private FrameLayout mLayoutDivider;
     private LinearLayout mCreateReset;
-    private Boolean mPassword;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +164,7 @@ public class SettingsActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                if (mPreference.getBoolean("PASSWORD_PROCTECTION", false)) {
+                if (PasswordManager.isPasswordTurnedOn(SettingsActivity.this)) {
                     PasswordManager.showResetPasswordDialog(SettingsActivity.this);
                 } else {
                     PasswordManager.showCreatePasswordDialog(SettingsActivity.this);

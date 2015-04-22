@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,8 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -36,9 +33,8 @@ import com.gogocosmo.cosmoqiu.fire_sticker.Model.ItemFactory;
 import com.gogocosmo.cosmoqiu.fire_sticker.R;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedTime;
 import com.gogocosmo.cosmoqiu.fire_sticker.Utils.CustomizedToast;
+import com.gogocosmo.cosmoqiu.fire_sticker.Utils.PasswordManager;
 import com.gogocosmo.cosmoqiu.fire_sticker.sqlite.DatabaseHelper;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -70,8 +66,6 @@ public class ViewActivity extends ActionBarActivity {
     private String mOriginFront;
     private String mOriginBack;
     private String mOriginTitle;
-
-    private SharedPreferences mPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,14 +151,11 @@ public class ViewActivity extends ActionBarActivity {
 
         if (!mItem.getDateUpdate().isEmpty()) {
             TextView lastUpdatedDateFront = (TextView) findViewById(R.id.frontSide_time_updated);
-            lastUpdatedDateFront.setText("Updated: " + mItem.getDateUpdate());
+            lastUpdatedDateFront.setText("Edited: " + mItem.getDateUpdate());
 
             TextView lastUpdatedDateBack = (TextView) findViewById(R.id.backSide_time_updated);
-            lastUpdatedDateBack.setText("Updated: " + mItem.getDateUpdate());
+            lastUpdatedDateBack.setText("Edited: " + mItem.getDateUpdate());
         }
-
-        mPreference = PreferenceManager.getDefaultSharedPreferences(this);
-
     }
 
     private int randomColor() {
@@ -305,14 +296,14 @@ public class ViewActivity extends ActionBarActivity {
 
             case R.id.action_lock_view:
 
-                if (mPreference.getBoolean("PASSWORD_PROCTECTION", false)) {
+                if (PasswordManager.isPasswordTurnedOn(this)) {
                     mLocked.setVisible(true);
                     mLock.setVisible(false);
                     mItem.setLock(1);
                     CustomizedToast.showToast(this, "Locked");
                     ItemFactory.notifyItemUpdate(ItemFactory.getItemGroupObjectList().get(mGroupId), mItem);
                 } else {
-                    showRequirePasswordSetupDialog();
+                    PasswordManager.showRequirePasswordSetupDialog(this);
                 }
                 return true;
 
@@ -328,31 +319,6 @@ public class ViewActivity extends ActionBarActivity {
             default:
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showRequirePasswordSetupDialog() {
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        // set title
-        alertDialogBuilder.setTitle("Password");
-
-        // set dialog message
-        alertDialogBuilder
-                .setCancelable(false)
-                .setMessage("Please set up your password first: Settings -> PASSWORD")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
-
     }
 
     private void confirmEdits() {

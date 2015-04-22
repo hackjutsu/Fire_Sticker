@@ -22,6 +22,7 @@ public class CardFragment extends Fragment {
     private int mStamp = 0;
     private int mColor;
     private String mText;
+    private int mIsLocked = 0;
 
     @Override
     public void onAttach(Activity activity) {
@@ -41,20 +42,30 @@ public class CardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_card,
                 container, false);
 
+        ImageView lockStamp = (ImageView) view.findViewById(R.id.item_card_lock);
+        ImageView bookMark = (ImageView) view.findViewById(R.id.item_card_bookmark);
+        ImageView stampDone = (ImageView) view.findViewById(R.id.item_card_done);
         mCard = (TextView) view.findViewById(R.id.card);
         mCard.setBackgroundColor(mColor);
+
+        if (mIsLocked == 1) {
+            lockStamp.setVisibility(View.VISIBLE);
+            bookMark.setVisibility(View.INVISIBLE);
+            stampDone.setVisibility(View.INVISIBLE);
+            return view;
+        } else {
+            lockStamp.setVisibility(View.INVISIBLE);
+        }
+
         mCard.setText(mText);
-//        adjustCardTextFormat();
 
         int cardPadding = 50;
         mCard.setPadding(cardPadding, cardPadding, cardPadding, cardPadding);
 
-        ImageView bookMark = (ImageView) view.findViewById(R.id.item_card_bookmark);
         if (mMarked == 0) {
             bookMark.setVisibility(View.INVISIBLE);
         }
 
-        ImageView stampDone = (ImageView) view.findViewById(R.id.item_card_done);
         if (mStamp == 0) {
             stampDone.setVisibility(View.INVISIBLE);
         }
@@ -77,6 +88,9 @@ public class CardFragment extends Fragment {
 //        });
 //        colorAnimation.start();
 //        mCard.setBackgroundColor(mColor);
+        if (mIsLocked == 1) {
+            return ;
+        }
         mCard.setText(text);
     }
 
@@ -95,6 +109,9 @@ public class CardFragment extends Fragment {
 //        });
 //        colorAnimation.start();
 
+        if (mIsLocked == 1) {
+            return ;
+        }
         mCard.setText(text);
     }
 
@@ -112,6 +129,10 @@ public class CardFragment extends Fragment {
 
     public void setStamp(int stamp) {
         mStamp = stamp;
+    }
+
+    public void setLock(int lock) {
+        mIsLocked = lock;
     }
 
     private void adjustCardTextFormat() {

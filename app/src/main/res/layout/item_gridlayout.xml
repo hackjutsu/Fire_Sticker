@@ -66,6 +66,19 @@
                 android:ellipsize="marquee" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/item_update_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text=""
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/GREY"
+            android:textSize="10sp"
+            android:paddingLeft="15dp"
+            android:paddingBottom="10dp"
+            android:maxLines="1"/>
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -91,7 +104,7 @@
             android:layout_gravity="center"
             android:layout_margin="12dp"
             android:id="@+id/item_lock"
-            android:src="@drawable/lock"
+            android:src="@drawable/lock_opaque"
             android:scaleType="centerInside" />
 
         <ImageView

@@ -37,4 +37,13 @@
         android:src="@drawable/done"
         android:scaleType="centerInside" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_margin="25dp"
+        android:id="@+id/item_card_lock"
+        android:src="@drawable/lock_transparent"
+        android:scaleType="centerInside" />
+
 </FrameLayout>

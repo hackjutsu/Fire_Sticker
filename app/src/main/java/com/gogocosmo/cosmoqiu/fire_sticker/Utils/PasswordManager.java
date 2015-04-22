@@ -1,7 +1,9 @@
 package com.gogocosmo.cosmoqiu.fire_sticker.Utils;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -13,6 +15,18 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 
 public class PasswordManager {
+
+    static public boolean isPasswordTurnedOn(final Context ctx) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(ctx);
+        return preference.getBoolean("PASSWORD_PROCTECTION", false);
+    }
+
+    static public boolean isAuthenticated(final Context ctx, final String password) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(ctx);
+        return password.equals(preference.getString("Credentials", "1989"));
+    }
 
     static public void showCreatePasswordDialog(final Context context) {
 
@@ -112,4 +126,27 @@ public class PasswordManager {
         dialog.show();
     }
 
+    static public void showRequirePasswordSetupDialog(Context ctx) {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctx);
+
+        // set title
+        alertDialogBuilder.setTitle("Password");
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setMessage("Please set up your password first: Settings -> PASSWORD")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
 }
