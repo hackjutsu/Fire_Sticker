@@ -75,7 +75,8 @@
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/GREY"
             android:textSize="10sp"
-            android:paddingLeft="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="15dp"
             android:paddingBottom="10dp"
             android:maxLines="1"/>
 

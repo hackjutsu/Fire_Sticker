@@ -16,23 +16,25 @@ import com.gogocosmo.cosmoqiu.fire_sticker.R;
 
 public class PasswordManager {
 
+    private static final String PREF_FILE_NAME = "PassPref";
+
     static public boolean isPasswordTurnedOn(final Context ctx) {
 
-        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences preference = ctx.getSharedPreferences(PREF_FILE_NAME, ctx.MODE_PRIVATE);
         return preference.getBoolean("PASSWORD_PROCTECTION", false);
     }
 
     static public boolean isAuthenticated(final Context ctx, final String password) {
 
-        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences preference = ctx.getSharedPreferences(PREF_FILE_NAME, ctx.MODE_PRIVATE);
         return password.equals(preference.getString("Credentials", "1989"));
     }
 
-    static public void showCreatePasswordDialog(final Context context) {
+    static public void showCreatePasswordDialog(final Context ctx) {
 
-        final SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences preference = ctx.getSharedPreferences(PREF_FILE_NAME, ctx.MODE_PRIVATE);
 
-        final Dialog dialog = new Dialog(context);
+        final Dialog dialog = new Dialog(ctx);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_create_password);
 
@@ -65,9 +67,9 @@ public class PasswordManager {
                     editor.putBoolean("PASSWORD_PROCTECTION", true);
                     editor.commit();
                     dialog.dismiss();
-                    CustomizedToast.showToast(context, "New password set up");
+                    CustomizedToast.showToast(ctx, "New password set up");
                 } else {
-                    CustomizedToast.showToast(context,
+                    CustomizedToast.showToast(ctx,
                             "Confirmation must match new password.");
                 }
             }

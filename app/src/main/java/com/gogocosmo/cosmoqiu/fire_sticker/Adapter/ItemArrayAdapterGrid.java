@@ -77,7 +77,9 @@ public class ItemArrayAdapterGrid extends ArrayAdapter<Item> {
         }
 
         viewHolder.mTitle.setText(mValues.get(position).getTitle());
-        viewHolder.mUpdatedDate.setText("Edited " + mValues.get(position).getDateUpdate());
+        if (!mValues.get(position).getDateUpdate().isEmpty()) {
+            viewHolder.mUpdatedDate.setText("Edited " + mValues.get(position).getDateUpdate());
+        }
 
         String frontStr = mValues.get(position).getFront();
         String backStr = mValues.get(position).getBack();
