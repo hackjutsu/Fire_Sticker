@@ -2,7 +2,6 @@ package com.gogocosmo.cosmoqiu.fire_sticker.Acitivty;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -775,20 +774,7 @@ public class LaunchActivity extends ActionBarActivity implements
 
     private void showPickerDialog() {
 
-        final CharSequence[] items = {
-                "Owls",
-                "Fox",
-                "Zebra",
-                "Lion",
-                "Panda",
-                "Monkey",
-                "Puppy",
-                "Kitty",
-                "Penguin",
-                "Chicken",
-                "Pig",
-                "Tiger"
-        };
+        final CharSequence[] items = ProfilePicker.getProfileItems();
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle("Pick up a profile:)");
@@ -804,60 +790,12 @@ public class LaunchActivity extends ActionBarActivity implements
         builderSingle.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 // Do something with the selection
-                switch (item) {
-                    case 0:
-                        setProfile(R.drawable.profile_owl);
-                        break;
-                    case 1:
-                        setProfile(R.drawable.profile_fox);
-                        break;
-                    case 2:
-                        setProfile(R.drawable.profile_zebra);
-                        break;
-                    case 3:
-                        setProfile(R.drawable.profile_lion);
-                        break;
-                    case 4:
-                        setProfile(R.drawable.profile_panda);
-                        break;
-                    case 5:
-                        setProfile(R.drawable.profile_monkey);
-                        break;
-                    case 6:
-                        setProfile(R.drawable.profile_dog);
-                        break;
-                    case 7:
-                        setProfile(R.drawable.profile_cat);
-                        break;
-                    case 8:
-                        setProfile(R.drawable.profile_penguin);
-                        break;
-                    case 9:
-                        setProfile(R.drawable.profile_chicken);
-                        break;
-                    case 10:
-                        setProfile(R.drawable.profile_pig);
-                        break;
-                    case 11:
-                        setProfile(R.drawable.profile_tiger);
-                        break;
-                    default:
-                        setProfile(R.drawable.profile_owl);
-                }
+                ProfilePicker.setProfileImage(LaunchActivity.this, items[item].toString());
+                updateDrawerItems();
                 dialog.dismiss();
             }
         });
         builderSingle.show();
-    }
-
-    private void setProfile(final int profile) {
-
-        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preference.edit();
-        editor.putInt("PROFILE_IMAGE", profile);
-        editor.commit();
-
-        updateDrawerItems();
     }
 
     @Override

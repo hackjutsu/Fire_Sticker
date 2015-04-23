@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:gravity="center"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/ColorPrimary"
+    android:background="@drawable/drawer_header_background"
     android:orientation="vertical"
     android:layout_marginBottom="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_gravity="center"
+        android:elevation="5dp"
         android:src="@drawable/profile_fox"
         android:layout_marginTop="5dip"
         android:layout_marginBottom="5dip"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        app:border_width="4dp"
+        app:border_color="@color/PURE_WHITE"
         android:id="@+id/circleView" />
-    <!--app:border_width="2dp"-->
-    <!--app:border_color="@color/PURE_WHITE"-->
 
     <TextView
         android:layout_width="match_parent"

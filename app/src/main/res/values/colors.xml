@@ -44,8 +44,8 @@
     <color name="PURE_BLACK">@android:color/black</color>
 
     <!-- Colors Source -->
-    <color name="WINERED">#AE1833</color>
-    <color name="WINERED_DARK">#9D162E</color>
+    <color name="WINERED">#B81327</color>
+    <color name="WINERED_DARK">#A61123</color>
     <color name="RED900">#B71C1C</color>
     <color name="YANZHI">#952e3a</color>
     <color name="FANQIEHONG">#c4473d</color>
