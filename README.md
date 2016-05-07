@@ -6,6 +6,7 @@ Inspired by sticky notes, every note here has two colorful sides.
 It is simple to create, edit and delete a note just as how you do with the sticky notes in the real life.
 
 
+
 **Key Features**  
 * Stay Organized  
 * BookMark and Stamp  
