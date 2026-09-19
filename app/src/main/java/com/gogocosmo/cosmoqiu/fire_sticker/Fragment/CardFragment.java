@@ -52,6 +52,7 @@ public class CardFragment extends Fragment {
             lockStamp.setVisibility(View.VISIBLE);
             bookMark.setVisibility(View.INVISIBLE);
             stampDone.setVisibility(View.INVISIBLE);
+            mCard.setText("");
             return view;
         } else {
             lockStamp.setVisibility(View.INVISIBLE);
@@ -89,6 +90,7 @@ public class CardFragment extends Fragment {
 //        colorAnimation.start();
 //        mCard.setBackgroundColor(mColor);
         if (mIsLocked == 1) {
+            mCard.setText("");
             return ;
         }
         mCard.setText(text);
@@ -110,6 +112,7 @@ public class CardFragment extends Fragment {
 //        colorAnimation.start();
 
         if (mIsLocked == 1) {
+            mCard.setText("");
             return ;
         }
         mCard.setText(text);
